@@ -305,6 +305,7 @@
     };
     $('#panel-toggle').onclick = () => togglePanel();
     $('#panel-close').onclick = () => togglePanel(false);
+    $('#help-chip').onclick = () => toggleHelp();
     $('#fullscreen').onclick = () => toggleFullscreen();
     $('#midi-connect').onclick = () => connectMidi();
     buildPresets();
