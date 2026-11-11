@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>COSTAR Spiral Tuned Guitar</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="theme-light">
+
+<div id="stage">
+  <svg id="board" class="board" xmlns="http://www.w3.org/2000/svg"></svg>
+</div>
+<div id="topbar">
+  <div id="badge"></div>
+  <div id="midi-pill" class="waiting">MIDI: starting…</div>
+</div>
+<div id="toast"></div>
+<button id="panel-toggle" title="Settings (H)">⚙</button>
+
+<aside id="panel">
+  <header>
+    <h1>COSTAR Spiral Tuned Guitar <kbd>H</kbd></h1>
+    <button id="panel-close" title="Hide settings (H)">×</button>
+  </header>
+
+  <section>
+    <h2>Key &amp; mode <kbd>← →</kbd> <kbd>↑ ↓</kbd></h2>
+    <div id="roots" class="btn-row"></div>
+    <div id="modes" class="btn-row"></div>
+    <p class="hint" id="key-hint"></p>
+  </section>
+
+  <section>
+    <h2>View <kbd>V</kbd></h2>
+    <div class="btn-row" data-field="view">
+      <button data-value="six">Six strings</button>
+      <button data-value="spiral">Spiral (12 × 19)</button>
+    </div>
+    <p class="hint">Spiral style</p>
+    <div class="btn-row" data-field="spiralStyle">
+      <button data-value="neck">Guitar neck</button>
+      <button data-value="grid">Abstract grid</button>
+    </div>
+    <p class="hint">Dots <kbd>D</kbd></p>
+    <div class="btn-row" data-field="dots">
+      <button data-value="all">All scale notes</button>
+      <button data-value="played">Only notes being played</button>
+    </div>
+    <p class="hint">Dot size <kbd>S</kbd></p>
+    <div class="btn-row" data-field="dotSize">
+      <button data-value="100">100%</button>
+      <button data-value="75">75%</button>
+      <button data-value="50">50%</button>
+    </div>
+    <label><input type="checkbox" id="clean"> Hide key, MIDI status and fret numbers <kbd>I</kbd></label>
+    <label><input type="checkbox" id="chroma"> Chroma paths (diatonic, colored) <kbd>C</kbd></label>
+    <label><input type="checkbox" id="luma"> Luma paths (pentatonic, black) <kbd>L</kbd></label>
+    <p class="hint">Luma dot labels <kbd>G</kbd></p>
+    <div class="btn-row" data-field="lumaLabel">
+      <button data-value="none">None</button>
+      <button data-value="greek">Greek letters</button>
+      <button data-value="degree">Scale degrees</button>
+    </div>
+    <label><input type="checkbox" id="names"> Note names on chroma dots <kbd>N</kbd></label>
+  </section>
+
+  <section>
+    <h2>Scale pattern <kbd>P</kbd></h2>
+    <div class="btn-row" data-field="pattern">
+      <button data-value="off">Off</button>
+      <button data-value="chroma">Chroma, 3 per string</button>
+      <button data-value="luma">Luma, 2 per string</button>
+    </div>
+    <label><span>Start fret on the low string <kbd>[</kbd> <kbd>]</kbd></span><input type="number" id="patternFret" min="0" max="24"></label>
+    <p class="hint">Tip: shift-click a dot on the low string to start the pattern there.</p>
+  </section>
+
+  <section>
+    <h2>Instrument</h2>
+    <label><span>Lowest open string</span><select id="openLow"></select></label>
+    <label><span>Frets shown</span><input type="number" id="frets" min="12" max="24"></label>
+    <p class="hint">Tuning</p>
+    <div class="btn-row" data-field="tuning">
+      <button data-value="fourths">All Fourths</button>
+      <button data-value="standard">Standard</button>
+    </div>
+    <p class="hint">Standard is like a regular guitar: the 4th and 5th strings up from the lowest string are a third apart instead of a fourth. The Spiral view needs All Fourths.</p>
+    <p class="hint">Orientation <kbd>O</kbd></p>
+    <div class="btn-row" data-field="orientation">
+      <button data-value="mirror">Mirror: low string on top</button>
+      <button data-value="standard">Standard: high string on top</button>
+    </div>
+    <p class="hint">Mirror matches what you see looking down at the guitar; Standard puts higher notes higher on screen, like the paper charts.</p>
+  </section>
+
+  <section>
+    <h2 id="palette">Palette <kbd>T</kbd></h2>
+    <div id="themes" class="btn-row"></div>
+    <p class="hint"><a href="palettes.html" target="_blank">See all palettes full size, to scroll through</a>.</p>
+    <div class="btn-row"><button id="fullscreen">Full screen <kbd>F</kbd></button></div>
+  </section>
+
+  <section>
+    <h2>MIDI <kbd>Esc</kbd> <span class="kbd-note">clears stuck notes</span></h2>
+    <p class="hint" id="midi-status"></p>
+    <div class="btn-row"><button id="midi-connect">Connect MIDI</button></div>
+    <label><span>Input</span><select id="midiDevice"><option value="all">All inputs</option></select></label>
+    <label><span>String mapping</span>
+      <select id="stringMap">
+        <option value="ch1high">Per string: channel 1 = high string</option>
+        <option value="ch1low">Per string: channel 1 = low string</option>
+        <option value="pitch">Pitch only (any channel)</option>
+      </select>
+    </label>
+    <label><span>Transpose incoming notes</span><input type="number" id="transpose" min="-24" max="24"></label>
+    <p class="hint">Last note: <span id="midi-last">—</span></p>
+    <p class="hint">Roland GR-20: set its MIDI mode to MONO (one channel per string) and keep the mapping above on "channel 1 = high string". Open low D should read D2 here.</p>
+    <p class="hint">No MIDI handy? Click and hold any position on the fretboard to light it.</p>
+  </section>
+
+  <section>
+    <h2>Song presets (Program Change)</h2>
+    <div id="presets"></div>
+    <button id="preset-add">+ Add preset</button>
+    <label><span>Listen for Program Change on</span><select id="pcChannel"></select></label>
+    <p class="hint">An incoming Program Change 1 loads preset 1, PC 2 loads preset 2, and so on. Pick a channel here so the GR-20's own patch changes don't trigger presets.</p>
+  </section>
+
+  <section>
+    <h2>About</h2>
+    <p class="hint">Live MIDI works in Google Chrome, Microsoft Edge and other Chrome-family browsers on Mac, Windows and Android. It does not work in Safari, or on any iPhone or iPad. There the fretboard and click-to-play still work, but notes from a guitar won't appear.</p>
+    <p class="hint">Created by Claude for Kevin Shrieve. COSTAR: Cycles Of Song, Theme, And Ritual</p>
+  </section>
+
+</aside>
+
+<script src="js/theory.js"></script>
+<script src="js/render.js"></script>
+<script src="js/midi.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

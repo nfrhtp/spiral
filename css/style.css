@@ -1,0 +1,200 @@
+/* ---------- Palettes ----------
+   Light base (:root), dark base (.dark), then one block per palette overriding
+   the background and the seven chroma colors (2..7 plus the half-dot "1") and luma.
+   Degree colors: 2 green · 3 yellow · 4 orange · 5 red · 6 blue · 7 purple — always. */
+:root, .light {
+  --bg: #f5f2eb; --fg: #1d1d1d; --muted: #6f6b63;
+  --wood: rgba(0,0,0,0.03); --edge: #2a2a2a; --fret: #8f8b82; --nut: #1d1d1d;
+  --string: #222; --inlay: #a39e92; --grid: #cdc8bc; --band: rgba(0,0,0,0.10);
+  --c1l: #ffffff; --c1r: #151515;
+  --c2: #4fb85f; --c3: #f0c93f; --c4: #f26a1e; --c5: #e63b47; --c6: #5aa9e6; --c7: #c77bc9;
+  --dot-stroke: rgba(0,0,0,0.35);
+  --luma: #181818; --luma-stroke: #181818; --luma-text: #ffffff;
+  --live: #111111; --live2: #ffffff;
+  --panel-bg: rgba(252,251,248,0.97); --panel-border: #d8d3c8;
+  --btn: #ebe7de; --btn-fg: #1d1d1d; --btn-active: #1d1d1d; --btn-active-fg: #ffffff;
+  --input-bg: #ffffff;
+}
+.dark {
+  --bg: #0f1013; --fg: #ebebeb; --muted: #9a9a9a;
+  --wood: rgba(255,255,255,0.03); --edge: #cfcfcf; --fret: #5a5e66; --nut: #e6e6e6;
+  --string: #d9d9d9; --inlay: #60646c; --grid: #2e3138; --band: rgba(255,255,255,0.10);
+  --c1l: #ffffff; --c1r: #0b0b0b;
+  --dot-stroke: rgba(255,255,255,0.25);
+  --luma: #1c1d21; --luma-stroke: #a8a8a8; --luma-text: #f0f0f0;
+  --live: #ffffff; --live2: #000000;
+  --panel-bg: rgba(22,23,27,0.97); --panel-border: #33363d;
+  --btn: #262930; --btn-fg: #ebebeb; --btn-active: #f0f0f0; --btn-active-fg: #111111;
+  --input-bg: #16171b;
+}
+
+/* 1 Paper — the colors of the original hand-made charts, on warm paper */
+.theme-paper { --bg: #f3eee2; --wood: rgba(90,60,20,0.04);
+  --c2: #86c77e; --c3: #f1d27c; --c4: #f36a1d; --c5: #ea3b3b; --c6: #8bc3e8; --c7: #d48fc6; --luma: #1a1a1a; --luma-stroke: #1a1a1a; }
+/* 2 Studio — the app's original light look: the chart colors, tuned for a screen */
+.theme-studio { }
+/* 3 Stage — the same colors on near-black */
+.theme-stage { }
+/* 4 Neon — maximum punch on black, for a big screen in a dark room */
+.theme-neon { --bg: #06070b; --string: #cfd3dc; --edge: #9aa0ad; --fret: #3d424d; --nut: #e8eaf0;
+  --c2: #3dff5c; --c3: #fff43a; --c4: #ff8a1f; --c5: #ff2e63; --c6: #19c8ff; --c7: #c45cff;
+  --c1r: #000000; --luma: #15161a; --luma-stroke: #6b6e78; --dot-stroke: rgba(255,255,255,0.15); }
+/* 5 Okabe–Ito — the standard colorblind-safe palette, on light */
+.theme-okabe { --bg: #fbfbf8;
+  --c2: #009e73; --c3: #f0e442; --c4: #e69f00; --c5: #d55e00; --c6: #56b4e9; --c7: #cc79a7; --luma: #000000; --luma-stroke: #000000; }
+/* 6 Autumn — muted earth tones on cream */
+.theme-autumn { --bg: #efe7d6; --string: #3a2f28; --edge: #4a3b30; --nut: #3a2f28; --fret: #a08f78; --wood: rgba(120,80,30,0.06);
+  --c2: #6f8f2f; --c3: #d9a520; --c4: #cf6a2a; --c5: #a8382d; --c6: #4b7ea6; --c7: #7d5a8e; --luma: #2a2420; --luma-stroke: #2a2420; --c1r: #2a2420; }
+/* 7 Pastel Night — soft pastels on deep navy */
+.theme-pastelnight { --bg: #121a2b; --string: #d7deeb; --edge: #9fb0cc; --fret: #2c3a55; --nut: #e3e9f5; --grid: #27344d;
+  --c2: #a9e8a0; --c3: #fff2a8; --c4: #ffc69b; --c5: #ff9f9f; --c6: #a9d6f7; --c7: #dcbaf2;
+  --luma: #1b2437; --luma-stroke: #8a97b3; }
+/* 8 Jewel — deep saturated gem tones on charcoal */
+.theme-jewel { --bg: #1b1b1e;
+  --c2: #0f9d58; --c3: #ffb300; --c4: #f4511e; --c5: #d81b60; --c6: #1e88e5; --c7: #8e24aa;
+  --luma: #0e0e10; --luma-stroke: #8d8d8d; }
+/* 9 Pop — clean flat brights on pure white */
+.theme-pop { --bg: #ffffff; --wood: rgba(0,0,0,0.02);
+  --c2: #2ecc71; --c3: #f1c40f; --c4: #ff7f11; --c5: #e74c3c; --c6: #3498db; --c7: #9b59b6; --luma: #222222; --luma-stroke: #222222; }
+/* The degree-to-color sequence is fixed (it is part of the COSTAR system); palettes vary tone, not meaning. */
+
+/* ---------- Page ---------- */
+html, body { height: 100%; margin: 0; }
+body {
+  background: var(--bg); color: var(--fg);
+  font: 14px/1.4 -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  overflow: hidden;
+}
+#stage { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; }
+#board { width: 100%; height: 100%; display: block; touch-action: none; }
+
+#topbar {
+  position: fixed; top: 12px; left: 16px; right: 64px;
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap; pointer-events: none;
+}
+#badge {
+  padding: 6px 12px; border-radius: 999px;
+  background: var(--panel-bg); border: 1px solid var(--panel-border);
+  font-size: 15px; font-weight: 600; letter-spacing: 0.02em;
+}
+#midi-pill {
+  padding: 5px 10px; border-radius: 999px;
+  background: var(--panel-bg); border: 1px solid var(--panel-border);
+  font-size: 12px; color: var(--muted);
+}
+#midi-pill.ready { color: #2e8b57; border-color: #2e8b57; }
+#midi-pill.waiting { color: #b8860b; border-color: #b8860b; }
+#midi-pill.error { color: #c0392b; border-color: #c0392b; }
+#panel-toggle {
+  position: fixed; top: 12px; right: 16px; width: 36px; height: 36px; border-radius: 50%;
+  border: 1px solid var(--panel-border); background: var(--panel-bg); color: var(--fg);
+  font-size: 18px; cursor: pointer;
+}
+#toast {
+  position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(20px);
+  padding: 10px 18px; border-radius: 10px; background: var(--btn-active); color: var(--btn-active-fg);
+  font-size: 16px; opacity: 0; transition: opacity .25s, transform .25s; pointer-events: none;
+}
+#toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ---------- Board (SVG) ---------- */
+.board .wood { fill: var(--wood); }
+.board .edge { stroke: var(--edge); stroke-width: 3; }
+.board .edge.thin { stroke-width: 1.2; }
+.board .fret { stroke: var(--fret); stroke-width: 2.5; }
+.board .nut { stroke: var(--nut); stroke-width: 12; }
+.board .nut.soft { stroke-width: 5; opacity: .45; }
+.board .string { stroke: var(--string); stroke-linecap: round; }
+.board .inlay { fill: var(--inlay); }
+.board .fretnum { fill: var(--muted); font-family: inherit; }
+.board .grid-v, .board .grid-h { stroke: var(--grid); }
+.board .band { fill: var(--band); }
+
+/* Clean view (key I): only the board and the settings button. */
+body.clean #topbar, body.clean .board .fretnum { display: none; }
+
+.board .dot circle { stroke: var(--dot-stroke); stroke-width: 1.5; }
+.board .dot.deg-2 circle { fill: var(--c2); }
+.board .dot.deg-3 circle { fill: var(--c3); }
+.board .dot.deg-4 circle { fill: var(--c4); }
+.board .dot.deg-5 circle { fill: var(--c5); }
+.board .dot.deg-6 circle { fill: var(--c6); }
+.board .dot.deg-7 circle { fill: var(--c7); }
+.board .dot.deg-1 .half-l { fill: var(--c1l); }
+.board .dot.deg-1 .half-r { fill: var(--c1r); }
+.board .dot.deg-1 .half-ring { fill: none; stroke: var(--c1r); stroke-width: 1.5; }
+.board .dot.luma circle { fill: var(--luma); stroke: var(--luma-stroke); }
+.board .dot text { pointer-events: none; font-family: "Times New Roman", Times, Georgia, serif; }
+.board .dot.luma text { fill: var(--luma-text); font-style: normal; font-weight: normal; }
+.board .dot.luma text.degree { font-family: inherit; font-weight: 500; letter-spacing: -0.02em; }
+.board .dot.chroma text { fill: #111; font-family: inherit; font-weight: 600; }
+.board .dot.deg-1 text.on-light { fill: var(--c1r); }
+.board .dot.deg-1 text.on-dark { fill: var(--c1l); }
+.board .dot.ghost { opacity: .45; }
+
+.board .live { opacity: 1; transition: opacity .5s ease-out; pointer-events: none; }
+.board .live.off { opacity: 0; }
+.board .live .ring-outer { fill: none; stroke: var(--live2); stroke-width: 10; }
+.board .live .ring-inner { fill: none; stroke: var(--live); stroke-width: 5; }
+
+/* ---------- Settings panel ---------- */
+#panel {
+  position: fixed; top: 0; right: 0; bottom: 0; width: 360px; max-width: 100%; box-sizing: border-box;
+  padding: 16px 18px 40px; overflow-y: auto;
+  background: var(--panel-bg); border-left: 1px solid var(--panel-border);
+  transition: transform .2s ease;
+}
+#panel.hidden { transform: translateX(100%); }
+#panel header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+#panel h1 { font-size: 17px; margin: 0; }
+#panel h2 { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 18px 0 8px; }
+#panel section { border-top: 1px solid var(--panel-border); }
+#panel section:first-of-type { border-top: 0; }
+#panel label { display: flex; align-items: center; gap: 8px; margin: 6px 0; }
+#panel label span { flex: 1; }
+#panel .hint { color: var(--muted); font-size: 12px; margin: 6px 0; }
+/* Keyboard shortcut chips, shown next to the item they control */
+#panel kbd {
+  display: inline-block; margin-left: 6px; padding: 0 5px; border-radius: 4px;
+  border: 1px solid var(--panel-border); color: var(--muted); background: transparent;
+  font: 11px/16px -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-transform: none; letter-spacing: 0; vertical-align: 1px;
+}
+#panel h1 kbd { font-size: 11px; font-weight: 400; }
+#panel .kbd-note { font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 11px; margin-left: 4px; }
+#panel button kbd { margin-left: 5px; border-color: currentColor; color: inherit; opacity: .7; }
+#panel button {
+  border: 1px solid var(--panel-border); background: var(--btn); color: var(--btn-fg);
+  border-radius: 6px; padding: 5px 9px; font-size: 13px; cursor: pointer;
+}
+#panel button:disabled { opacity: .35; cursor: not-allowed; }
+#panel button.active { background: var(--btn-active); color: var(--btn-active-fg); border-color: var(--btn-active); }
+#panel #panel-close { border: 0; background: transparent; font-size: 20px; }
+.btn-row { display: flex; flex-wrap: wrap; gap: 5px; margin: 4px 0; }
+#panel input[type=number], #panel input[type=text], #panel select {
+  background: var(--input-bg); color: var(--fg); border: 1px solid var(--panel-border);
+  border-radius: 6px; padding: 4px 6px; font-size: 13px;
+}
+#panel input[type=number] { width: 64px; }
+#panel select { max-width: 200px; }
+/* Compact palette chooser: one row per palette, drawn in that palette's own colors */
+#themes { display: flex; flex-direction: column; gap: 4px; }
+#panel #themes .theme-row {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%;
+  background: var(--bg); color: var(--fg); border: 1px solid var(--panel-border); padding: 6px 9px;
+}
+#panel #themes .theme-row.active { background: var(--bg); color: var(--fg); outline: 2px solid #1e90ff; outline-offset: 1px; }
+#themes .tname { font-size: 13px; font-weight: 600; }
+#themes .tdots { display: flex; gap: 3px; }
+#themes .tdots span { width: 15px; height: 15px; border-radius: 50%; border: 1px solid var(--dot-stroke); display: inline-block; }
+#themes .tdots .half { background: linear-gradient(90deg, var(--c1l) 50%, var(--c1r) 50%); }
+#themes .tdots .d2 { background: var(--c2); } #themes .tdots .d3 { background: var(--c3); }
+#themes .tdots .d4 { background: var(--c4); } #themes .tdots .d5 { background: var(--c5); }
+#themes .tdots .d6 { background: var(--c6); } #themes .tdots .d7 { background: var(--c7); }
+#themes .tdots .dl { background: var(--luma); border-color: var(--luma-stroke); }
+
+.preset { display: grid; grid-template-columns: 44px 1fr 56px 86px 28px 28px; gap: 4px; align-items: center; margin: 4px 0; }
+.preset .pc { font-size: 11px; color: var(--muted); }
+.preset input { min-width: 0; }
+.preset select { max-width: 100%; }
+.keys p { font-size: 12px; color: var(--muted); }

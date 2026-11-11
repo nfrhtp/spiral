@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>COSTAR Spiral Tuned Guitar — palettes</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+  html, body { height: auto; overflow: auto; background: #3a3a3a; }
+  body { padding: 24px; }
+  h1 { color: #eee; font-size: 20px; margin: 0 0 4px; }
+  .intro { color: #bbb; font-size: 14px; margin: 0 0 20px; max-width: 900px; }
+  .sample { background: var(--bg); color: var(--fg); border-radius: 12px; padding: 14px 18px 8px; margin-bottom: 18px; }
+  .sample header { display: flex; align-items: baseline; gap: 12px; margin-bottom: 6px; }
+  .sample h2 { font-size: 16px; margin: 0; }
+  .sample .num { font-size: 13px; color: var(--muted); }
+  .sample p { font-size: 13px; color: var(--muted); margin: 0 0 6px; }
+  .sample .alt { color: #d04040; font-weight: 600; }
+  .sample svg { width: 100%; height: auto; display: block; }
+  .swatches { display: flex; gap: 8px; align-items: center; margin: 6px 0 10px; }
+  .swatches span { width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid var(--dot-stroke); display: inline-block; }
+  .swatches .lbl { width: auto; height: auto; border: 0; border-radius: 0; font-size: 12px; color: var(--muted); margin-left: 6px; }
+</style>
+</head>
+<body>
+<h1>COSTAR Spiral Tuned Guitar — palettes</h1>
+<p class="intro">Each strip is drawn with the app's own renderer: C Ionian, six strings in all fourths, standard orientation (high string on top), first twelve frets.
+The dots left to right in the swatch row are 1 · 2 · 3 · 4 · 5 · 6 · 7 · luma. Every palette keeps the same degree-to-color meaning; only the tones and background change.</p>
+<div id="samples"></div>
+
+<script src="js/theory.js"></script>
+<script src="js/render.js"></script>
+<script>
+(() => {
+  const THEMES = [
+    ['paper', 'Paper', false, 'The colors of the original hand-made charts, on warm paper. Familiar; a little soft for distance viewing.'],
+    ['studio', 'Studio', false, 'The chart colors tuned for a screen — the default palette. Balanced, readable up close.'],
+    ['stage', 'Stage', true, 'The same colors on near-black. Dots glow; the neck recedes. Good for a dim room.'],
+    ['neon', 'Neon', true, 'Maximum saturation on black, built for a big screen behind a performer. Loud; can tire the eyes in long practice.'],
+    ['okabe', 'Okabe–Ito', false, 'The standard colorblind-safe set: every pair stays distinct for red-green and blue-yellow color vision. Red and orange are the closest pair.'],
+    ['autumn', 'Autumn', false, 'Muted earth tones on cream — olive, goldenrod, brick, slate, plum. Calm and warm; the lowest contrast between hues.'],
+    ['pastelnight', 'Pastel Night', true, 'Soft pastels on deep navy. Gentle but surprisingly clear at distance because every dot is light on dark.'],
+    ['jewel', 'Jewel', true, 'Deep gem tones — emerald, amber, ruby, sapphire, amethyst — on charcoal. Rich rather than loud.'],
+    ['pop', 'Pop', false, 'Clean flat brights on pure white. Crisp and modern; strongest contrast on a light background.'],
+  ];
+  const state = { view: 'six', orientation: 'standard', spiralStyle: 'neck', dots: 'all',
+    root: 0, mode: 0, chroma: true, luma: true, lumaLabel: 'none', names: false,
+    pattern: 'off', patternFret: 0, openLow: 38, frets: 12 };
+  const box = document.getElementById('samples');
+  THEMES.forEach(([id, name, dark, blurb], i) => {
+    const div = document.createElement('div');
+    div.className = 'sample theme-' + id + (dark ? ' dark' : ' light');
+    div.innerHTML = `<header><span class="num">${i + 1}</span><h2>${name}</h2></header>
+      <p>${blurb.replace('ALTERNATIVE MAPPING:', '<span class="alt">Alternative mapping:</span>')}</p>
+      <div class="swatches">
+        <span style="background: linear-gradient(90deg, var(--c1l) 50%, var(--c1r) 50%)"></span>
+        <span style="background: var(--c2)"></span><span style="background: var(--c3)"></span>
+        <span style="background: var(--c4)"></span><span style="background: var(--c5)"></span>
+        <span style="background: var(--c6)"></span><span style="background: var(--c7)"></span>
+        <span style="background: var(--luma); border-color: var(--luma-stroke)"></span>
+        <span class="lbl">1 · 2 · 3 · 4 · 5 · 6 · 7 · luma</span>
+      </div>`;
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('class', 'board');
+    div.appendChild(svg);
+    box.appendChild(div);
+    Render.build(svg, state);
+  });
+})();
+</script>
+</body>
+</html>
