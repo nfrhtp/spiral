@@ -178,6 +178,7 @@ body.clean #topbar, body.clean .board .fretnum { display: none; }
   justify-content: start; column-gap: 40px; row-gap: 4px; }
 #help .help-grid > h2, #help .help-grid > .help-foot { align-self: baseline; padding-bottom: 4px; }
 #help .help-close { justify-self: end; }
+#help .help-settings { padding-bottom: 4px; }
 #help .hi { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
 #help kbd { margin-left: 0; font-size: 11px; line-height: 17px; padding: 0 6px; color: var(--fg); }
 #help .help-foot { color: var(--muted); font-size: 11px; margin: 0; }
