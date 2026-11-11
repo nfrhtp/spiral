@@ -21,9 +21,15 @@ const Theory = (() => {
     { name: 'Mixolydian', offset: 7 },
     { name: 'Aeolian',    offset: 9,  alias: 'natural minor' },
     { name: 'Locrian',    offset: 11 },
-    // Blues: the root is the luma β note (b3 of the parent "1"), so the parent lies 3 semitones
-    // below the root and the five luma dots form the minor pentatonic on the root.
-    { name: 'Blues',      offset: 3,  alias: 'root is luma β' },
+    // Pentatonic modes (penta: true). The five luma notes of any parent form one pentatonic scale
+    // (the major pentatonic on luma γ). Each mode starts it on a different luma note, so its root is
+    // that note and the parent "1" lies `offset` semitones below the root. Names and order follow
+    // Wikipedia's "Modes of the pentatonic scale" table. Minor (root on β) is the former "Blues" mode.
+    { name: 'Major pentatonic',    short: 'Major',    offset: 6,  penta: true },  // root = luma γ · 1 2 3 5 6
+    { name: 'Egyptian pentatonic', short: 'Egyptian', offset: 8,  penta: true },  // root = luma δ · 1 2 4 5 ♭7
+    { name: 'Man Gong pentatonic', short: 'Man Gong', offset: 10, penta: true },  // root = luma ε · 1 ♭3 4 ♭6 ♭7
+    { name: 'Ritsu pentatonic',    short: 'Ritsu',    offset: 1,  penta: true },  // root = luma α · 1 2 4 5 6
+    { name: 'Minor pentatonic',    short: 'Minor',    offset: 3,  penta: true },  // root = luma β · 1 ♭3 4 5 ♭7
   ];
 
   const MAJOR = [0, 2, 4, 5, 7, 9, 11];          // intervals of degrees 1..7

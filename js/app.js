@@ -43,8 +43,15 @@
 
   function load() {
     let s;
-    try { s = Object.assign({}, DEFAULTS, JSON.parse(localStorage.getItem(STORAGE) || '{}')); }
-    catch (e) { s = Object.assign({}, DEFAULTS); }
+    let raw = {};
+    try { raw = JSON.parse(localStorage.getItem(STORAGE) || '{}'); } catch (e) { raw = {}; }
+    s = Object.assign({}, DEFAULTS, raw);
+    // Mode 7 used to be "Blues"; it is now "Major pentatonic", and Blues lives on as "Minor pentatonic" (11).
+    if (raw.modeSet !== 2) {
+      if (s.mode === 7) s.mode = 11;
+      for (const p of s.presets || []) if (p.mode === 7) p.mode = 11;
+    }
+    s.modeSet = 2;
     s.panelOpen = /[?&]panel=1/.test(location.search); // board in full view unless ?panel=1
     if (s.theme === 'light') s.theme = 'studio';   // names from before the palette system
     if (s.theme === 'dark') s.theme = 'stage';
@@ -63,23 +70,24 @@
     delete copy.panelOpen;
     localStorage.setItem(STORAGE, JSON.stringify(copy));
   }
-  const isBlues = mode => Theory.MODES[mode] && Theory.MODES[mode].name === 'Blues';
+  const isPenta = mode => !!(Theory.MODES[mode] && Theory.MODES[mode].penta);
   function set(patch) {
-    const wasBlues = isBlues(state.mode);
+    const wasPenta = isPenta(state.mode);
     Object.assign(state, patch);
-    const nowBlues = isBlues(state.mode);
+    const nowPenta = isPenta(state.mode);
     if (state.tuning === 'standard') state.view = 'six';   // the 12-row Spiral only makes sense in all fourths
-    // Entering Blues hides the colored chroma dots so only the pentatonic shows;
+    // Entering a pentatonic mode hides the colored chroma dots so only the pentatonic shows;
     // leaving it restores whatever the chroma setting was before.
-    // It also turns the luma dots on (they are the whole picture in Blues); leaving restores both.
-    if (nowBlues && !wasBlues) {
-      state.chromaBeforeBlues = state.chroma; state.chroma = false;
-      state.lumaBeforeBlues = state.luma; state.luma = true;
+    // it also turns the luma dots on (they are the whole picture there). Moving between pentatonic
+    // modes changes nothing; leaving them restores both settings.
+    if (nowPenta && !wasPenta) {
+      state.chromaBeforePenta = state.chroma; state.chroma = false;
+      state.lumaBeforePenta = state.luma; state.luma = true;
     }
-    else if (wasBlues && !nowBlues) {
-      state.chroma = state.chromaBeforeBlues !== false;
-      if (state.lumaBeforeBlues !== undefined) state.luma = state.lumaBeforeBlues;
-      if (state.lumaLabel === 'degree') state.lumaLabel = 'none';   // degrees are a Blues-only crutch
+    else if (wasPenta && !nowPenta) {
+      state.chroma = state.chromaBeforePenta !== false;
+      if (state.lumaBeforePenta !== undefined) state.luma = state.lumaBeforePenta;
+      if (state.lumaLabel === 'degree') state.lumaLabel = 'none';   // degrees are a pentatonic-only crutch
     }
     render();
   }
@@ -235,7 +243,19 @@
   }
   function buildPanel() {
     buttonGroup($('#roots'), ROOT_LABELS, 'root');
-    buttonGroup($('#modes'), Theory.MODES.map(m => m.name), 'mode');
+    // Church modes in one row, pentatonic modes in the row below; each button's value is its MODES index.
+    for (const [box, penta] of [[$('#modes'), false], [$('#pentas'), true]]) {
+      box.innerHTML = '';
+      Theory.MODES.forEach((m, i) => {
+        if (!!m.penta !== penta) return;
+        const b = document.createElement('button');
+        b.textContent = m.short || m.name;
+        b.title = m.name;
+        b.dataset.value = i;
+        b.onclick = () => set({ mode: i });
+        box.appendChild(b);
+      });
+    }
     const tc = $('#themes');
     for (const t of THEMES) {
       // Each row carries its palette's class, so its dots and background show that palette's real colors.
@@ -314,6 +334,7 @@
       b.classList.toggle('active', String(b.dataset.value) === String(value)));
     mark($('#roots'), state.root);
     mark($('#modes'), state.mode);
+    mark($('#pentas'), state.mode);
     mark($('#themes'), themeById(state.theme).id);
     document.querySelectorAll('.btn-row[data-field]').forEach(row => mark(row, state[row.dataset.field]));
     const spiralBtn = document.querySelector('.btn-row[data-field="view"] button[data-value="spiral"]');
@@ -329,12 +350,13 @@
     const parent = Theory.parentRoot(state.root, state.mode);
     const pn = Theory.noteName(parent, parent);
     let hint = `Colors are measured from ${pn} as "1". Luma = the five notes outside ${pn} major.`;
-    if (Theory.MODES[state.mode].name === 'Blues') {
-      hint = `${Theory.describe(state.root, state.mode)}: the root is the black luma β note; the five luma dots are ${Theory.noteName(state.root, parent)} minor pentatonic. Colors are measured from ${pn} as "1".`;
+    if (isPenta(state.mode)) {
+      const m = Theory.MODES[state.mode];
+      hint = `${Theory.describe(state.root, state.mode)}: the root is the black luma ${Theory.LUMA[m.offset]} note; the five luma dots are ${Theory.noteName(state.root, parent)} ${m.name}. Colors are measured from ${pn} as "1".`;
     }
     $('#key-hint').textContent = hint;
     const degBtn = document.querySelector('.btn-row[data-field="lumaLabel"] button[data-value="degree"]');
-    if (degBtn) degBtn.style.display = isBlues(state.mode) ? '' : 'none';
+    if (degBtn) degBtn.style.display = isPenta(state.mode) ? '' : 'none';
     $('#panel').classList.toggle('hidden', !state.panelOpen);
   }
   function togglePanel(force) {
@@ -386,7 +408,7 @@
       case 'c': set({ chroma: !state.chroma }); break;
       case 'l': set({ luma: !state.luma }); break;
       case 'g': {
-        const order = isBlues(state.mode) ? ['none', 'greek', 'degree'] : ['none', 'greek'];
+        const order = isPenta(state.mode) ? ['none', 'greek', 'degree'] : ['none', 'greek'];
         set({ lumaLabel: order[(order.indexOf(state.lumaLabel) + 1) % order.length] });
         break;
       }
