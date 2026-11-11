@@ -130,11 +130,12 @@ const Render = (() => {
     if (info.kind === 'chroma' && state.names) {
       const nm = Theory.noteName(info.pc, parentRoot);
       if (info.degree === 1) {
-        // Half-and-half "1" dot: the letter sits on the white half in the dark color,
-        // a ♭/♯ sits on the black half in the light color, so both stay legible.
-        const off = r * 0.46;
-        text(grp, -off, 0, nm[0], 'name on-light', r * 0.85);
-        if (nm.length > 1) text(grp, off, 0, nm.slice(1), 'name on-dark', r * 0.85);
+        // Half-and-half "1" dot: the letter ends just left of the centre line, on the white half in
+        // the dark color; a ♭/♯ starts just right of it, on the black half in the light color. So the
+        // pair sits about as close as on a solid dot, and a lone letter stays near the middle.
+        const gap = r * 0.05;
+        text(grp, -gap, 0, nm[0], 'name on-light', r * 0.85).setAttribute('text-anchor', 'end');
+        if (nm.length > 1) text(grp, gap, 0, nm.slice(1), 'name on-dark', r * 0.85).setAttribute('text-anchor', 'start');
       } else {
         text(grp, 0, 0, nm, 'name', r * 0.85);
       }
