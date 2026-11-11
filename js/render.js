@@ -41,7 +41,8 @@ const Render = (() => {
     const rows = six ? 6 : 12;
     const cols = state.frets + 1;
     const W = 1600, mx = 40;
-    const cellW = (W - 2 * mx) / cols;
+    const ml = 80;                         // wider left margin: room for the open-string note names
+    const cellW = (W - ml - mx) / cols;
     const rowGap = six ? cellW * 1.25 : cellW * 0.95;
     const my = six ? 70 : 50;
     const H = rowGap * rows + 2 * my;
@@ -49,10 +50,10 @@ const Render = (() => {
     // 'standard' draws it at the bottom (higher notes higher on screen).
     const flip = state.orientation === 'standard';
     return {
-      six, rows, cols, W, H, mx, my, cellW, rowGap, flip,
-      x: f => mx + cellW * (f + 0.5),      // dot centre for fret f
+      six, rows, cols, W, H, mx, ml, my, cellW, rowGap, flip,
+      x: f => ml + cellW * (f + 0.5),      // dot centre for fret f
       y: r => my + rowGap * ((flip ? rows - 1 - r : r) + 0.5),  // string row r
-      wire: k => mx + cellW * (k + 1),     // fret wire k (k = 0 is the nut)
+      wire: k => ml + cellW * (k + 1),     // fret wire k (k = 0 is the nut)
       hitR: Math.min(cellW, rowGap) * 0.36,                                   // full-size radius (click target)
       r: Math.min(cellW, rowGap) * 0.36 * ((+state.dotSize || 100) / 100),   // dot radius at the chosen size
       anchorRow: six ? 0 : 3,              // row of the real lowest string
@@ -150,11 +151,22 @@ const Render = (() => {
     return STRING_WIDTHS[row - 3];
   }
 
+  // The open-string note to the left of each of the six real strings, styled like the fret numbers.
+  // In the Spiral view only the six playable rows (3..8) get one. Hidden with the fret numbers in clean view.
+  function drawOpenNames(gp, g, state, size) {
+    // Open strings are named the way guitarists name them (D G C F Bb Eb), whatever the key.
+    for (let r = g.anchorRow; r < g.anchorRow + 6; r++) {
+      const pc = Theory.mod(openOfRow(state, r), 12);
+      const t = text(gp, g.ml - 18, g.y(r), Theory.NAMES_FLAT[pc], 'fretnum', size);
+      t.setAttribute('text-anchor', 'end');
+    }
+  }
+
   // A guitar neck: wood, nut, fret wires, inlays, strings of varying thickness.
   // Used for the six-string view and for the "Guitar neck" style of the Spiral view.
   function drawNeck(gp, g, state) {
     const rows = g.rows;
-    const top = g.my, bottom = g.H - g.my, left = g.mx, right = g.W - g.mx;
+    const top = g.my, bottom = g.H - g.my, left = g.ml, right = g.W - g.mx;
     const nutX = g.wire(0);
     // The six-string neck sits on the plain page background; only the 12-row neck gets the faint
     // fretboard tint plus the brighter band marking the six playable strings.
@@ -188,11 +200,12 @@ const Render = (() => {
       el('line', { x1: left, y1: g.y(r), x2: right, y2: g.y(r), class: 'string',
                    'stroke-width': stringWidth(r, rows) }, gp);
     }
+    drawOpenNames(gp, g, state, 20);
   }
 
   // The abstract lattice: fine lines only, no nut, no string thickness. A faint band marks the real strings.
   function drawGrid(gp, g, state) {
-    const top = g.my, bottom = g.H - g.my, left = g.mx, right = g.W - g.mx;
+    const top = g.my, bottom = g.H - g.my, left = g.ml, right = g.W - g.mx;
     const bandTop = Math.min(g.y(3), g.y(8)) - g.rowGap / 2;
     el('rect', { x: left, y: bandTop, width: right - left, height: g.rowGap * 6, class: 'band' }, gp);
     // Vertical lines sit between the dots and look like fret wires (wire(-1) is the left edge);
@@ -206,6 +219,7 @@ const Render = (() => {
     for (let f = 1; f <= state.frets; f++) {
       if (INLAY_SINGLE.includes(f) || INLAY_DOUBLE.includes(f)) text(gp, g.x(f), bottom + 24, String(f), 'fretnum', 18);
     }
+    drawOpenNames(gp, g, state, 18);
   }
 
   // Build the whole board. Returns geometry, the parent "1", a map of every
