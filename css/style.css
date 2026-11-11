@@ -177,7 +177,8 @@ body.clean #topbar, body.clean .board .fretnum { display: none; }
 #help .help-grid { display: grid; grid-template-columns: repeat(3, auto); align-items: center;
   justify-content: start; column-gap: 40px; row-gap: 4px; }
 #help .help-grid > h2, #help .help-grid > .help-foot { align-self: center; }   /* top row spaced like the rest */
-#help .help-close { justify-self: end; }
+#help h2 .help-keys { margin-left: 8px; text-transform: none; letter-spacing: 0; font-weight: 400; }
+#help h2 .help-keys kbd { font-size: 10px; line-height: 15px; padding: 0 4px; color: var(--muted); }
 #help .hi { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
 #help kbd { margin-left: 0; font-size: 11px; line-height: 17px; padding: 0 6px; color: var(--fg); }
 #help .help-foot { color: var(--muted); font-size: 11px; margin: 0; }
