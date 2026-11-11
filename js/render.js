@@ -41,7 +41,7 @@ const Render = (() => {
     const rows = six ? 6 : 12;
     const cols = state.frets + 1;
     const W = 1600, mx = 40;
-    const ml = 40;                         // wider left margin: room for the open-string note names
+    const ml = 80;                         // wider left margin: room for the open-string note names
     const cellW = (W - ml - mx) / cols;
     const rowGap = six ? cellW * 1.25 : cellW * 0.95;
     const my = six ? 70 : 50;
@@ -157,7 +157,7 @@ const Render = (() => {
     // Open strings are named the way guitarists name them (D G C F Bb Eb), whatever the key.
     for (let r = g.anchorRow; r < g.anchorRow + 6; r++) {
       const pc = Theory.mod(openOfRow(state, r), 12);
-      const t = text(gp, g.ml - 12, g.y(r), Theory.NAMES_FLAT[pc], 'fretnum', size);
+      const t = text(gp, g.ml - 18, g.y(r), Theory.NAMES_FLAT[pc], 'fretnum', size);
       t.setAttribute('text-anchor', 'end');
     }
   }
