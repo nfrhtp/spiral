@@ -2,16 +2,17 @@
 (() => {
   const STORAGE = 'spacetime-spiral-v1';
   const ROOT_LABELS = ['C', 'D♭', 'D', 'E♭', 'E', 'F', 'G♭', 'G', 'A♭', 'A', 'B♭', 'B'];
+  // Light palettes first, then the dark ones (T cycles in this order).
   const THEMES = [
     { id: 'paper',       name: 'Paper',        dark: false },
     { id: 'studio',      name: 'Studio',       dark: false },
-    { id: 'stage',       name: 'Stage',        dark: true  },
-    { id: 'neon',        name: 'Neon',         dark: true  },
     { id: 'okabe',       name: 'Okabe–Ito',    dark: false },
     { id: 'autumn',      name: 'Autumn',       dark: false },
+    { id: 'pop',         name: 'Pop',          dark: false },
+    { id: 'stage',       name: 'Stage',        dark: true  },
+    { id: 'neon',        name: 'Neon',         dark: true  },
     { id: 'pastelnight', name: 'Pastel Night', dark: true  },
     { id: 'jewel',       name: 'Jewel',        dark: true  },
-    { id: 'pop',         name: 'Pop',          dark: false },
   ];
   const themeById = id => THEMES.find(t => t.id === id) || THEMES[1];
 
