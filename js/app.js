@@ -364,6 +364,10 @@
     $('#panel').classList.toggle('hidden', !state.panelOpen);
     save();
   }
+  function toggleHelp(force) {
+    const h = $('#help');
+    h.classList.toggle('hidden', force === undefined ? !h.classList.contains('hidden') : !force);
+  }
   function toggleFullscreen() {
     if (document.fullscreenElement) document.exitFullscreen();
     else document.documentElement.requestFullscreen();
@@ -398,6 +402,7 @@
     if (e.metaKey || e.ctrlKey || e.altKey) return;
     switch (e.key.toLowerCase()) {
       case 'h': togglePanel(); break;
+      case 'k': toggleHelp(); break;
       case 'f': toggleFullscreen(); break;
       case 'v':
         if (state.tuning === 'standard') { toast('The Spiral view needs All Fourths tuning'); break; }
@@ -435,7 +440,7 @@
       case 'arrowright': set({ root: Theory.mod(state.root + 1, 12) }); break;
       case 'arrowup': set({ mode: Theory.mod(state.mode - 1, Theory.MODES.length) }); break;
       case 'arrowdown': set({ mode: Theory.mod(state.mode + 1, Theory.MODES.length) }); break;
-      case 'escape': togglePanel(false); allNotesOff(); break;
+      case 'escape': toggleHelp(false); togglePanel(false); allNotesOff(); break;
       default: return;
     }
     e.preventDefault();

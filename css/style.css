@@ -154,7 +154,7 @@ body.clean #topbar, body.clean .board .fretnum { display: none; }
 #panel label span { flex: 1; }
 #panel .hint { color: var(--muted); font-size: 12px; margin: 6px 0; }
 /* Keyboard shortcut chips, shown next to the item they control */
-#panel kbd {
+#panel kbd, #help kbd {
   display: inline-block; margin-left: 6px; padding: 0 5px; border-radius: 4px;
   border: 1px solid var(--panel-border); color: var(--muted); background: transparent;
   font: 11px/16px -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -162,6 +162,20 @@ body.clean #topbar, body.clean .board .fretnum { display: none; }
 }
 #panel h1 kbd { font-size: 11px; font-weight: 400; }
 #panel .kbd-note { font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 11px; margin-left: 4px; }
+/* Keyboard-shortcut help (key K): a card in the middle of the screen */
+#help {
+  position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 20;
+  background: var(--panel-bg); color: var(--fg); border: 1px solid var(--panel-border);
+  border-radius: 12px; padding: 18px 26px 14px; box-shadow: 0 10px 40px rgba(0,0,0,.25);
+  font-size: 15px; max-width: calc(100vw - 40px); box-sizing: border-box;
+}
+#help.hidden { display: none; }
+#help h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 0 0 14px; }
+#help .help-grid { display: grid; grid-template-columns: auto auto auto auto; column-gap: 10px; row-gap: 11px; align-items: center; }
+#help .help-grid .c2 { padding-left: 34px; }
+#help kbd { margin-left: 0; font-size: 13px; line-height: 20px; padding: 0 7px; color: var(--fg); }
+#help .help-foot { color: var(--muted); font-size: 12px; margin: 16px 0 0; }
+#help .help-foot kbd { font-size: 11px; line-height: 16px; padding: 0 5px; color: var(--muted); }
 #panel button kbd { margin-left: 5px; border-color: currentColor; color: inherit; opacity: .7; }
 #panel button {
   border: 1px solid var(--panel-border); background: var(--btn); color: var(--btn-fg);
