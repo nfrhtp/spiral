@@ -92,6 +92,15 @@
     render();
   }
 
+  // What the mode's root looks like on the board: its color in the church modes
+  // (the COSTAR degree colors), its Greek letter in the pentatonic modes.
+  const DEGREE_COLORS = { 1: 'white/black', 2: 'green', 3: 'yellow', 4: 'orange', 5: 'red', 6: 'blue', 7: 'purple' };
+  function rootLabel(mode) {
+    const m = Theory.MODES[mode];
+    if (m.penta) return Theory.LUMA[m.offset];
+    return DEGREE_COLORS[Theory.MAJOR.indexOf(m.offset) + 1];
+  }
+
   // ---------- rendering ----------
   function render() {
     const t = themeById(state.theme);
@@ -99,8 +108,7 @@
     board = Render.build(svg, state);
     Live.reset(board, state);
     held.clear();
-    const parentName = Theory.noteName(board.parent, board.parent);
-    $('#badge').textContent = `${Theory.describe(state.root, state.mode)}  ·  1 = ${parentName}`;
+    $('#badge').textContent = `${Theory.describe(state.root, state.mode)}  ·  root = ${rootLabel(state.mode)}`;
     syncPanel();
     save();
   }
