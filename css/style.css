@@ -173,10 +173,11 @@ body.clean #topbar, body.clean .board .fretnum { display: none; }
   box-shadow: 0 4px 18px rgba(0,0,0,.12);
 }
 #help.hidden { display: none; }
-#help .help-head { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; margin-bottom: 6px; }
 #help h2 { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 0; }
-#help .help-grid { display: grid; grid-template-rows: repeat(4, auto); grid-auto-flow: column;
+#help .help-grid { display: grid; grid-template-columns: repeat(3, auto); align-items: center;
   justify-content: start; column-gap: 40px; row-gap: 4px; }
+#help .help-grid > h2, #help .help-grid > .help-foot { align-self: baseline; padding-bottom: 4px; }
+#help .help-close { justify-self: end; }
 #help .hi { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
 #help kbd { margin-left: 0; font-size: 11px; line-height: 17px; padding: 0 6px; color: var(--fg); }
 #help .help-foot { color: var(--muted); font-size: 11px; margin: 0; }

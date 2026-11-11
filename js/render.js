@@ -127,8 +127,11 @@ const Render = (() => {
       const fs = r * 0.85;
       text(grp, 0, 0.34 * fs, label, 'degree', fs, 'alphabetic');
     }
-    if (info.kind === 'chroma' && state.names) {
-      const nm = Theory.noteName(info.pc, parentRoot);
+    if (info.kind === 'chroma' && (state.chromaLabel === 'name' || state.chromaLabel === 'degree')) {
+      // Note name (spelled in the parent key), or scale degree counted from the mode's root
+      // (G# Aeolian: G# = 1, B = ♭3, E = ♭6), written the same way as the pentatonic luma degrees.
+      const nm = state.chromaLabel === 'name' ? Theory.noteName(info.pc, parentRoot)
+                                              : Theory.intervalName(info.pc - state.root);
       if (info.degree === 1) {
         // Half-and-half "1" dot: the letter ends just left of the centre line, on the white half in
         // the dark color; a ♭/♯ starts just right of it, on the black half in the light color. So the

@@ -21,7 +21,8 @@
     view: 'six',                           // 'six' | 'spiral'
     spiralStyle: 'neck',                   // 'neck' | 'grid' — how the 12-string Spiral view is drawn
     orientation: 'standard',               // 'mirror' (low string on top) | 'standard' (high string on top)
-    chroma: true, luma: false, names: false,
+    chroma: true, luma: false,
+    chromaLabel: 'none',                   // 'none' | 'name' | 'degree' — what chroma dots show (key N)
     lumaLabel: 'none',                     // 'none' | 'greek' | 'degree' (distance from the mode root)
     dots: 'all',                           // 'all' | 'played' (only the notes being played)
     dotSize: 100,                          // 100 | 75 | 50 — dot diameter, % of the original
@@ -53,6 +54,8 @@
       for (const p of s.presets || []) if (p.mode === 7) p.mode = 11;
     }
     s.modeSet = 2;
+    if (raw.chromaLabel === undefined && raw.names) s.chromaLabel = 'name';   // the old on/off note-names setting
+    delete s.names;
     s.panelOpen = /[?&]panel=1/.test(location.search); // board in full view unless ?panel=1
     if (s.theme === 'light') s.theme = 'studio';   // names from before the palette system
     if (s.theme === 'dark') s.theme = 'stage';
@@ -60,9 +63,10 @@
     if (s.greek !== undefined) { if (s.greek) s.lumaLabel = 'greek'; delete s.greek; }  // pre-label-option setting
     // Overrides in the web address, e.g. index.html?view=spiral&theme=dark&root=2&mode=1
     const q = new URLSearchParams(location.search);
-    for (const k of ['view', 'spiralStyle', 'orientation', 'dots', 'theme', 'pattern', 'stringMap', 'lumaLabel', 'tuning']) if (q.has(k)) s[k] = q.get(k);
+    for (const k of ['view', 'spiralStyle', 'orientation', 'dots', 'theme', 'pattern', 'stringMap', 'lumaLabel', 'tuning', 'chromaLabel']) if (q.has(k)) s[k] = q.get(k);
     for (const k of ['root', 'mode', 'patternFret', 'frets', 'openLow', 'transpose', 'dotSize']) if (q.has(k)) s[k] = +q.get(k);
-    for (const k of ['chroma', 'luma', 'names', 'clean']) if (q.has(k)) s[k] = q.get(k) !== '0' && q.get(k) !== 'false';
+    for (const k of ['chroma', 'luma', 'clean']) if (q.has(k)) s[k] = q.get(k) !== '0' && q.get(k) !== 'false';
+    if (q.has('names')) s.chromaLabel = (q.get('names') !== '0' && q.get('names') !== 'false') ? 'name' : 'none';
     if (q.has('greek')) s.lumaLabel = (q.get('greek') !== '0' && q.get('greek') !== 'false') ? 'greek' : 'none';
     return s;
   }
@@ -286,7 +290,7 @@
         };
       });
     });
-    for (const id of ['chroma', 'luma', 'names', 'clean']) {
+    for (const id of ['chroma', 'luma', 'clean']) {
       $('#' + id).onchange = e => set({ [id]: e.target.checked });
     }
     $('#patternFret').onchange = e => set({ patternFret: clamp(+e.target.value, 0, state.frets) });
@@ -350,7 +354,7 @@
     const spiralBtn = document.querySelector('.btn-row[data-field="view"] button[data-value="spiral"]');
     spiralBtn.disabled = state.tuning === 'standard';
     spiralBtn.title = spiralBtn.disabled ? 'The Spiral view needs All Fourths tuning' : '';
-    for (const id of ['chroma', 'luma', 'names', 'clean']) $('#' + id).checked = state[id];
+    for (const id of ['chroma', 'luma', 'clean']) $('#' + id).checked = state[id];
     $('#patternFret').value = state.patternFret;
     $('#frets').value = state.frets;
     $('#transpose').value = state.transpose;
@@ -359,11 +363,13 @@
     $('#pcChannel').value = state.pcChannel;
     const parent = Theory.parentRoot(state.root, state.mode);
     const pn = Theory.noteName(parent, parent);
-    let hint = `Colors are measured from ${pn} as "1". Luma = the five notes outside ${pn} major.`;
-    if (isPenta(state.mode)) {
-      const m = Theory.MODES[state.mode];
-      hint = `${Theory.describe(state.root, state.mode)}: the root is the black luma ${Theory.LUMA[m.offset]} note; the five luma dots are ${Theory.noteName(state.root, parent)} ${m.name}. Colors are measured from ${pn} as "1".`;
-    }
+    const rn = Theory.noteName(state.root, parent);
+    const m = Theory.MODES[state.mode];
+    // Wording is Kevin's (2026-11-11). Pentatonic modes show no chroma dots, so no colors are mentioned.
+    let hint;
+    if (isPenta(state.mode)) hint = `The ${rn} root (scale degree 1) is the luma sequence ${Theory.LUMA[m.offset]} note.`;
+    else if (m.offset === 0) hint = `The ${rn} root is white/black: it is the "1" of its chroma sequence.`;
+    else hint = `The ${rn} root is ${rootLabel(state.mode)}. Its relative major ("1" of its chroma sequence) is ${pn}.`;
     $('#key-hint').textContent = hint;
     const degBtn = document.querySelector('.btn-row[data-field="lumaLabel"] button[data-value="degree"]');
     if (degBtn) degBtn.style.display = isPenta(state.mode) ? '' : 'none';
@@ -428,7 +434,13 @@
         set({ lumaLabel: order[(order.indexOf(state.lumaLabel) + 1) % order.length] });
         break;
       }
-      case 'n': set({ names: !state.names }); break;
+      case 'n': {
+        const order = ['none', 'name', 'degree'];
+        const next = order[(order.indexOf(state.chromaLabel) + 1) % order.length];
+        set({ chromaLabel: next });
+        toast('Chroma dots: ' + { none: 'no labels', name: 'note names', degree: 'scale degrees' }[next]);
+        break;
+      }
       case 'i': set({ clean: !state.clean }); break;
       case 's': {
         const sizes = [100, 75, 50];

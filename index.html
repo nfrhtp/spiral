@@ -66,7 +66,12 @@
       <button data-value="greek">Greek letters</button>
       <button data-value="degree">Scale degrees</button>
     </div>
-    <label><input type="checkbox" id="names"> Note names on chroma dots <kbd>N</kbd></label>
+    <p class="hint">Chroma dot labels <kbd>N</kbd></p>
+    <div class="btn-row" data-field="chromaLabel">
+      <button data-value="none">None</button>
+      <button data-value="name">Note names</button>
+      <button data-value="degree">Scale degrees</button>
+    </div>
   </section>
 
   <section>
@@ -140,21 +145,23 @@
 </aside>
 
 <!-- Keyboard-shortcut bubble (key K): floats at the bottom centre; the board does not move.
-     Items run down three columns of four (Kevin's order, 2026-11-11). -->
+     Three columns, filled row by row; the top row is the title, Settings H (over the middle column) and the close hint. -->
 <div id="help" class="hidden" role="dialog" aria-label="Keyboard shortcuts">
-  <div class="help-head"><h2>Keyboard shortcuts</h2><p class="help-foot">Press <kbd>K</kbd> or <kbd>Esc</kbd> to close</p></div>
   <div class="help-grid">
+    <h2>Keyboard shortcuts</h2>
+    <p class="help-foot">Settings <kbd>H</kbd></p>
+    <p class="help-foot help-close">Press <kbd>K</kbd> or <kbd>Esc</kbd> to close</p>
     <div class="hi"><span>Key</span><kbd>← →</kbd></div>
-    <div class="hi"><span>Mode (diatonic, pentatonic)</span><kbd>↑ ↓</kbd></div>
-    <div class="hi"><span>Full screen</span><kbd>F</kbd></div>
-    <div class="hi"><span>Hide info</span><kbd>I</kbd></div>
-    <div class="hi"><span>Chroma on</span><kbd>C</kbd></div>
-    <div class="hi"><span>Chroma note names</span><kbd>N</kbd></div>
-    <div class="hi"><span>Luma on</span><kbd>L</kbd></div>
-    <div class="hi"><span>Luma note names</span><kbd>G</kbd></div>
+    <div class="hi"><span>Chroma sequence on</span><kbd>C</kbd></div>
     <div class="hi"><span>Show all dots vs played</span><kbd>D</kbd></div>
+    <div class="hi"><span>Mode (diatonic, pentatonic)</span><kbd>↑ ↓</kbd></div>
+    <div class="hi"><span>Chroma note names</span><kbd>N</kbd></div>
     <div class="hi"><span>Scale pattern</span><kbd>P</kbd></div>
+    <div class="hi"><span>Full screen</span><kbd>F</kbd></div>
+    <div class="hi"><span>Luma sequence on</span><kbd>L</kbd></div>
     <div class="hi"><span>Pattern’s base fret</span><kbd>[ ]</kbd></div>
+    <div class="hi"><span>Hide info</span><kbd>I</kbd></div>
+    <div class="hi"><span>Luma note names</span><kbd>G</kbd></div>
     <div class="hi"><span>Cycle palettes</span><kbd>T</kbd></div>
   </div>
 </div>
