@@ -71,9 +71,14 @@
     if (state.tuning === 'standard') state.view = 'six';   // the 12-row Spiral only makes sense in all fourths
     // Entering Blues hides the colored chroma dots so only the pentatonic shows;
     // leaving it restores whatever the chroma setting was before.
-    if (nowBlues && !wasBlues) { state.chromaBeforeBlues = state.chroma; state.chroma = false; }
+    // It also turns the luma dots on (they are the whole picture in Blues); leaving restores both.
+    if (nowBlues && !wasBlues) {
+      state.chromaBeforeBlues = state.chroma; state.chroma = false;
+      state.lumaBeforeBlues = state.luma; state.luma = true;
+    }
     else if (wasBlues && !nowBlues) {
       state.chroma = state.chromaBeforeBlues !== false;
+      if (state.lumaBeforeBlues !== undefined) state.luma = state.lumaBeforeBlues;
       if (state.lumaLabel === 'degree') state.lumaLabel = 'none';   // degrees are a Blues-only crutch
     }
     render();
