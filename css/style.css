@@ -102,7 +102,7 @@ body {
 .board .edge { stroke: var(--edge); stroke-width: 3; }
 .board .edge.thin { stroke-width: 1.2; }
 .board .fret { stroke: var(--fret); stroke-width: 2.5; }
-.board .nut { stroke: var(--nut); stroke-width: 12; }
+.board .nut { stroke: var(--nut); stroke-width: 8; }   /* a little thicker than the lowest string (6) */
 .board .nut.soft { stroke-width: 5; opacity: .45; }
 .board .string { stroke: var(--string); stroke-linecap: round; }
 .board .inlay { fill: var(--inlay); }
