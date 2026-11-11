@@ -163,19 +163,22 @@ body.clean #topbar, body.clean .board .fretnum { display: none; }
 }
 #panel h1 kbd { font-size: 11px; font-weight: 400; }
 #panel .kbd-note { font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 11px; margin-left: 4px; }
-/* Keyboard-shortcut strip (key K): along the bottom of the window; #stage stops above it */
+/* Keyboard-shortcut bubble (key K): floats at the bottom centre, as wide as its contents.
+   The board does not move; on a short window the bubble may sit over the fret numbers. */
 #help {
-  position: fixed; left: 0; right: 0; bottom: 0; z-index: 20;
-  background: var(--panel-bg); color: var(--fg); border-top: 1px solid var(--panel-border);
-  padding: 8px 28px 12px; font-size: 14px; box-sizing: border-box;
+  position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 20;
+  width: max-content; max-width: calc(100vw - 28px); box-sizing: border-box;
+  background: var(--panel-bg); color: var(--fg); border: 1px solid var(--panel-border);
+  border-radius: 14px; padding: 9px 20px 11px; font-size: 13px;
+  box-shadow: 0 4px 18px rgba(0,0,0,.12);
 }
 #help.hidden { display: none; }
-#help .help-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 6px; }
+#help .help-head { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; margin-bottom: 6px; }
 #help h2 { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 0; }
 #help .help-grid { display: grid; grid-template-rows: repeat(4, auto); grid-auto-flow: column;
-  justify-content: center; column-gap: 72px; row-gap: 5px; }
+  justify-content: start; column-gap: 40px; row-gap: 4px; }
 #help .hi { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
-#help kbd { margin-left: 0; font-size: 12px; line-height: 18px; padding: 0 6px; color: var(--fg); }
+#help kbd { margin-left: 0; font-size: 11px; line-height: 17px; padding: 0 6px; color: var(--fg); }
 #help .help-foot { color: var(--muted); font-size: 11px; margin: 0; }
 #help .help-foot kbd { font-size: 10px; line-height: 15px; padding: 0 4px; color: var(--muted); }
 #panel { z-index: 30; }   /* Settings slides over the strip */
