@@ -196,9 +196,9 @@ body.clean #topbar, body.clean .board .fretnum { display: none; }
 #panel #panel-close { border: 0; background: transparent; font-size: 20px; }
 /* "Shortcuts K" chip on its own line under the heading; click it or press K */
 #panel header { flex-wrap: wrap; }
-#panel #help-chip { order: 3; margin-top: 4px; padding: 2px 8px; font-size: 11px; color: var(--muted);
-  background: transparent; border-radius: 999px; }
-#panel #help-chip kbd { margin-left: 4px; }
+#panel .header-chips { order: 3; flex-basis: 100%; display: flex; gap: 6px; margin-top: 4px; }
+#panel .header-chips .chip { padding: 2px 8px; font-size: 11px; color: var(--muted); background: transparent; border-radius: 999px; }
+#panel .header-chips .chip kbd { margin-left: 4px; }
 .btn-row { display: flex; flex-wrap: wrap; gap: 5px; margin: 4px 0; }
 #panel input[type=number], #panel input[type=text], #panel select {
   background: var(--input-bg); color: var(--fg); border: 1px solid var(--panel-border);

@@ -20,9 +20,12 @@
 
 <aside id="panel">
   <header>
-    <h1>COSTAR Spiral Tuned Guitar <kbd>H</kbd></h1>
+    <h1>COSTAR Spiral Tuned Guitar</h1>
     <button id="panel-close" title="Hide settings (H)">×</button>
-    <button id="help-chip" title="Show the keyboard shortcuts (K)">Shortcuts <kbd>K</kbd></button>
+    <div class="header-chips">
+      <button id="settings-chip" class="chip" title="Hide settings (H)">Settings <kbd>H</kbd></button>
+      <button id="help-chip" class="chip" title="Show the keyboard shortcuts (K)">Shortcuts <kbd>K</kbd></button>
+    </div>
   </header>
 
   <section>
@@ -94,13 +97,11 @@
       <button data-value="fourths">All Fourths</button>
       <button data-value="standard">Standard</button>
     </div>
-    <p class="hint">Standard is like a regular guitar: the 4th and 5th strings up from the lowest string are a third apart instead of a fourth. The Spiral view needs All Fourths.</p>
     <p class="hint">Orientation <kbd>O</kbd></p>
     <div class="btn-row" data-field="orientation">
       <button data-value="mirror">Mirror: low string on top</button>
       <button data-value="standard">Standard: high string on top</button>
     </div>
-    <p class="hint">Mirror matches what you see looking down at the guitar; Standard puts higher notes higher on screen, like the paper charts.</p>
   </section>
 
   <section>
@@ -139,7 +140,8 @@
   <section>
     <h2>About</h2>
     <p class="hint">Live MIDI works in Google Chrome, Microsoft Edge and other Chrome-family browsers on Mac, Windows and Android. It does not work in Safari, or on any iPhone or iPad. There the fretboard and click-to-play still work, but notes from a guitar won't appear.</p>
-    <p class="hint">Created by Kevin Shrieve with Claude.<br><a href="https://soundcloud.com/kevinshrieve" target="_blank" rel="noopener">https://soundcloud.com/kevinshrieve</a><br>COSTAR: Cycles Of Song, Theme, And Ritual</p>
+    <p class="hint">Created by <a href="https://soundcloud.com/kevinshrieve" target="_blank" rel="noopener">Kevin Shrieve</a> with Claude.</p>
+    <p class="hint">COSTAR: Cycles Of Song, Theme, And Ritual</p>
   </section>
 
 </aside>
