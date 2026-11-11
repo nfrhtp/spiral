@@ -365,10 +365,13 @@
     $('#panel').classList.toggle('hidden', !state.panelOpen);
     save();
   }
+  // The shortcut strip sits along the bottom; the board's area stops above it so nothing is covered.
   function toggleHelp(force) {
     const h = $('#help');
     h.classList.toggle('hidden', force === undefined ? !h.classList.contains('hidden') : !force);
+    $('#stage').style.bottom = h.classList.contains('hidden') ? '' : h.offsetHeight + 'px';
   }
+  window.addEventListener('resize', () => { if (!$('#help').classList.contains('hidden')) toggleHelp(true); });
   function toggleFullscreen() {
     if (document.fullscreenElement) document.exitFullscreen();
     else document.documentElement.requestFullscreen();
