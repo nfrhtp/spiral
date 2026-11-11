@@ -8,4 +8,5 @@ A live fretboard display for guitar, colored by the COSTAR scale-degree system, 
 - Live MIDI works in Google Chrome, Microsoft Edge and other Chrome-family browsers on Mac, Windows and Android. It does not work in Safari or on iPhone/iPad; there the fretboard and click-to-play still work.
 - Palettes at full size: https://nfrhtp.github.io/spiral/palettes.html
 
-Created by Claude for Kevin Shrieve. COSTAR: Cycles Of Song, Theme, And Ritual
+Created by Kevin Shrieve with Claude.  
+COSTAR: Cycles Of Song, Theme, And Ritual

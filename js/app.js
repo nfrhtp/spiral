@@ -19,8 +19,8 @@
     root: 0, mode: 0,                      // C Ionian
     view: 'six',                           // 'six' | 'spiral'
     spiralStyle: 'neck',                   // 'neck' | 'grid' — how the 12-string Spiral view is drawn
-    orientation: 'mirror',                 // 'mirror' (low string on top) | 'standard' (high string on top)
-    chroma: true, luma: true, names: false,
+    orientation: 'standard',               // 'mirror' (low string on top) | 'standard' (high string on top)
+    chroma: true, luma: false, names: false,
     lumaLabel: 'none',                     // 'none' | 'greek' | 'degree' (distance from the mode root)
     dots: 'all',                           // 'all' | 'played' (only the notes being played)
     dotSize: 100,                          // 100 | 75 | 50 — dot diameter, % of the original
