@@ -245,7 +245,8 @@ const Render = (() => {
         const pitch = openOfRow(state, r) + f;
         const pc = Theory.mod(pitch, 12);
         const info = Object.assign({ pc, pitch }, Theory.classify(pc, parent));
-        const layerOn = info.kind === 'chroma' ? state.chroma : state.luma;
+        // Chroma dots never show in a pentatonic mode (Kevin, 2026-11-12), whatever the chroma setting.
+        const layerOn = info.kind === 'chroma' ? state.chroma && !Theory.MODES[state.mode].penta : state.luma;
         const key = r + ':' + f;
         const visible = state.dots !== 'played' && layerOn && (!pat || pat.has(key));
         const pos = { key, row: r, fret: f, x: g.x(f), y: g.y(r), r: g.r, hitR: g.hitR, pitch, info, visible };
@@ -280,7 +281,10 @@ const Live = (() => {
       if (a) { clearTimeout(a.timer); a.el.classList.remove('off'); continue; }
       const grp = Render.el('g', { class: 'live', transform: `translate(${pos.x},${pos.y})` }, layer);
       // In "played only" mode the note appears as a full dot; otherwise an off-pattern note shows as a ghost.
-      if (!pos.visible) Render.drawDot(grp, 0, 0, pos.r, pos.info, state, parent, state.dots === 'played' ? '' : 'ghost');
+      // A played note off the visible dots gets its dot drawn here, except a chroma note in a
+      // pentatonic mode, which shows as the ring alone (no chroma dots in pentatonic modes).
+      const noChromaHere = pos.info.kind === 'chroma' && Theory.MODES[state.mode].penta;
+      if (!pos.visible && !noChromaHere) Render.drawDot(grp, 0, 0, pos.r, pos.info, state, parent, state.dots === 'played' ? '' : 'ghost');
       Render.el('circle', { r: pos.r * 1.45, class: 'ring-outer' }, grp);
       Render.el('circle', { r: pos.r * 1.45, class: 'ring-inner' }, grp);
       active.set(key, { el: grp, timer: null });

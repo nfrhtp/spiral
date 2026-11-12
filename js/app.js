@@ -364,6 +364,8 @@
     if (state.view === 'six') mark(styleRow, 'neck');
     styleRow.querySelector('button[data-value="grid"]').disabled = state.view === 'six';
     for (const id of ['chroma', 'luma', 'clean']) $('#' + id).checked = state[id];
+    $('#chroma').disabled = isPenta(state.mode);   // no chroma dots in pentatonic modes
+    if (isPenta(state.mode)) $('#chroma').checked = false;
     $('#patternFret').value = state.patternFret;
     $('#frets').value = state.frets;
     $('#transpose').value = state.transpose;
@@ -401,6 +403,15 @@
   function clamp(v, lo, hi) { return Math.min(hi, Math.max(lo, isNaN(v) ? lo : v)); }
 
   let toastTimer = null;
+  // A notice at the top centre explains why a shortcut did nothing (a rule blocked it).
+  let noticeTimer = null;
+  function notice(msg) {
+    const n = $('#notice');
+    n.textContent = msg;
+    n.classList.add('show');
+    clearTimeout(noticeTimer);
+    noticeTimer = setTimeout(() => n.classList.remove('show'), 3500);
+  }
   function toast(msg) {
     const t = $('#toast');
     t.textContent = msg;
@@ -431,12 +442,15 @@
       case 'k': toggleHelp(); break;
       case 'f': toggleFullscreen(); break;
       case 'v':
-        if (state.tuning === 'standard') { toast('Twelve strings needs All Fourths tuning'); break; }
+        if (state.tuning === 'standard') { notice('Twelve strings with All Fourths tuning only'); break; }
         set({ view: state.view === 'six' ? 'spiral' : 'six' });
         break;
       case 'o': set({ orientation: state.orientation === 'mirror' ? 'standard' : 'mirror' }); break;
       case 'd': set({ dots: state.dots === 'all' ? 'played' : 'all' }); break;
-      case 'c': set({ chroma: !state.chroma }); break;
+      case 'c':
+        if (isPenta(state.mode)) { notice('Chroma sequence dots with diatonic modes only'); break; }
+        set({ chroma: !state.chroma });
+        break;
       case 'l': set({ luma: !state.luma }); break;
       case 'g': {
         const order = isPenta(state.mode) ? ['none', 'greek', 'degree'] : ['none', 'greek'];

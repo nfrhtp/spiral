@@ -95,6 +95,15 @@ body {
   font-size: 16px; opacity: 0; transition: opacity .25s, transform .25s; pointer-events: none;
 }
 #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+/* Why a shortcut did nothing: a short notice at the top centre, in the style of the key badge */
+#notice {
+  position: fixed; top: 12px; left: 50%; transform: translateX(-50%); z-index: 25;
+  padding: 6px 14px; border-radius: 999px; white-space: nowrap;
+  background: var(--panel-bg); color: var(--fg); border: 1px solid var(--panel-border);
+  font-size: 15px; font-weight: 600; letter-spacing: 0.02em;
+  opacity: 0; transition: opacity .25s; pointer-events: none;
+}
+#notice.show { opacity: 1; }
 
 /* ---------- Board (SVG) ---------- */
 .board .wood { fill: var(--wood); }
