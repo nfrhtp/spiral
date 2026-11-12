@@ -17,7 +17,7 @@
   const themeById = id => THEMES.find(t => t.id === id) || THEMES[1];
 
   const DEFAULTS = {
-    root: 0, mode: 0,                      // C Ionian
+    root: 0, mode: 'ionian',               // C Ionian (modes are saved by id, see theory.js)
     view: 'six',                           // 'six' | 'spiral'
     spiralStyle: 'neck',                   // 'neck' | 'grid' — how the 12-string Spiral view is drawn
     orientation: 'standard',               // 'mirror' (low string on top) | 'standard' (high string on top)
@@ -33,7 +33,7 @@
     frets: 18,
     theme: 'stage',                        // first-visit palette (Kevin, 2026-11-12)
     midiDevice: 'all', stringMap: 'ch1high', transpose: 0, pcChannel: 'any',
-    presets: [{ name: '', root: 0, mode: 0 }],
+    presets: [{ name: '', root: 0, mode: 'ionian' }],
   };
 
   const $ = s => document.querySelector(s);
@@ -45,28 +45,35 @@
   const held = new Map();      // "ch:note" -> keys lit for that note
   let pointerKey = null;
 
+  // A mode as saved or typed: an id ('dorian'), or an old list number from before 2026-11-12.
+  // (A function declaration, so it is ready when load() runs at the top of the file.)
+  function modeId(v) {
+    const OLD_MODE_NUMBERS = ['ionian', 'dorian', 'phrygian', 'lydian', 'mixolydian', 'aeolian', 'locrian',
+                              'major-pentatonic', 'egyptian', 'man-gong', 'ritsu', 'minor-pentatonic'];
+    if (typeof v === 'number' || /^\d+$/.test(String(v))) return OLD_MODE_NUMBERS[+v] || 'ionian';
+    return Theory.MODES.some(m => m.id === v) ? v : 'ionian';
+  }
   function load() {
     let s;
     let raw = {};
     try { raw = JSON.parse(localStorage.getItem(STORAGE) || '{}'); } catch (e) { raw = {}; }
     s = Object.assign({}, DEFAULTS, raw);
-    // Mode 7 used to be "Blues"; it is now "Major pentatonic", and Blues lives on as "Minor pentatonic" (11).
-    if (raw.modeSet !== 2) {
-      if (s.mode === 7) s.mode = 11;
-      for (const p of s.presets || []) if (p.mode === 7) p.mode = 11;
-    }
-    s.modeSet = 2;
+    // Modes used to be saved by their number in the list; they are saved by id since 2026-11-12.
+    s.mode = modeId(s.mode);
+    for (const p of s.presets || []) p.mode = modeId(p.mode);
+    delete s.modeSet;
     if (raw.chromaLabel === undefined && raw.names) s.chromaLabel = 'name';   // the old on/off note-names setting
     delete s.names;
     s.panelOpen = /[?&]panel=1/.test(location.search); // board in full view unless ?panel=1
     if (s.theme === 'light') s.theme = 'studio';   // names from before the palette system
     if (s.theme === 'dark') s.theme = 'stage';
-    if (s.presets && s.presets.length === 1 && s.presets[0].name === 'Example song') s.presets = [{ name: '', root: 0, mode: 0 }];
+    if (s.presets && s.presets.length === 1 && s.presets[0].name === 'Example song') s.presets = [{ name: '', root: 0, mode: 'ionian' }];
     if (s.greek !== undefined) { if (s.greek) s.lumaLabel = 'greek'; delete s.greek; }  // pre-label-option setting
-    // Overrides in the web address, e.g. index.html?view=spiral&theme=dark&root=2&mode=1
+    // Overrides in the web address, e.g. index.html?view=spiral&theme=dark&root=2&mode=dorian
     const q = new URLSearchParams(location.search);
     for (const k of ['view', 'spiralStyle', 'orientation', 'dots', 'theme', 'pattern', 'stringMap', 'lumaLabel', 'tuning', 'chromaLabel']) if (q.has(k)) s[k] = q.get(k);
-    for (const k of ['root', 'mode', 'patternFret', 'frets', 'openLow', 'transpose', 'dotSize']) if (q.has(k)) s[k] = +q.get(k);
+    for (const k of ['root', 'patternFret', 'frets', 'openLow', 'transpose', 'dotSize']) if (q.has(k)) s[k] = +q.get(k);
+    if (q.has('mode')) s.mode = modeId(q.get('mode'));
     for (const k of ['chroma', 'luma', 'clean']) if (q.has(k)) s[k] = q.get(k) !== '0' && q.get(k) !== 'false';
     if (q.has('names')) s.chromaLabel = (q.get('names') !== '0' && q.get('names') !== 'false') ? 'name' : 'none';
     if (q.has('greek')) s.lumaLabel = (q.get('greek') !== '0' && q.get('greek') !== 'false') ? 'greek' : 'none';
@@ -77,15 +84,7 @@
     delete copy.panelOpen;
     localStorage.setItem(STORAGE, JSON.stringify(copy));
   }
-  const isPenta = mode => !!(Theory.MODES[mode] && Theory.MODES[mode].penta);
-  // Display and ↑ ↓ order: the church modes as listed, then the pentatonic modes by their root's
-  // luma letter α β γ δ ε (Ritsu, Minor, Major, Egyptian, Man Gong). The MODES indices themselves
-  // stay as they are, so saved settings and presets keep their meaning.
-  const MODE_ORDER = Theory.MODES.map((m, i) => i).sort((a, b) => {
-    const A = Theory.MODES[a], B = Theory.MODES[b];
-    if (!!A.penta !== !!B.penta) return A.penta ? 1 : -1;
-    return A.penta ? A.offset - B.offset : a - b;
-  });
+  const isPenta = mode => !!Theory.modeById(mode).penta;
   function set(patch) {
     const wasPenta = isPenta(state.mode);
     Object.assign(state, patch);
@@ -114,7 +113,7 @@
   // (the COSTAR degree colors), its Greek letter in the pentatonic modes.
   const DEGREE_COLORS = { 1: 'white/black', 2: 'green', 3: 'yellow', 4: 'orange', 5: 'red', 6: 'blue', 7: 'purple' };
   function rootLabel(mode) {
-    const m = Theory.MODES[mode];
+    const m = Theory.modeById(mode);
     if (m.penta) return Theory.LUMA[m.offset];
     return DEGREE_COLORS[Theory.MAJOR.indexOf(m.offset) + 1];
   }
@@ -270,17 +269,16 @@
   }
   function buildPanel() {
     buttonGroup($('#roots'), ROOT_LABELS, 'root');
-    // Church modes in one row, pentatonic modes in the row below; each button's value is its MODES index.
+    // Church modes in one row, pentatonic modes in the row below, in MODES order; each button's value is the mode id.
     for (const [box, penta] of [[$('#modes'), false], [$('#pentas'), true]]) {
       box.innerHTML = '';
-      MODE_ORDER.forEach(i => {
-        const m = Theory.MODES[i];
+      Theory.MODES.forEach(m => {
         if (!!m.penta !== penta) return;
         const b = document.createElement('button');
         b.textContent = m.short || m.name;
         b.title = m.name;
-        b.dataset.value = i;
-        b.onclick = () => set({ mode: i });
+        b.dataset.value = m.id;
+        b.onclick = () => set({ mode: m.id });
         box.appendChild(b);
       });
     }
@@ -349,11 +347,11 @@
       const name = row.querySelector('.pname'), rs = row.querySelector('.proot'), ms = row.querySelector('.pmode');
       name.value = p.name;
       ROOT_LABELS.forEach((l, j) => rs.add(new Option(l, j)));
-      MODE_ORDER.forEach(j => ms.add(new Option(Theory.MODES[j].name, j)));
+      Theory.MODES.forEach(md => ms.add(new Option(md.name, md.id)));
       rs.value = p.root; ms.value = p.mode;
       name.onchange = e => { p.name = e.target.value; save(); };
       rs.onchange = e => { p.root = +e.target.value; save(); };
-      ms.onchange = e => { p.mode = +e.target.value; save(); };
+      ms.onchange = e => { p.mode = e.target.value; save(); };
       row.querySelector('.pload').onclick = () => set({ root: p.root, mode: p.mode });
       row.querySelector('.pdel').onclick = () => { state.presets.splice(i, 1); buildPresets(); save(); };
       box.appendChild(row);
@@ -390,7 +388,7 @@
     const parent = Theory.parentRoot(state.root, state.mode);
     const pn = Theory.noteName(parent, parent);
     const rn = Theory.noteName(state.root, parent);
-    const m = Theory.MODES[state.mode];
+    const m = Theory.modeById(state.mode);
     // Wording is Kevin's (2026-11-11). Pentatonic modes show no chroma dots, so no colors are mentioned.
     let hint;
     if (isPenta(state.mode)) hint = `The ${rn} root (scale degree 1) is the luma sequence ${Theory.LUMA[m.offset]} note.`;
@@ -515,8 +513,8 @@
       case 'arrowright': set({ root: Theory.mod(state.root + 1, 12) }); break;
       case 'arrowup':
       case 'arrowdown': {
-        const k = MODE_ORDER.indexOf(state.mode) + (e.key === 'ArrowUp' ? -1 : 1);
-        set({ mode: MODE_ORDER[Theory.mod(k, MODE_ORDER.length)] });
+        const k = Theory.MODES.findIndex(m => m.id === state.mode) + (e.key === 'ArrowUp' ? -1 : 1);
+        set({ mode: Theory.MODES[Theory.mod(k, Theory.MODES.length)].id });
         break;
       }
       case 'escape': toggleHelp(false); togglePanel(false); allNotesOff(); break;
