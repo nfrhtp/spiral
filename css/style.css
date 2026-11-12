@@ -214,6 +214,7 @@ body.clean #topbar, body.clean .board .fretnum { display: none; }
 /* The Rotundum comes in two see-through versions: white lines for dark palettes, black lines for light ones */
 body.dark #panel img.for-light, body.light #panel img.for-dark { display: none; }
 #panel p.caption { text-align: center; }
+#panel img.flag.after-gap, #panel p.after-gap { margin-top: 2.6em; }   /* a blank paragraph's worth, so each caption clearly belongs to the image above it */
 /* Click an About image to see it over the whole page */
 #lightbox {
   position: fixed; inset: 0; z-index: 100; display: none; align-items: center; justify-content: center;
