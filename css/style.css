@@ -190,10 +190,9 @@ body.clean #topbar, body.clean .board .fretnum { display: none; }
   border-radius: 6px; padding: 5px 9px; font-size: 13px; cursor: pointer;
 }
 #panel button:disabled { opacity: .35; cursor: not-allowed; }
-#panel #pentas { flex-wrap: nowrap; }
-#panel #pentas button { padding: 5px 7px; }
+#panel .btn-row button { white-space: nowrap; }   /* a button's label never breaks inside it */
 #panel #luma-labels { flex-wrap: nowrap; }
-#panel #luma-labels button { padding: 5px 7px; }   /* four luma label choices on one row */   /* five pentatonic modes fit on one row */
+#panel #luma-labels button { padding: 5px 7px; }   /* four luma label choices on one row */
 #panel button.active { background: var(--btn-active); color: var(--btn-active-fg); border-color: var(--btn-active); }
 #panel #panel-close { border: 0; background: transparent; font-size: 20px; }
 /* "Shortcuts K" chip on its own line under the heading; click it or press K */

@@ -69,10 +69,12 @@
     if (s.theme === 'dark') s.theme = 'stage';
     if (s.presets && s.presets.length === 1 && s.presets[0].name === 'Example song') s.presets = [{ name: '', root: 0, mode: 'ionian' }];
     if (s.greek !== undefined) { if (s.greek) s.lumaLabel = 'greek'; delete s.greek; }  // pre-label-option setting
-    // Overrides in the web address, e.g. index.html?view=spiral&theme=dark&root=2&mode=dorian
+    // Overrides in the web address, e.g. index.html?view=spiral&theme=dark&key=2&mode=dorian
+    // (key = half steps above C, 0–11; the older name root= still works)
     const q = new URLSearchParams(location.search);
     for (const k of ['view', 'spiralStyle', 'orientation', 'dots', 'theme', 'pattern', 'stringMap', 'lumaLabel', 'tuning', 'chromaLabel']) if (q.has(k)) s[k] = q.get(k);
     for (const k of ['root', 'patternFret', 'frets', 'openLow', 'transpose', 'dotSize']) if (q.has(k)) s[k] = +q.get(k);
+    if (q.has('key')) s.root = Theory.mod(+q.get('key') || 0, 12);
     if (q.has('mode')) s.mode = modeId(q.get('mode'));
     for (const k of ['chroma', 'luma', 'clean']) if (q.has(k)) s[k] = q.get(k) !== '0' && q.get(k) !== 'false';
     if (q.has('names')) s.chromaLabel = (q.get('names') !== '0' && q.get('names') !== 'false') ? 'name' : 'none';
@@ -275,7 +277,10 @@
       Theory.MODES.forEach(m => {
         if (!!m.penta !== penta) return;
         const b = document.createElement('button');
-        b.textContent = m.short || m.name;
+        // Each button leads with what its root is in the system: the chroma degree (1-Ionian … 7-Locrian)
+        // or the luma letter (α-Ritsu … ε-Man Gong). Kevin is trying this out (2026-11-12).
+        const tag = m.penta ? Theory.LUMA[m.offset] : Theory.MAJOR.indexOf(m.offset) + 1;
+        b.textContent = `${tag}-${m.short || m.name}`;
         b.title = m.name;
         b.dataset.value = m.id;
         b.onclick = () => set({ mode: m.id });
@@ -330,6 +335,9 @@
       buildPresets(); save();
     };
     $('#panel-toggle').onclick = () => togglePanel();
+    // A clicked button keeps the keyboard focus, and once a shortcut is pressed Chrome draws a focus
+    // outline round it, which then looks like a second selection. Let go of the focus after each click.
+    $('#panel').addEventListener('click', e => { const b = e.target.closest('button'); if (b) b.blur(); });
     $('#panel-close').onclick = () => togglePanel(false);
     $('#help-chip').onclick = () => toggleHelp();
     $('#settings-chip').onclick = () => togglePanel(false);
