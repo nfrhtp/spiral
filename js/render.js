@@ -126,6 +126,10 @@ const Render = (() => {
       const label = Theory.intervalName(info.pc - state.root);
       const fs = r * 0.85;
       text(grp, 0, 0.34 * fs, label, 'degree', fs, 'alphabetic');
+    } else if (info.kind === 'luma' && state.lumaLabel === 'name') {
+      // Note name, always with flats: luma notes are the parent's flatted degrees (♭2 ♭3 ♭5 ♭6 ♭7),
+      // so C Minor pentatonic reads C Eb F G Bb. Same size as chroma note names.
+      text(grp, 0, 0, Theory.NAMES_FLAT[info.pc], 'degree', r * 0.85);
     }
     if (info.kind === 'chroma' && (state.chromaLabel === 'name' || state.chromaLabel === 'degree')) {
       // Note name (spelled in the parent key), or scale degree counted from the mode's root

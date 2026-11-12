@@ -420,7 +420,8 @@
     n.textContent = msg;
     n.classList.add('show');
     clearTimeout(noticeTimer);
-    noticeTimer = setTimeout(() => n.classList.remove('show'), 3500);
+    // Longer sentences (with a second part after " · ") stay up for 5 seconds, short ones 3.5.
+    noticeTimer = setTimeout(() => n.classList.remove('show'), msg.length > 50 ? 5000 : 3500);
   }
 
   // Move the pattern start to the previous/next scale note on the low string.
@@ -469,16 +470,15 @@
         break;
       case 'l': set({ luma: !state.luma }); break;
       case 'g': {
-        const order = isPenta(state.mode) ? ['none', 'greek', 'degree'] : ['none', 'greek'];
+        const order = isPenta(state.mode) ? ['none', 'greek', 'name', 'degree'] : ['none', 'greek', 'name'];
         const next = order[(order.indexOf(lumaLabelNow()) + 1) % order.length];
         set({ lumaLabel: next });
-        // In a diatonic mode the person most likely wanted the colored dots' labels, which are on N.
-        notice('Luma dots: ' + { none: 'no labels', greek: 'Greek letters', degree: 'scale degrees' }[next]
-               + (isPenta(state.mode) ? '' : ' · For chroma sequence labels type N'));
+        // G did its job, so the message only names the choice (no pointer to N).
+        notice('Luma dots: ' + { none: 'no labels', greek: 'Greek letters', name: 'note names', degree: 'scale degrees' }[next]);
         break;
       }
       case 'n': {
-        if (isPenta(state.mode)) { notice('Chroma dot labels with diatonic modes only · For luma sequence labels type G'); break; }
+        if (isPenta(state.mode)) { notice('Chroma dot labels with diatonic modes only · Type G for luma sequence labels'); break; }
         const order = ['none', 'name', 'degree'];
         const next = order[(order.indexOf(state.chromaLabel) + 1) % order.length];
         set({ chromaLabel: next });
