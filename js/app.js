@@ -105,6 +105,15 @@
       track(TRACKED[k], { value: v });
     }, 3000);
   }
+  // Scale pattern kept on for a full minute without being turned off (once per stretch).
+  let patternTimer = null;
+  function trackPattern() {
+    if (state.pattern === 'off') { clearTimeout(patternTimer); patternTimer = null; return; }
+    if (patternTimer) return;
+    patternTimer = setTimeout(() => {
+      if (state.pattern !== 'off') track('Scale pattern used 1 min', { pattern: state.pattern, mode: state.mode });
+    }, 60000);
+  }
   function set(patch) {
     const wasPenta = isPenta(state.mode);
     for (const k in TRACKED) if (k in patch && patch[k] !== state[k]) trackChoice(k);
@@ -144,6 +153,7 @@
     const t = themeById(state.theme);
     document.body.className = 'theme-' + t.id + (t.dark ? ' dark' : ' light') + (state.clean ? ' clean' : '');
     board = Render.build(svg, state);
+    trackPattern();
     Live.reset(board, state);
     held.clear();
     $('#badge').textContent = `${Theory.describe(state.root, state.mode)}  ·  root = ${rootLabel(state.mode)}`;
