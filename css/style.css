@@ -79,13 +79,11 @@ body {
 }
 #midi-pill {
   margin-left: auto;   /* right side of the top bar, just left of the settings gear */
+  color: var(--fg);    /* plain text color whatever the state (Kevin, 2026-11-12) */
   padding: 5px 10px; border-radius: 999px;
   background: var(--panel-bg); border: 1px solid var(--panel-border);
-  font-size: 12px; color: var(--muted);
+  font-size: 12px;
 }
-#midi-pill.ready { color: #2e8b57; border-color: #2e8b57; }
-#midi-pill.waiting { color: #b8860b; border-color: #b8860b; }
-#midi-pill.error { color: #c0392b; border-color: #c0392b; }
 #panel-toggle {
   position: fixed; top: 12px; right: 16px; width: 36px; height: 36px; border-radius: 50%;
   border: 1px solid var(--panel-border); background: var(--panel-bg); color: var(--fg);

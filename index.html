@@ -55,14 +55,13 @@
       <button data-value="all">All scale notes</button>
       <button data-value="played">Only notes being played</button>
     </div>
-    <p class="hint">Dot size <kbd>S</kbd></p>
-    <div class="btn-row" data-field="dotSize">
-      <button data-value="100">100%</button>
-      <button data-value="75">75%</button>
-      <button data-value="50">50%</button>
-    </div>
-    <label><input type="checkbox" id="clean"> Hide key, MIDI status and fret numbers <kbd>I</kbd></label>
     <label><input type="checkbox" id="chroma"> Chroma sequence (diatonic, colored) <kbd>C</kbd></label>
+    <p class="hint">Chroma dot labels <kbd>N</kbd></p>
+    <div class="btn-row" data-field="chromaLabel">
+      <button data-value="none">None</button>
+      <button data-value="name">Note names</button>
+      <button data-value="degree">Scale degrees</button>
+    </div>
     <label><input type="checkbox" id="luma"> Luma sequence (pentatonic, black) <kbd>L</kbd></label>
     <p class="hint">Luma dot labels <kbd>G</kbd></p>
     <div class="btn-row" data-field="lumaLabel">
@@ -70,11 +69,12 @@
       <button data-value="greek">Greek letters</button>
       <button data-value="degree">Scale degrees</button>
     </div>
-    <p class="hint">Chroma dot labels <kbd>N</kbd></p>
-    <div class="btn-row" data-field="chromaLabel">
-      <button data-value="none">None</button>
-      <button data-value="name">Note names</button>
-      <button data-value="degree">Scale degrees</button>
+    <label><input type="checkbox" id="clean"> Hide key, MIDI status and fret numbers <kbd>I</kbd></label>
+    <p class="hint">Dot size <kbd>S</kbd></p>
+    <div class="btn-row" data-field="dotSize">
+      <button data-value="100">100%</button>
+      <button data-value="75">75%</button>
+      <button data-value="50">50%</button>
     </div>
   </section>
 
