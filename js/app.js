@@ -49,7 +49,9 @@
   // (A function declaration, so it is ready when load() runs at the top of the file.)
   function modeId(v) {
     const OLD_MODE_NUMBERS = ['ionian', 'dorian', 'phrygian', 'lydian', 'mixolydian', 'aeolian', 'locrian',
-                              'major-pentatonic', 'egyptian', 'man-gong', 'ritsu', 'minor-pentatonic'];
+                              'major-pent', 'egyptian', 'man-gong', 'ritsu', 'minor-pent'];
+    const RENAMED = { 'minor-pentatonic': 'minor-pent', 'major-pentatonic': 'major-pent' };   // ids used briefly on 2026-11-12
+    if (RENAMED[v]) return RENAMED[v];
     if (typeof v === 'number' || /^\d+$/.test(String(v))) return OLD_MODE_NUMBERS[+v] || 'ionian';
     return Theory.MODES.some(m => m.id === v) ? v : 'ionian';
   }

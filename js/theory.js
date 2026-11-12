@@ -29,8 +29,8 @@ const Theory = (() => {
     // "Modes of the pentatonic scale" table; order follows the root's luma letter α β γ δ ε.
     // Minor (root on β) is the former "Blues" mode.
     { id: 'ritsu',            name: 'Ritsu pentatonic',    short: 'Ritsu',    offset: 1,  penta: true },  // root = luma α · 1 2 4 5 6
-    { id: 'minor-pentatonic', name: 'Minor pentatonic',    short: 'Minor',    offset: 3,  penta: true },  // root = luma β · 1 ♭3 4 5 ♭7
-    { id: 'major-pentatonic', name: 'Major pentatonic',    short: 'Major',    offset: 6,  penta: true },  // root = luma γ · 1 2 3 5 6
+    { id: 'minor-pent',       name: 'Minor pentatonic',    short: 'Minor',    offset: 3,  penta: true },  // root = luma β · 1 ♭3 4 5 ♭7
+    { id: 'major-pent',       name: 'Major pentatonic',    short: 'Major',    offset: 6,  penta: true },  // root = luma γ · 1 2 3 5 6
     { id: 'egyptian',         name: 'Egyptian pentatonic', short: 'Egyptian', offset: 8,  penta: true },  // root = luma δ · 1 2 4 5 ♭7
     { id: 'man-gong',         name: 'Man Gong pentatonic', short: 'Man Gong', offset: 10, penta: true },  // root = luma ε · 1 ♭3 4 ♭6 ♭7
   ];
