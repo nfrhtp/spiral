@@ -221,11 +221,14 @@ body.dark #panel img.for-light, body.light #panel img.for-dark { display: none; 
 }
 #lightbox.open { display: flex; }
 #lightbox img { max-width: 94vw; max-height: 92vh; object-fit: contain; }
+#lightbox img.can-zoom { cursor: zoom-in; }   /* a second click shows the image at full size */
+#lightbox.full { display: block; overflow: auto; }
+#lightbox.full img { max-width: none; max-height: none; display: block; margin: 0 auto; cursor: zoom-out; }
 body.light #lightbox { background: rgba(250, 248, 244, 0.97); }   /* light palettes get a light backdrop */
 body.light #lightbox button { border-color: rgba(0,0,0,0.4); background: rgba(255,255,255,0.6); color: #111; }
 body.light #lightbox button:hover { background: rgba(0,0,0,0.08); }
 #lightbox button {
-  position: absolute; top: 14px; right: 18px; width: 40px; height: 40px; border-radius: 50%;
+  position: fixed; top: 14px; right: 18px; width: 40px; height: 40px; border-radius: 50%;
   border: 1px solid rgba(255,255,255,0.5); background: rgba(0,0,0,0.5); color: #fff;
   font-size: 26px; line-height: 1; cursor: pointer;
 }
