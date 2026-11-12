@@ -211,15 +211,19 @@ body.clean #topbar, body.clean .board .fretnum { display: none; }
 #themes { display: flex; flex-direction: column; gap: 4px; }
 #panel img.flag { display: block; width: 100%; height: auto; margin: 12px 0; }   /* as wide as the palette rows */
 #panel img.zoomable { cursor: zoom-in; }
-#panel img.on-white { background: #fff; padding: 6px; box-sizing: border-box; border-radius: 4px; }   /* drawings with see-through backgrounds */
+/* The Rotundum comes in two see-through versions: white lines for dark palettes, black lines for light ones */
+body.dark #panel img.for-light, body.light #panel img.for-dark { display: none; }
+#panel p.caption { text-align: center; }
 /* Click an About image to see it over the whole page */
 #lightbox {
   position: fixed; inset: 0; z-index: 100; display: none; align-items: center; justify-content: center;
-  background: rgba(0, 0, 0, 0.88); cursor: zoom-out;
+  background: rgba(0, 0, 0, 0.96); cursor: zoom-out;
 }
 #lightbox.open { display: flex; }
 #lightbox img { max-width: 94vw; max-height: 92vh; object-fit: contain; }
-#lightbox img.on-white { background: #fff; padding: 12px; border-radius: 6px; }
+body.light #lightbox { background: rgba(250, 248, 244, 0.97); }   /* light palettes get a light backdrop */
+body.light #lightbox button { border-color: rgba(0,0,0,0.4); background: rgba(255,255,255,0.6); color: #111; }
+body.light #lightbox button:hover { background: rgba(0,0,0,0.08); }
 #lightbox button {
   position: absolute; top: 14px; right: 18px; width: 40px; height: 40px; border-radius: 50%;
   border: 1px solid rgba(255,255,255,0.5); background: rgba(0,0,0,0.5); color: #fff;

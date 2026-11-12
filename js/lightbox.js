@@ -12,7 +12,6 @@
   function open(img) {
     big.src = img.src;
     big.alt = img.alt;
-    big.className = img.classList.contains('on-white') ? 'on-white' : '';
     box.classList.add('open');
     try { if (window.rybbit) window.rybbit.event('Image enlarged', { image: img.src.split('/').pop() }); } catch (e) {}
   }
