@@ -113,8 +113,8 @@
 
   <section>
     <h2>MIDI <kbd>Esc</kbd> <span class="kbd-note">clears stuck notes</span></h2>
-    <p class="hint" id="midi-status"></p>
     <div class="btn-row"><button id="midi-connect">Connect MIDI</button></div>
+    <p class="hint" id="midi-status"></p>
     <label><span>Input</span><select id="midiDevice"><option value="all">All inputs</option></select></label>
     <label><span>String mapping</span>
       <select id="stringMap">
@@ -124,9 +124,10 @@
       </select>
     </label>
     <label><span>Transpose incoming notes</span><input type="number" id="transpose" min="-24" max="24"></label>
-    <p class="hint">Last note: <span id="midi-last">—</span></p>
+    <p class="hint">MIDI tips:</p>
     <p class="hint">Roland GR-20: set its MIDI mode to MONO (one channel per string) and keep the mapping above on "channel 1 = high string". Open low D should read D2 here.</p>
     <p class="hint">No MIDI handy? Click and hold any position on the fretboard to light it.</p>
+    <p class="hint">Live MIDI works in Google Chrome, Microsoft Edge and other Chrome-family browsers on Mac, Windows and Android. It does not work in Safari, or on any iPhone or iPad. There the fretboard and click-to-play still work, but notes from a guitar won't appear.</p>
   </section>
 
   <section>
@@ -139,11 +140,10 @@
 
   <section>
     <h2>About</h2>
-    <p class="hint">Live MIDI works in Google Chrome, Microsoft Edge and other Chrome-family browsers on Mac, Windows and Android. It does not work in Safari, or on any iPhone or iPad. There the fretboard and click-to-play still work, but notes from a guitar won't appear.</p>
     <p class="hint">Created by <a href="https://soundcloud.com/kevinshrieve" target="_blank" rel="noopener">Kevin Shrieve</a> with Claude.</p>
     <p class="hint">COSTAR: Cycles Of Song, Theme, And Ritual</p>
     <img class="flag" src="img/LocalGroupFlag.svg" alt="Flag of The Local Group: green, red and blue vertical bands with the COSTAR symbol in black on the red band">
-    <p class="hint">The flag of The Local Group celebrates 3 facets of creation: multiplicity, self-reliance, and kinship. The COSTAR symbol represents the light of reason, embracing a circle of wonder, pregnant with our emerging world soul.</p>
+    <p class="hint">The flag of The Local Group celebrates 3 facets of creation: <strong>multiplicity</strong>, <strong>self-reliance</strong>, and <strong>kinship</strong>.<br>The COSTAR symbol represents the light of reason, embracing a circle of wonder, pregnant with our emerging world soul.</p>
   </section>
 
 </aside>

@@ -208,7 +208,7 @@ body.clean #topbar, body.clean .board .fretnum { display: none; }
 #panel select { max-width: 200px; }
 /* Compact palette chooser: one row per palette, drawn in that palette's own colors */
 #themes { display: flex; flex-direction: column; gap: 4px; }
-#panel img.flag { display: block; width: 100%; height: auto; margin: 12px 0 6px; }   /* as wide as the palette rows */
+#panel img.flag { display: block; width: 100%; height: auto; margin: 12px 0; }   /* as wide as the palette rows */
 #panel #themes .theme-row {
   display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%;
   background: var(--bg); color: var(--fg); border: 1px solid var(--panel-border); padding: 6px 9px;
