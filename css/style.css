@@ -210,6 +210,22 @@ body.clean #topbar, body.clean .board .fretnum { display: none; }
 /* Compact palette chooser: one row per palette, drawn in that palette's own colors */
 #themes { display: flex; flex-direction: column; gap: 4px; }
 #panel img.flag { display: block; width: 100%; height: auto; margin: 12px 0; }   /* as wide as the palette rows */
+#panel img.zoomable { cursor: zoom-in; }
+#panel img.on-white { background: #fff; padding: 6px; box-sizing: border-box; border-radius: 4px; }   /* drawings with see-through backgrounds */
+/* Click an About image to see it over the whole page */
+#lightbox {
+  position: fixed; inset: 0; z-index: 100; display: none; align-items: center; justify-content: center;
+  background: rgba(0, 0, 0, 0.88); cursor: zoom-out;
+}
+#lightbox.open { display: flex; }
+#lightbox img { max-width: 94vw; max-height: 92vh; object-fit: contain; }
+#lightbox img.on-white { background: #fff; padding: 12px; border-radius: 6px; }
+#lightbox button {
+  position: absolute; top: 14px; right: 18px; width: 40px; height: 40px; border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.5); background: rgba(0,0,0,0.5); color: #fff;
+  font-size: 26px; line-height: 1; cursor: pointer;
+}
+#lightbox button:hover { background: rgba(255,255,255,0.15); }
 #panel #themes .theme-row {
   display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%;
   background: var(--bg); color: var(--fg); border: 1px solid var(--panel-border); padding: 6px 9px;
