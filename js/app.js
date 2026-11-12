@@ -89,8 +89,25 @@
     localStorage.setItem(STORAGE, JSON.stringify(copy));
   }
   const isPenta = mode => !!Theory.modeById(mode).penta;
+  // Anonymous usage counts (Rybbit). A choice is reported once it has stayed put for 3 seconds,
+  // so stepping through modes with the arrow keys sends only where the player lands.
+  function track(name, props) {
+    try { if (window.rybbit && window.rybbit.event) window.rybbit.event(name, props); } catch (e) {}
+  }
+  const TRACKED = { mode: 'Mode chosen', root: 'Key chosen', view: 'View chosen', theme: 'Palette chosen' };
+  const trackTimers = {}, trackSent = {};
+  function trackChoice(k) {
+    clearTimeout(trackTimers[k]);
+    trackTimers[k] = setTimeout(() => {
+      const v = k === 'root' ? Theory.NAMES_FLAT[state.root] : String(state[k]);
+      if (trackSent[k] === v) return;
+      trackSent[k] = v;
+      track(TRACKED[k], { value: v });
+    }, 3000);
+  }
   function set(patch) {
     const wasPenta = isPenta(state.mode);
+    for (const k in TRACKED) if (k in patch && patch[k] !== state[k]) trackChoice(k);
     Object.assign(state, patch);
     const nowPenta = isPenta(state.mode);
     if (state.tuning === 'standard') state.view = 'six';   // the 12-row Spiral only makes sense in all fourths
@@ -173,7 +190,9 @@
     for (const k of [...held.keys()]) releaseHeld(k);
     Live.allOff();
   }
+  let firstNoteSent = false;
   Midi.on('noteon', m => {
+    if (!firstNoteSent) { firstNoteSent = true; track('MIDI note played'); }
     const pitch = m.note + state.transpose;
     const string = stringFromChannel(m.ch);
     const k = m.ch + ':' + m.note;
@@ -209,8 +228,10 @@
     pill.textContent = 'MIDI: ' + text;
     pill.className = cls;
   }
+  let midiConnectSent = false;
   Midi.on('devices', list => {
     midiReady = true;
+    if (!midiConnectSent) { midiConnectSent = true; track('MIDI connected', { inputs: list.length }); }
     const sel = $('#midiDevice');
     sel.innerHTML = '';
     sel.add(new Option('All inputs', 'all'));
