@@ -168,8 +168,7 @@
     clearTimeout(holdTimers.get(k));
     holdTimers.set(k, setTimeout(() => releaseHeld(k), HOLD_LIMIT_MS));
     Live.on(keys);
-    // The "Last note" readout was removed from Settings (2026-11-11); write to it only if it comes back.
-    const last = $('#midi-last');
+    const last = $('#midi-last');   // "Last note received:" under the MIDI status
     if (last) last.textContent = `ch ${m.ch} · note ${m.note} = ${Theory.midiName(pitch, board.parent)} · vel ${m.vel}`;
   });
   Midi.on('noteoff', m => releaseHeld(m.ch + ':' + m.note));
@@ -189,7 +188,7 @@
   });
   let midiReady = false;
   function midiStatus(text, cls) {
-    $('#midi-status').textContent = text;
+    $('#midi-status').textContent = 'Status: ' + text;
     const pill = $('#midi-pill');
     pill.textContent = 'MIDI: ' + text;
     pill.className = cls;

@@ -115,6 +115,7 @@
     <h2>MIDI <kbd>Esc</kbd> <span class="kbd-note">clears stuck notes</span></h2>
     <div class="btn-row"><button id="midi-connect">Connect MIDI</button></div>
     <p class="hint" id="midi-status"></p>
+    <p class="hint">Last note received: <span id="midi-last">—</span></p>
     <label><span>Input</span><select id="midiDevice"><option value="all">All inputs</option></select></label>
     <label><span>String mapping</span>
       <select id="stringMap">
@@ -125,7 +126,7 @@
     </label>
     <label><span>Transpose incoming notes</span><input type="number" id="transpose" min="-24" max="24"></label>
     <p class="hint">MIDI tips:</p>
-    <p class="hint">Roland GR-20: set its MIDI mode to MONO (one channel per string) and keep the mapping above on "channel 1 = high string". Open low D should read D2 here.</p>
+    <p class="hint">Roland GR-20: tune your guitar accurately, keep the patch's Transpose at 0, and set its MIDI mode to MONO (hold EXIT while switching the GR-20 on, choose Mono with the dial, press EXIT). Keep the mapping above on "channel 1 = high string". To check, play your lowest open string: the dot left of the nut on the low string should light.</p>
     <p class="hint">No MIDI handy? Click and hold any position on the fretboard to light it.</p>
     <p class="hint">Live MIDI works in Google Chrome, Microsoft Edge and other Chrome-family browsers on Mac, Windows and Android. It does not work in Safari, or on any iPhone or iPad. There the fretboard and click-to-play still work, but notes from a guitar won't appear.</p>
   </section>
