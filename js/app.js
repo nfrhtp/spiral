@@ -379,7 +379,7 @@
     else hint = `The ${rn} root is ${rootLabel(state.mode)}. Its relative major ("1" of its chroma sequence) is ${pn}.`;
     $('#key-hint').textContent = hint;
     const degBtn = document.querySelector('.btn-row[data-field="lumaLabel"] button[data-value="degree"]');
-    if (degBtn) degBtn.style.display = isPenta(state.mode) ? '' : 'none';
+    if (degBtn) degBtn.disabled = !isPenta(state.mode);   // shown but greyed out outside the pentatonic modes
     $('#panel').classList.toggle('hidden', !state.panelOpen);
   }
   function togglePanel(force) {
