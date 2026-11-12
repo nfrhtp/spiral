@@ -28,7 +28,7 @@
     dotSize: 100,                          // 100 | 75 | 50 — dot diameter, % of the original
     clean: false,                          // true hides the key badge, MIDI pill and fret numbers (key I)
     pattern: 'off', patternFret: 8,        // 'off' | 'chroma' | 'luma'
-    openLow: 38,                           // D2 — lowest open string (MIDI note)
+    openLow: 40,                           // E2 for newcomers (Kevin plays D2) — lowest open string (MIDI note)
     tuning: 'fourths',                     // 'fourths' (all fourths) | 'standard' (major third between strings 4 and 5)
     frets: 18,
     theme: 'stage',                        // first-visit palette (Kevin, 2026-11-12)
@@ -38,6 +38,8 @@
 
   const $ = s => document.querySelector(s);
   const svg = $('#board');
+  let firstVisit = false;   // nothing saved yet: a newcomer
+  try { firstVisit = !localStorage.getItem(STORAGE); } catch (e) { /* storage blocked: treat as returning */ }
   let state = load();
   let board = null;
   const held = new Map();      // "ch:note" -> keys lit for that note
@@ -479,6 +481,7 @@
   // ---------- start ----------
   buildPanel();
   render();
+  if (firstVisit) toggleHelp(true);   // a newcomer sees the keyboard shortcuts once; K or Esc closes them
   connectMidi();
   // index.html?panel=1#palette opens the settings scrolled to that section.
   if (location.hash) { const target = document.querySelector(location.hash); if (target) target.scrollIntoView(); }
