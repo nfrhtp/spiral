@@ -31,7 +31,7 @@
     openLow: 38,                           // D2 — lowest open string (MIDI note)
     tuning: 'fourths',                     // 'fourths' (all fourths) | 'standard' (major third between strings 4 and 5)
     frets: 18,
-    theme: 'studio',
+    theme: 'stage',                        // first-visit palette (Kevin, 2026-11-12)
     midiDevice: 'all', stringMap: 'ch1high', transpose: 0, pcChannel: 'any',
     presets: [{ name: '', root: 0, mode: 0 }],
   };
