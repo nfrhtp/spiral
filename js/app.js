@@ -83,6 +83,10 @@
     Object.assign(state, patch);
     const nowPenta = isPenta(state.mode);
     if (state.tuning === 'standard') state.view = 'six';   // the 12-row Spiral only makes sense in all fourths
+    // Scale pattern follows the mode family: chroma (3 per string) in diatonic modes, luma (2 per
+    // string) in pentatonic ones. Crossing families switches a running pattern to the other kind.
+    if (isPenta(state.mode) && state.pattern === 'chroma') state.pattern = 'luma';
+    if (!isPenta(state.mode) && state.pattern === 'luma') state.pattern = 'chroma';
     // Entering a pentatonic mode hides the colored chroma dots so only the pentatonic shows;
     // leaving it restores whatever the chroma setting was before.
     // it also turns the luma dots on (they are the whole picture there). Moving between pentatonic
@@ -365,6 +369,9 @@
     styleRow.querySelector('button[data-value="grid"]').disabled = state.view === 'six';
     for (const id of ['chroma', 'luma', 'clean']) $('#' + id).checked = state[id];
     $('#chroma').disabled = isPenta(state.mode);   // no chroma dots in pentatonic modes
+    const patRow = document.querySelector('.btn-row[data-field="pattern"]');
+    patRow.querySelector('[data-value="chroma"]').disabled = isPenta(state.mode);
+    patRow.querySelector('[data-value="luma"]').disabled = !isPenta(state.mode);
     if (isPenta(state.mode)) $('#chroma').checked = false;
     $('#patternFret').value = state.patternFret;
     $('#frets').value = state.frets;
@@ -422,7 +429,8 @@
 
   // Move the pattern start to the previous/next scale note on the low string.
   function stepPattern(dir) {
-    const kind = state.pattern === 'off' ? 'chroma' : state.pattern;
+    if (state.pattern === 'off') { notice('Pattern’s base fret with Scale pattern on (P) only'); return; }
+    const kind = state.pattern;
     const parent = Theory.parentRoot(state.root, state.mode);
     const inSet = f => Theory.classify(Theory.mod(state.openLow + f, 12), parent).kind === kind;
     let f = state.patternFret;
@@ -430,12 +438,24 @@
     let g = f + dir;
     while (g >= 0 && g <= state.frets && !inSet(g)) g += dir;
     if (g >= 0 && g <= state.frets) set({ patternFret: g });
+    else notice('No further scale note on the low string that way');
   }
 
   // ---------- keyboard ----------
-  const PATTERNS = ['off', 'chroma', 'luma'];
+  const SHORTCUT_KEYS = 'hkfvodclgnistp[]';
   document.addEventListener('keydown', e => {
-    if (['INPUT', 'SELECT', 'TEXTAREA'].includes(e.target.tagName)) return;
+    const t = e.target;
+    // A ticked checkbox keeps the focus but takes no typing, so shortcuts carry on there.
+    const typing = ['INPUT', 'SELECT', 'TEXTAREA'].includes(t.tagName) && t.type !== 'checkbox';
+    if (typing) {
+      // In a number box or a list, a shortcut letter does nothing; say why. In a text box (a song
+      // name) letters are being typed on purpose, so stay quiet.
+      if ((t.type === 'number' || t.tagName === 'SELECT') && !e.metaKey && !e.ctrlKey && !e.altKey
+          && e.key.length === 1 && SHORTCUT_KEYS.includes(e.key.toLowerCase())) {
+        notice('Shortcuts pause while typing in Settings — click the fretboard to resume');
+      }
+      return;
+    }
     if (e.metaKey || e.ctrlKey || e.altKey) return;
     switch (e.key.toLowerCase()) {
       case 'h': togglePanel(); break;
@@ -458,6 +478,7 @@
         break;
       }
       case 'n': {
+        if (isPenta(state.mode)) { notice('Chroma dot labels with diatonic modes only'); break; }
         const order = ['none', 'name', 'degree'];
         const next = order[(order.indexOf(state.chromaLabel) + 1) % order.length];
         set({ chromaLabel: next });
@@ -479,7 +500,12 @@
         toast('Palette: ' + next.name);
         break;
       }
-      case 'p': set({ pattern: PATTERNS[(PATTERNS.indexOf(state.pattern) + 1) % 3] }); break;
+      case 'p': {
+        // Off ↔ the pattern kind that fits the mode: chroma in diatonic modes, luma in pentatonic ones.
+        const kind = isPenta(state.mode) ? 'luma' : 'chroma';
+        set({ pattern: state.pattern === 'off' ? kind : 'off' });
+        break;
+      }
       case '[': stepPattern(-1); break;
       case ']': stepPattern(1); break;
       case 'arrowleft': set({ root: Theory.mod(state.root - 1, 12) }); break;
