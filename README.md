@@ -1,4 +1,4 @@
-# COSTAR Spiral Tuned Guitar
+# COSTAR Spiral-Tuned Guitar
 
 A live fretboard display for guitar, colored by the COSTAR scale-degree system, that reacts to notes played over MIDI.
 
