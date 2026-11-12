@@ -121,8 +121,9 @@ const Render = (() => {
     if (info.kind === 'luma' && state.lumaLabel === 'greek') {
       const fs = r * 1.15;
       text(grp, 0, (LUMA_INK_CENTRE[info.letter] || 0.25) * fs, info.letter, 'greek', fs, 'alphabetic');
-    } else if (info.kind === 'luma' && state.lumaLabel === 'degree' && Theory.MODES[state.mode].penta) {
-      // Pentatonic modes only: distance from the root (e.g. 1 · ♭3 · 4 · 5 · ♭7). Same size as chroma note names.
+    } else if (info.kind === 'luma' && state.lumaLabel === 'degree') {
+      // Distance from the mode's root (C Minor pentatonic: 1 · ♭3 · 4 · 5 · ♭7; C Ionian: ♭2 ♭3 ♭5 ♭6 ♭7),
+      // in every mode since 2026-11-12. Same size as chroma note names.
       const label = Theory.intervalName(info.pc - state.root);
       const fs = r * 0.85;
       text(grp, 0, 0.34 * fs, label, 'degree', fs, 'alphabetic');

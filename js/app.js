@@ -78,8 +78,6 @@
     localStorage.setItem(STORAGE, JSON.stringify(copy));
   }
   const isPenta = mode => !!(Theory.MODES[mode] && Theory.MODES[mode].penta);
-  // The luma label in effect: a remembered "Scale degrees" only applies in pentatonic modes.
-  const lumaLabelNow = () => (state.lumaLabel === 'degree' && !isPenta(state.mode)) ? 'none' : state.lumaLabel;
   function set(patch) {
     const wasPenta = isPenta(state.mode);
     Object.assign(state, patch);
@@ -100,7 +98,6 @@
     else if (wasPenta && !nowPenta) {
       state.chroma = state.chromaBeforePenta !== false;
       if (state.lumaBeforePenta !== undefined) state.luma = state.lumaBeforePenta;
-      // A luma "Scale degrees" choice is kept for the next pentatonic mode; diatonic modes show it as None.
     }
     render();
   }
@@ -391,9 +388,6 @@
     else if (m.offset === 0) hint = `The ${rn} root is white/black: it is the "1" of its chroma sequence.`;
     else hint = `The ${rn} root is ${rootLabel(state.mode)}. Its relative major ("1" of its chroma sequence) is ${pn}.`;
     $('#key-hint').textContent = hint;
-    mark(document.querySelector('.btn-row[data-field="lumaLabel"]'), lumaLabelNow());
-    const degBtn = document.querySelector('.btn-row[data-field="lumaLabel"] button[data-value="degree"]');
-    if (degBtn) degBtn.disabled = !isPenta(state.mode);   // shown but greyed out outside the pentatonic modes
     $('#panel').classList.toggle('hidden', !state.panelOpen);
   }
   function togglePanel(force) {
@@ -470,8 +464,8 @@
         break;
       case 'l': set({ luma: !state.luma }); break;
       case 'g': {
-        const order = isPenta(state.mode) ? ['none', 'greek', 'name', 'degree'] : ['none', 'greek', 'name'];
-        const next = order[(order.indexOf(lumaLabelNow()) + 1) % order.length];
+        const order = ['none', 'greek', 'name', 'degree'];
+        const next = order[(order.indexOf(state.lumaLabel) + 1) % order.length];
         set({ lumaLabel: next });
         // G did its job, so the message only names the choice (no pointer to N).
         notice('Luma dots: ' + { none: 'no labels', greek: 'Greek letters', name: 'note names', degree: 'scale degrees' }[next]);
