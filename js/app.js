@@ -354,7 +354,12 @@
     document.querySelectorAll('.btn-row[data-field]').forEach(row => mark(row, state[row.dataset.field]));
     const spiralBtn = document.querySelector('.btn-row[data-field="view"] button[data-value="spiral"]');
     spiralBtn.disabled = state.tuning === 'standard';
-    spiralBtn.title = spiralBtn.disabled ? 'The Spiral view needs All Fourths tuning' : '';
+    spiralBtn.title = spiralBtn.disabled ? 'Twelve strings needs All Fourths tuning' : '';
+    // The six-string view is always drawn as a guitar neck, so there the grid style is unavailable and
+    // "Guitar neck" shows as chosen. The saved choice is kept for when Twelve strings comes back.
+    const styleRow = document.querySelector('.btn-row[data-field="spiralStyle"]');
+    if (state.view === 'six') mark(styleRow, 'neck');
+    styleRow.querySelector('button[data-value="grid"]').disabled = state.view === 'six';
     for (const id of ['chroma', 'luma', 'clean']) $('#' + id).checked = state[id];
     $('#patternFret').value = state.patternFret;
     $('#frets').value = state.frets;
@@ -423,7 +428,7 @@
       case 'k': toggleHelp(); break;
       case 'f': toggleFullscreen(); break;
       case 'v':
-        if (state.tuning === 'standard') { toast('The Spiral view needs All Fourths tuning'); break; }
+        if (state.tuning === 'standard') { toast('Twelve strings needs All Fourths tuning'); break; }
         set({ view: state.view === 'six' ? 'spiral' : 'six' });
         break;
       case 'o': set({ orientation: state.orientation === 'mirror' ? 'standard' : 'mirror' }); break;

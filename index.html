@@ -25,6 +25,7 @@
     <div class="header-chips">
       <button id="settings-chip" class="chip" title="Hide settings (H)">Settings <kbd>H</kbd></button>
       <button id="help-chip" class="chip" title="Show the keyboard shortcuts (K)">Shortcuts <kbd>K</kbd></button>
+      <button id="fullscreen" class="chip" title="Full screen (F)">Full screen <kbd>F</kbd></button>
     </div>
   </header>
 
@@ -42,9 +43,9 @@
     <h2>View <kbd>V</kbd></h2>
     <div class="btn-row" data-field="view">
       <button data-value="six">Six strings</button>
-      <button data-value="spiral">Spiral (12 × 19)</button>
+      <button data-value="spiral">Twelve strings</button>
     </div>
-    <p class="hint">Spiral style</p>
+    <p class="hint">Fretboard style</p>
     <div class="btn-row" data-field="spiralStyle">
       <button data-value="neck">Guitar neck</button>
       <button data-value="grid">Abstract grid</button>
@@ -108,7 +109,6 @@
     <h2 id="palette">Palette <kbd>T</kbd></h2>
     <div id="themes" class="btn-row"></div>
     <p class="hint"><a href="palettes.html" target="_blank">See all palettes full size, to scroll through</a>.</p>
-    <div class="btn-row"><button id="fullscreen">Full screen <kbd>F</kbd></button></div>
   </section>
 
   <section>
@@ -151,20 +151,20 @@
 <div id="help" class="hidden" role="dialog" aria-label="Keyboard shortcuts">
   <div class="help-grid">
     <h2>Keyboard shortcuts <span class="help-keys"><kbd>K</kbd> or <kbd>Esc</kbd></span></h2>
-    <span></span>
-    <div class="hi help-settings"><span>Settings</span><kbd>H</kbd></div>
-    <div class="hi"><span>Key</span><kbd>← →</kbd></div>
     <div class="hi"><span>Chroma sequence on</span><kbd>C</kbd></div>
-    <div class="hi"><span>Show all dots vs played</span><kbd>D</kbd></div>
-    <div class="hi"><span>Mode (diatonic, pentatonic)</span><kbd>↑ ↓</kbd></div>
+    <div class="hi"><span>Settings</span><kbd>H</kbd></div>
+    <div class="hi"><span>Key</span><kbd>← →</kbd></div>
     <div class="hi"><span>Chroma dot labels</span><kbd>N</kbd></div>
     <div class="hi"><span>Scale pattern</span><kbd>P</kbd></div>
-    <div class="hi"><span>Full screen</span><kbd>F</kbd></div>
+    <div class="hi"><span>Mode (diatonic, pentatonic)</span><kbd>↑ ↓</kbd></div>
     <div class="hi"><span>Luma sequence on</span><kbd>L</kbd></div>
     <div class="hi"><span>Pattern’s base fret</span><kbd>[ ]</kbd></div>
-    <div class="hi"><span>Hide info</span><kbd>I</kbd></div>
+    <div class="hi"><span>Full screen</span><kbd>F</kbd></div>
     <div class="hi"><span>Luma dot labels</span><kbd>G</kbd></div>
     <div class="hi"><span>Cycle palettes</span><kbd>T</kbd></div>
+    <div class="hi"><span>Hide info</span><kbd>I</kbd></div>
+    <div class="hi"><span>Show dots vs played only</span><kbd>D</kbd></div>
+    <div class="hi"><span>View 6 vs 12 strings</span><kbd>V</kbd></div>
   </div>
 </div>
 
