@@ -78,6 +78,14 @@
     localStorage.setItem(STORAGE, JSON.stringify(copy));
   }
   const isPenta = mode => !!(Theory.MODES[mode] && Theory.MODES[mode].penta);
+  // Display and ↑ ↓ order: the church modes as listed, then the pentatonic modes by their root's
+  // luma letter α β γ δ ε (Ritsu, Minor, Major, Egyptian, Man Gong). The MODES indices themselves
+  // stay as they are, so saved settings and presets keep their meaning.
+  const MODE_ORDER = Theory.MODES.map((m, i) => i).sort((a, b) => {
+    const A = Theory.MODES[a], B = Theory.MODES[b];
+    if (!!A.penta !== !!B.penta) return A.penta ? 1 : -1;
+    return A.penta ? A.offset - B.offset : a - b;
+  });
   function set(patch) {
     const wasPenta = isPenta(state.mode);
     Object.assign(state, patch);
@@ -265,7 +273,8 @@
     // Church modes in one row, pentatonic modes in the row below; each button's value is its MODES index.
     for (const [box, penta] of [[$('#modes'), false], [$('#pentas'), true]]) {
       box.innerHTML = '';
-      Theory.MODES.forEach((m, i) => {
+      MODE_ORDER.forEach(i => {
+        const m = Theory.MODES[i];
         if (!!m.penta !== penta) return;
         const b = document.createElement('button');
         b.textContent = m.short || m.name;
@@ -340,7 +349,7 @@
       const name = row.querySelector('.pname'), rs = row.querySelector('.proot'), ms = row.querySelector('.pmode');
       name.value = p.name;
       ROOT_LABELS.forEach((l, j) => rs.add(new Option(l, j)));
-      Theory.MODES.forEach((m, j) => ms.add(new Option(m.name, j)));
+      MODE_ORDER.forEach(j => ms.add(new Option(Theory.MODES[j].name, j)));
       rs.value = p.root; ms.value = p.mode;
       name.onchange = e => { p.name = e.target.value; save(); };
       rs.onchange = e => { p.root = +e.target.value; save(); };
@@ -504,8 +513,12 @@
       case ']': stepPattern(1); break;
       case 'arrowleft': set({ root: Theory.mod(state.root - 1, 12) }); break;
       case 'arrowright': set({ root: Theory.mod(state.root + 1, 12) }); break;
-      case 'arrowup': set({ mode: Theory.mod(state.mode - 1, Theory.MODES.length) }); break;
-      case 'arrowdown': set({ mode: Theory.mod(state.mode + 1, Theory.MODES.length) }); break;
+      case 'arrowup':
+      case 'arrowdown': {
+        const k = MODE_ORDER.indexOf(state.mode) + (e.key === 'ArrowUp' ? -1 : 1);
+        set({ mode: MODE_ORDER[Theory.mod(k, MODE_ORDER.length)] });
+        break;
+      }
       case 'escape': toggleHelp(false); togglePanel(false); allNotesOff(); break;
       default: return;
     }
