@@ -78,6 +78,7 @@ body {
   font-size: 15px; font-weight: 600; letter-spacing: 0.02em;
 }
 #midi-pill {
+  margin-left: auto;   /* right side of the top bar, just left of the settings gear */
   padding: 5px 10px; border-radius: 999px;
   background: var(--panel-bg); border: 1px solid var(--panel-border);
   font-size: 12px; color: var(--muted);
