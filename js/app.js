@@ -189,9 +189,9 @@
     const p = state.presets[m.program];
     if (p) {
       set({ root: p.root, mode: p.mode });
-      toast(`PC ${m.program + 1}: ${p.name ? p.name + ' — ' : ''}${Theory.describe(p.root, p.mode)}`);
+      notice(`PC ${m.program + 1}: ${p.name ? p.name + ' — ' : ''}${Theory.describe(p.root, p.mode)}`);
     } else {
-      toast(`PC ${m.program + 1}: no preset`);
+      notice(`PC ${m.program + 1}: no preset`);
     }
   });
   let midiReady = false;
@@ -412,8 +412,8 @@
   }
   function clamp(v, lo, hi) { return Math.min(hi, Math.max(lo, isNaN(v) ? lo : v)); }
 
-  let toastTimer = null;
-  // A notice at the top centre explains why a shortcut did nothing (a rule blocked it).
+  // A notice at the top centre: why a shortcut did nothing (a rule blocked it), or what a
+  // multi-choice shortcut just switched to (palette, dot size, dot labels, song presets).
   let noticeTimer = null;
   function notice(msg) {
     const n = $('#notice');
@@ -421,13 +421,6 @@
     n.classList.add('show');
     clearTimeout(noticeTimer);
     noticeTimer = setTimeout(() => n.classList.remove('show'), 3500);
-  }
-  function toast(msg) {
-    const t = $('#toast');
-    t.textContent = msg;
-    t.classList.add('show');
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
   }
 
   // Move the pattern start to the previous/next scale note on the low string.
@@ -477,15 +470,19 @@
       case 'l': set({ luma: !state.luma }); break;
       case 'g': {
         const order = isPenta(state.mode) ? ['none', 'greek', 'degree'] : ['none', 'greek'];
-        set({ lumaLabel: order[(order.indexOf(lumaLabelNow()) + 1) % order.length] });
+        const next = order[(order.indexOf(lumaLabelNow()) + 1) % order.length];
+        set({ lumaLabel: next });
+        // In a diatonic mode the person most likely wanted the colored dots' labels, which are on N.
+        notice('Luma dots: ' + { none: 'no labels', greek: 'Greek letters', degree: 'scale degrees' }[next]
+               + (isPenta(state.mode) ? '' : ' · For chroma sequence labels type N'));
         break;
       }
       case 'n': {
-        if (isPenta(state.mode)) { notice('Chroma dot labels with diatonic modes only'); break; }
+        if (isPenta(state.mode)) { notice('Chroma dot labels with diatonic modes only · For luma sequence labels type G'); break; }
         const order = ['none', 'name', 'degree'];
         const next = order[(order.indexOf(state.chromaLabel) + 1) % order.length];
         set({ chromaLabel: next });
-        toast('Chroma dots: ' + { none: 'no labels', name: 'note names', degree: 'scale degrees' }[next]);
+        notice('Chroma dots: ' + { none: 'no labels', name: 'note names', degree: 'scale degrees' }[next]);
         break;
       }
       case 'i': set({ clean: !state.clean }); break;
@@ -493,14 +490,14 @@
         const sizes = [100, 75, 50];
         const next = sizes[(sizes.indexOf(+state.dotSize) + 1) % sizes.length];
         set({ dotSize: next });
-        toast('Dot size: ' + next + '%');
+        notice('Dot size: ' + next + '%');
         break;
       }
       case 't': {
         const i = THEMES.indexOf(themeById(state.theme));
         const next = THEMES[(i + 1) % THEMES.length];
         set({ theme: next.id });
-        toast('Palette: ' + next.name);
+        notice('Palette: ' + next.name);
         break;
       }
       case 'p': {
