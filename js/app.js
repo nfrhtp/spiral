@@ -27,6 +27,7 @@
     dots: 'all',                           // 'all' | 'played' (only the notes being played)
     dotSize: 100,                          // 100 | 75 | 50 — dot diameter, % of the original
     clean: false,                          // true hides the key badge, MIDI pill and fret numbers (key I)
+    midiPill: true,                        // false hides just the MIDI status pill (key M)
     pattern: 'off', patternFret: 8,        // 'off' | 'chroma' | 'luma'
     openLow: 40,                           // E2 for newcomers (Kevin plays D2) — lowest open string (MIDI note)
     tuning: 'fourths',                     // 'fourths' (all fourths) | 'standard' (major third between strings 4 and 5)
@@ -78,7 +79,7 @@
     for (const k of ['root', 'patternFret', 'frets', 'openLow', 'transpose', 'dotSize']) if (q.has(k)) s[k] = +q.get(k);
     if (q.has('key')) s.root = Theory.mod(+q.get('key') || 0, 12);
     if (q.has('mode')) s.mode = modeId(q.get('mode'));
-    for (const k of ['chroma', 'luma', 'clean']) if (q.has(k)) s[k] = q.get(k) !== '0' && q.get(k) !== 'false';
+    for (const k of ['chroma', 'luma', 'clean', 'midiPill']) if (q.has(k)) s[k] = q.get(k) !== '0' && q.get(k) !== 'false';
     if (q.has('names')) s.chromaLabel = (q.get('names') !== '0' && q.get('names') !== 'false') ? 'name' : 'none';
     if (q.has('greek')) s.lumaLabel = (q.get('greek') !== '0' && q.get('greek') !== 'false') ? 'greek' : 'none';
     return s;
@@ -151,7 +152,7 @@
   // ---------- rendering ----------
   function render() {
     const t = themeById(state.theme);
-    document.body.className = 'theme-' + t.id + (t.dark ? ' dark' : ' light') + (state.clean ? ' clean' : '');
+    document.body.className = 'theme-' + t.id + (t.dark ? ' dark' : ' light') + (state.clean ? ' clean' : '') + (state.midiPill === false ? ' no-midi-pill' : '');
     board = Render.build(svg, state);
     trackPattern();
     Live.reset(board, state);
@@ -341,7 +342,7 @@
         };
       });
     });
-    for (const id of ['chroma', 'luma', 'clean']) {
+    for (const id of ['chroma', 'luma', 'clean', 'midiPill']) {
       $('#' + id).onchange = e => set({ [id]: e.target.checked });
     }
     $('#patternFret').onchange = e => set({ patternFret: clamp(+e.target.value, 0, state.frets) });
@@ -414,7 +415,7 @@
     const styleRow = document.querySelector('.btn-row[data-field="spiralStyle"]');
     if (state.view === 'six') mark(styleRow, 'neck');
     styleRow.querySelector('button[data-value="grid"]').disabled = state.view === 'six';
-    for (const id of ['chroma', 'luma', 'clean']) $('#' + id).checked = state[id];
+    for (const id of ['chroma', 'luma', 'clean', 'midiPill']) $('#' + id).checked = state[id] !== false;
     $('#chroma').disabled = isPenta(state.mode);   // no chroma dots in pentatonic modes
     const patRow = document.querySelector('.btn-row[data-field="pattern"]');
     patRow.querySelector('[data-value="chroma"]').disabled = isPenta(state.mode);
@@ -481,7 +482,7 @@
   }
 
   // ---------- keyboard ----------
-  const SHORTCUT_KEYS = 'hkfvodclgnistp[]';
+  const SHORTCUT_KEYS = 'hkfvodclgnistpm[]';
   document.addEventListener('keydown', e => {
     const t = e.target;
     // A ticked checkbox keeps the focus but takes no typing, so shortcuts carry on there.
@@ -528,6 +529,10 @@
         break;
       }
       case 'i': set({ clean: !state.clean }); break;
+      case 'm':
+        set({ midiPill: state.midiPill === false });
+        notice(state.midiPill ? (state.clean ? 'MIDI status will show once Hide info (I) is off' : 'MIDI status shown') : 'MIDI status hidden');
+        break;
       case 's': {
         const sizes = [100, 75, 50];
         const next = sizes[(sizes.indexOf(+state.dotSize) + 1) % sizes.length];

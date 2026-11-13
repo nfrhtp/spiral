@@ -114,6 +114,7 @@ body {
 
 /* Clean view (key I): only the board and the settings button. */
 body.clean #topbar, body.clean .board .fretnum { display: none; }
+body.no-midi-pill #midi-pill { display: none; }   /* key M */
 
 .board .dot circle { stroke: var(--dot-stroke); stroke-width: 1.5; }
 .board .dot.deg-2 circle { fill: var(--c2); }
@@ -176,7 +177,8 @@ body.clean #topbar, body.clean .board .fretnum { display: none; }
 }
 #help.hidden { display: none; }
 #help h2 { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 0; }
-#help .help-grid { display: grid; grid-template-columns: repeat(3, auto); align-items: center;
+/* Four columns filled top to bottom: the first holds 5 items, the others start one row down */
+#help .help-grid { display: grid; grid-auto-flow: column; grid-template-rows: repeat(5, auto); align-items: center;
   justify-content: start; column-gap: 40px; row-gap: 4px; }
 #help .help-grid > h2, #help .help-grid > .help-foot { align-self: center; }   /* top row spaced like the rest */
 #help .hi { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
@@ -205,7 +207,7 @@ body.clean #topbar, body.clean .board .fretnum { display: none; }
   background: var(--input-bg); color: var(--fg); border: 1px solid var(--panel-border);
   border-radius: 6px; padding: 4px 6px; font-size: 13px;
 }
-#panel input[type=number] { width: 64px; }
+#panel input[type=number] { width: 46px; }
 #panel select { max-width: 200px; }
 /* Compact palette chooser: one row per palette, drawn in that palette's own colors */
 #themes { display: flex; flex-direction: column; gap: 4px; }

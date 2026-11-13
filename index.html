@@ -121,6 +121,7 @@
     <div class="btn-row"><button id="midi-connect">Connect MIDI</button></div>
     <p class="hint" id="midi-status"></p>
     <p class="hint">Last note received: <span id="midi-last">—</span></p>
+    <label><input type="checkbox" id="midiPill"> Show MIDI status on the fretboard <kbd>M</kbd></label>
     <label><span>Input</span><select id="midiDevice"><option value="all">All inputs</option></select></label>
     <label><span>String mapping</span>
       <select id="stringMap">
@@ -168,20 +169,25 @@
 <div id="help" class="hidden" role="dialog" aria-label="Keyboard shortcuts">
   <div class="help-grid">
     <div class="hi"><span>Keyboard shortcuts on/off</span><kbd>K</kbd></div>
-    <div class="hi"><span>Chroma sequence on</span><kbd>C</kbd></div>
-    <div class="hi"><span>Settings</span><kbd>H</kbd></div>
-    <div class="hi"><span>Key</span><kbd>← →</kbd></div>
-    <div class="hi"><span>Chroma dot labels</span><kbd>N</kbd></div>
-    <div class="hi"><span>Scale pattern</span><kbd>P</kbd></div>
-    <div class="hi"><span>Mode (diatonic, pentatonic)</span><kbd>↑ ↓</kbd></div>
-    <div class="hi"><span>Luma sequence on</span><kbd>L</kbd></div>
-    <div class="hi"><span>Pattern’s base fret</span><kbd>[ ]</kbd></div>
     <div class="hi"><span>Full screen</span><kbd>F</kbd></div>
-    <div class="hi"><span>Luma dot labels</span><kbd>G</kbd></div>
-    <div class="hi"><span>Cycle palettes</span><kbd>T</kbd></div>
     <div class="hi"><span>Hide info</span><kbd>I</kbd></div>
+    <div class="hi"><span>MIDI status</span><kbd>M</kbd></div>
+    <div class="hi"><span>Cycle palettes</span><kbd>T</kbd></div>
+    <div class="hi-gap"></div>
+    <div class="hi"><span>Chroma sequence on</span><kbd>C</kbd></div>
+    <div class="hi"><span>Chroma dot labels</span><kbd>N</kbd></div>
+    <div class="hi"><span>Luma sequence on</span><kbd>L</kbd></div>
+    <div class="hi"><span>Luma dot labels</span><kbd>G</kbd></div>
+    <div class="hi-gap"></div>
+    <div class="hi"><span>Key</span><kbd>← →</kbd></div>
+    <div class="hi"><span>Mode (chroma, luma)</span><kbd>↑ ↓</kbd></div>
+    <div class="hi"><span>Scale pattern</span><kbd>P</kbd></div>
+    <div class="hi"><span>Pattern’s base</span><kbd>[ ]</kbd></div>
+    <div class="hi-gap"></div>
+    <div class="hi"><span>Settings</span><kbd>H</kbd></div>
     <div class="hi"><span>Show dots vs played only</span><kbd>D</kbd></div>
-    <div class="hi"><span>View 6 vs 12 strings</span><kbd>V</kbd></div>
+    <div class="hi"><span>Size of dots</span><kbd>S</kbd></div>
+    <div class="hi"><span>View 6 or 12 strings</span><kbd>V</kbd></div>
   </div>
 </div>
 
