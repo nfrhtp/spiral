@@ -208,7 +208,7 @@ body.no-midi-pill #midi-pill { display: none; }   /* Hide info (I) hides it too,
   background: var(--input-bg); color: var(--fg); border: 1px solid var(--panel-border);
   border-radius: 6px; padding: 4px 6px; font-size: 13px;
 }
-#panel input[type=number] { width: 46px; }
+#panel input[type=number] { width: 38px; }
 #panel select { max-width: 200px; }
 /* Compact palette chooser: one row per palette, drawn in that palette's own colors */
 #themes { display: flex; flex-direction: column; gap: 4px; }
