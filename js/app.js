@@ -483,8 +483,15 @@
     else notice('No further scale note on the low string that way');
   }
 
+  function stepPalette(dir) {
+    const i = THEMES.indexOf(themeById(state.theme));
+    const next = THEMES[(i + dir + THEMES.length) % THEMES.length];
+    set({ theme: next.id });
+    notice('Palette: ' + next.name);
+  }
+
   // ---------- keyboard ----------
-  const SHORTCUT_KEYS = 'hkfvodclgnistpm[]';
+  const SHORTCUT_KEYS = 'hkfvodclgnistpm[],.<>';
   document.addEventListener('keydown', e => {
     const t = e.target;
     // A ticked checkbox keeps the focus but takes no typing, so shortcuts carry on there.
@@ -547,13 +554,9 @@
         notice('Dot size: ' + next + '%');
         break;
       }
-      case 't': {
-        const i = THEMES.indexOf(themeById(state.theme));
-        const next = THEMES[(i + 1) % THEMES.length];
-        set({ theme: next.id });
-        notice('Palette: ' + next.name);
-        break;
-      }
+      // Palettes: > (the . key) forward, < (the , key) back; T still steps forward.
+      case 't': case '.': case '>': stepPalette(1); break;
+      case ',': case '<': stepPalette(-1); break;
       case 'p': {
         // Off ↔ the pattern kind that fits the mode: chroma in diatonic modes, luma in pentatonic ones.
         const kind = isPenta(state.mode) ? 'luma' : 'chroma';
