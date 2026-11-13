@@ -89,6 +89,8 @@
     delete copy.panelOpen;
     localStorage.setItem(STORAGE, JSON.stringify(copy));
   }
+  // M while Hide info (I) is on shows the MIDI status for a look; M or I hides it again. Not saved.
+  let midiPeek = false;
   const isPenta = mode => !!Theory.modeById(mode).penta;
   // Anonymous usage counts (Rybbit). A choice is reported once it has stayed put for 3 seconds,
   // so stepping through modes with the arrow keys sends only where the player lands.
@@ -152,7 +154,7 @@
   // ---------- rendering ----------
   function render() {
     const t = themeById(state.theme);
-    document.body.className = 'theme-' + t.id + (t.dark ? ' dark' : ' light') + (state.clean ? ' clean' : '') + (state.midiPill === false ? ' no-midi-pill' : '');
+    document.body.className = 'theme-' + t.id + (t.dark ? ' dark' : ' light') + (state.clean ? ' clean' : '') + ((state.clean ? midiPeek : state.midiPill !== false) ? '' : ' no-midi-pill');
     board = Render.build(svg, state);
     trackPattern();
     Live.reset(board, state);
@@ -343,7 +345,7 @@
       });
     });
     for (const id of ['chroma', 'luma', 'clean', 'midiPill']) {
-      $('#' + id).onchange = e => set({ [id]: e.target.checked });
+      $('#' + id).onchange = e => { if (id === 'clean') midiPeek = false; set({ [id]: e.target.checked }); };
     }
     $('#patternFret').onchange = e => set({ patternFret: clamp(+e.target.value, 0, state.frets) });
     $('#frets').onchange = e => set({ frets: clamp(+e.target.value, 12, 24) });
@@ -528,10 +530,15 @@
         notice('Chroma dots: ' + { none: 'no labels', name: 'note names', degree: 'scale degrees' }[next]);
         break;
       }
-      case 'i': set({ clean: !state.clean }); break;
+      case 'i':
+        if (state.clean && midiPeek) { midiPeek = false; render(); notice('MIDI status hidden'); break; }
+        midiPeek = false;
+        set({ clean: !state.clean });
+        break;
       case 'm':
-        set({ midiPill: state.midiPill === false });
-        notice(state.midiPill ? (state.clean ? 'MIDI status will show once Hide info (I) is off' : 'MIDI status shown') : 'MIDI status hidden');
+        if (state.clean) { midiPeek = !midiPeek; render(); }
+        else set({ midiPill: state.midiPill === false });
+        notice('MIDI status ' + ((state.clean ? midiPeek : state.midiPill) ? 'shown' : 'hidden'));
         break;
       case 's': {
         const sizes = [100, 75, 50];
