@@ -157,7 +157,8 @@ body.no-midi-pill #midi-pill { display: none; }   /* Hide info (I) hides it too,
 #panel label > span { flex: 1; }
 #panel .nowrap { white-space: nowrap; }
 #panel .hint { color: var(--muted); font-size: 12px; margin: 6px 0; }
-#panel a, #panel a:visited { color: inherit; }   /* links match the text around them; the underline marks them */
+#panel a, #panel a:visited { color: inherit; }
+#panel .doc-links { display: flex; justify-content: center; gap: 40px; margin: 4px 0 14px; font-size: 15px; }   /* User Guide · FAQ, above Key */   /* links match the text around them; the underline marks them */
 /* Keyboard shortcut chips, shown next to the item they control */
 #panel kbd, #help kbd {
   display: inline-block; margin-left: 6px; padding: 0 5px; border-radius: 4px;

@@ -1,0 +1,20 @@
+/* User Guide and FAQ pages */
+:root { --fg: #1d1d1f; --muted: #6e6e73; --bg: #faf9f6; --line: #dedbd3; --head: #f0eee8; }
+@media (prefers-color-scheme: dark) {
+  :root { --fg: #ececec; --muted: #a1a1a6; --bg: #141416; --line: #34343a; --head: #1f1f23; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg);
+  font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif; }
+.docnav { position: sticky; top: 0; display: flex; justify-content: space-between; gap: 16px;
+  padding: 12px 24px; background: var(--bg); border-bottom: 1px solid var(--line); font-size: 15px; }
+.docnav a, main a { color: inherit; }
+main { max-width: 760px; margin: 0 auto; padding: 24px 24px 80px; }
+h1 { font-size: 30px; line-height: 1.2; margin: 16px 0 12px; }
+h2 { font-size: 21px; margin: 40px 0 10px; padding-top: 8px; border-top: 1px solid var(--line); }
+p, ul, ol { margin: 0 0 14px; }
+li { margin-bottom: 6px; }
+code { font: 14px Menlo, Consolas, monospace; background: var(--head); padding: 1px 5px; border-radius: 4px; }
+table { border-collapse: collapse; margin: 6px 0 18px; width: 100%; font-size: 15px; }
+th, td { border: 1px solid var(--line); padding: 6px 9px; text-align: left; vertical-align: top; }
+th { background: var(--head); }

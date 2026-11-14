@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>FAQ · COSTAR Spiral-Tuned Guitar</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/docs.css">
+<script src="https://app.rybbit.io/api/script.js?siteId=1d7a8f01dfc9" defer></script>
+</head>
+<body>
+<nav class="docnav"><a href="./">← Back to the app</a><span class="links"><a href="guide.html">User Guide</a> · <b>FAQ</b></span></nav>
+<main>
+<h1 id="frequently-asked-questions">Frequently Asked Questions</h1>
+<h2 id="first-look">First look</h2>
+<p><strong>What is the COSTAR Spiral-Tuned Guitar?</strong><br />
+A web app that draws a guitar fretboard and shows where the notes of a key and mode fall on it, in color. With a MIDI guitar or keyboard connected, it also lights up the notes you play.</p>
+<p><strong>Who is it for?</strong><br />
+Guitarists who play in all fourths (E–A–D–G–C–F or similar), or want to try it. It also shows standard tuning, and works for anyone learning scales and modes on the neck.</p>
+<p><strong>Do I need to tune my guitar in fourths to use it?</strong><br />
+No. Choose <strong>Standard</strong> under Settings &gt; Instrument &gt; Tuning to see the board in regular guitar tuning.</p>
+<p><strong>What does it cost? Do I need an account?</strong><br />
+It's free, with no account and no sign-in.</p>
+<p><strong>Do I need to install anything?</strong><br />
+No. It runs in a web browser.</p>
+<p><strong>Which devices does it work on?</strong><br />
+Any computer, tablet or phone with a modern browser shows the board. Playing along with a MIDI instrument needs Chrome, Edge or another Chrome-family browser on Mac, Windows or Android.</p>
+<p><strong>Does it make sound?</strong><br />
+No. It shows notes; it doesn't play them.</p>
+<h2 id="getting-around">Getting around</h2>
+<p><strong>Where are the settings?</strong><br />
+Click the gear button at the top right, or press <strong>H</strong>.</p>
+<p><strong>How do I see the keyboard shortcuts?</strong><br />
+Press <strong>K</strong>. A bubble listing every shortcut appears at the bottom of the screen; <strong>K</strong> again hides it.</p>
+<p><strong>How do I change the key or mode quickly?</strong><br />
+Use the arrow keys: <strong>← →</strong> for the key, <strong>↑ ↓</strong> for the mode.</p>
+<p><strong>Can I clear the clutter off the screen?</strong><br />
+Yes. <strong>I</strong> hides the key badge, MIDI status, fret numbers and open-string names. <strong>F</strong> goes full screen. <strong>D</strong> shows only the notes you play.</p>
+<p><strong>Will it remember my settings?</strong><br />
+Yes, in the same browser on the same device. A different browser, device or private window starts with the defaults.</p>
+<p><strong>How do I go back to the starting setup?</strong><br />
+There's no reset button. Clearing this site's stored data in your browser's settings restores the defaults, and also removes your song presets.</p>
+<p><strong>Can I send someone the board exactly as I have it set?</strong><br />
+Yes, by adding options to the web address, such as <code>?key=7&amp;mode=dorian</code>. The User Guide lists them all.</p>
+<p><strong>Can I use it without a keyboard, on a tablet?</strong><br />
+Yes. Everything the shortcuts do is also in Settings.</p>
+<h2 id="reading-the-board">Reading the board</h2>
+<p><strong>What do the colors mean?</strong><br />
+In a diatonic mode, each color marks a scale degree of the mode's relative major: 1 is half white and half black, 2 green, 3 yellow, 4 orange, 5 red, 6 blue and 7 purple. The same note keeps the same color whichever of the seven modes you pick from that major scale.</p>
+<p><strong>Why is the root of A Aeolian blue, not white/black?</strong><br />
+A Aeolian uses the notes of C major, and A is the 6th degree of C major, so it's blue. The badge at the top left always names the root's color, and the note under the mode buttons in Settings names the relative major.</p>
+<p><strong>What are the black dots?</strong><br />
+The luma sequence: the five notes the diatonic scale leaves out. Turn them on with <strong>L</strong>. In a pentatonic mode these five notes are the scale.</p>
+<p><strong>What do the Greek letters mean?</strong><br />
+Each black dot's letter marks its distance above the relative major's 1: α = ♭2, β = ♭3, γ = ♭5, δ = ♭6, ε = ♭7. Show them with <strong>G</strong>.</p>
+<p><strong>Why can't I turn on the colored dots in a pentatonic mode?</strong><br />
+In a pentatonic mode the scale is the five black dots, so the app hides the colored ones to keep the scale clear. They come back when you return to a diatonic mode.</p>
+<p><strong>Can I show note names or scale degrees on the dots?</strong><br />
+Yes. <strong>N</strong> cycles the colored dots' labels and <strong>G</strong> the black dots' labels.</p>
+<p><strong>What is the Twelve strings view?</strong><br />
+In all fourths every string is the same distance from the next, so a scale shape repeats exactly as it moves across the strings. The <strong>Twelve strings</strong> view (<strong>V</strong>) continues that tuning to twelve rows a fourth apart, with your six real strings in the middle, so you can see the shape run through all twelve notes.</p>
+<p><strong>What is a scale pattern?</strong><br />
+One playable position of the scale, three notes per string for diatonic modes and two for pentatonic. Turn it on with <strong>P</strong> and slide it along the neck with <strong>[</strong> and <strong>]</strong>.</p>
+<p><strong>Which way up is the neck drawn?</strong><br />
+By default the high string is on top, as in guitar tab. <strong>O</strong> flips it to put the low string on top.</p>
+<h2 id="guitars-keyboards-and-midi">Guitars, keyboards and MIDI</h2>
+<p><strong>What can I connect?</strong><br />
+Any MIDI instrument your computer recognizes: a guitar-to-MIDI converter such as the Roland GR-20, a MIDI guitar, a keyboard, or recording software.</p>
+<p><strong>How do I connect it?</strong><br />
+Plug it in, open the app in Chrome or Edge, and click <strong>Allow</strong> when the browser asks about MIDI devices. The MIDI status at the top right names the inputs found.</p>
+<p><strong>Why doesn't MIDI work on my iPhone, iPad or in Safari?</strong><br />
+Those browsers don't support Web MIDI. The board and click-to-play still work there.</p>
+<p><strong>My guitar's notes light up on the wrong string. What do I change?</strong><br />
+In Settings &gt; MIDI &gt; String mapping, try <strong>channel 1 = low string</strong> instead of <strong>channel 1 = high string</strong>, or the other way round. Your converter needs to send one channel per string (often called Mono mode).</p>
+<p><strong>I'm using a keyboard. Which mapping should I use?</strong><br />
+<strong>Pitch only.</strong> Each key you press lights every position on the neck where that note can be played.</p>
+<p><strong>Notes show up an octave or a few steps off. Can I fix that?</strong><br />
+Yes. Set <strong>Transpose incoming notes</strong> in Settings &gt; MIDI, up to 24 half steps either way. Check your converter's own transpose setting first.</p>
+<p><strong>Can I try it without any MIDI gear?</strong><br />
+Yes. Click and hold any position on the board to light it.</p>
+<p><strong>Can a footswitch or my recording software change songs?</strong><br />
+Yes, with <strong>Song presets</strong>. Each preset holds a key and mode, and a MIDI Program Change loads the matching preset. Set <strong>Listen for Program Change on</strong> to the channel your controller sends on.</p>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<p><strong>The MIDI status says MIDI is blocked.</strong><br />
+Click the icon at the left of Chrome's address bar, allow MIDI devices, then reload the page.</p>
+<p><strong>My device isn't listed.</strong><br />
+Check it's plugged in and switched on, then click <strong>Connect MIDI</strong> in Settings &gt; MIDI. If you connected it while the browser was open and it still doesn't appear, quit the browser completely and reopen it.</p>
+<p><strong>I play but nothing lights up.</strong><br />
+Look at <strong>Last note received</strong> in Settings &gt; MIDI. If it stays at "—", no notes are arriving: check the Input setting and your device's MIDI output. If notes arrive but light in the wrong place, check the String mapping and Transpose settings.</p>
+<p><strong>A note stays lit after I stop playing.</strong><br />
+Press <strong>Esc</strong> to clear stuck notes.</p>
+<p><strong>A shortcut key does nothing.</strong><br />
+Shortcuts pause while a number box or menu in Settings is selected. Click the fretboard and try again. A notice at the top of the screen says why when a shortcut can't act, for example the chroma keys in a pentatonic mode.</p>
+<p><strong>Program Change doesn't load a preset.</strong><br />
+Check that a preset exists with that number, that <strong>Listen for Program Change on</strong> matches the sending channel (or is set to Any), and that your software isn't counting from 0 while the app counts from 1.</p>
+<p><strong>The page looks out of date after an update.</strong><br />
+Reload it with Cmd+Shift+R (Mac) or Ctrl+Shift+R (Windows).</p>
+</main>
+</body>
+</html>
