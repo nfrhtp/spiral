@@ -8,17 +8,20 @@
 <script src="https://app.rybbit.io/api/script.js?siteId=1d7a8f01dfc9" defer></script>
 </head>
 <body>
-<nav class="docnav"><a href="./">← Back to the app</a><span class="links"><b>User Guide</b> · <a href="faq.html">FAQ</a></span></nav>
+<nav class="docnav"><a href="./">← Back to the app</a><span class="links"><b>User Guide</b> · <a href="faq.html">FAQ</a> · <a href="about.html">About</a></span></nav>
 <main>
 <h1 id="costar-spiral-tuned-guitar-user-guide">COSTAR Spiral-Tuned Guitar: User Guide</h1>
-<p>The COSTAR Spiral-Tuned Guitar is a free web app that shows scales and modes on a guitar fretboard tuned in all fourths, and lights up the notes you play from a MIDI guitar. It runs in any Chrome-family web browser, with nothing to install.</p>
+<p>The COSTAR Spiral-Tuned Guitar is a free web app that displays scales and modes on a guitar fretboard tuned in all fourths, highlighting the notes you play from a MIDI guitar.</p>
+<p>The note color sequence is that of the COSTAR system and its chromatic lunar-solar calendar.</p>
+<p>COSTAR: Cycles Of Song, Theme, And Ritual</p>
+<p>The web app runs in any Chrome-family web browser, with nothing to install.</p>
 <h2 id="getting-started">Getting started</h2>
-<p>Open the app in a web browser. The first time, you see a six-string guitar neck showing C Ionian (the C major scale), with a bubble of keyboard shortcuts at the bottom.</p>
+<p>Open the app in a web browser by going to <a href="https://nfrhtp.github.io/spiral/">nfrhtp.github.io/spiral/</a>. The first time, you see a six-string guitar neck showing C Ionian (the C major scale), with a bubble of keyboard shortcuts at the bottom.</p>
 <ul>
-<li><strong>The fretboard</strong> fills the screen. The nut is on the left, with the open-string names beside it and fret numbers underneath.</li>
-<li><strong>The badge</strong> at the top left names the key and mode, for example "C Ionian · root = white/black".</li>
+<li><strong>The fretboard</strong> fills the screen. The nut is on the left, with the open-string note names beside it and some fret numbers underneath.</li>
+<li><strong>The badge</strong> at the top left of the screen names the key and mode, and identifies the color of the root note dots. For example: "C Ionian · root = white/black".</li>
 <li><strong>The MIDI status</strong> sits at the top right.</li>
-<li><strong>Settings</strong> open from the gear button at the top right, or with the <strong>H</strong> key. Every option in this guide lives there.</li>
+<li><strong>Settings</strong> open from the gear button at the top right, or with the <strong>H</strong> key. Every option in this guide can be set there.</li>
 <li><strong>The shortcuts bubble</strong> opens and closes with <strong>K</strong>.</li>
 <li><strong>Full screen</strong> is <strong>F</strong>.</li>
 </ul>
@@ -30,31 +33,80 @@
 <thead>
 <tr>
 <th>Degree of the relative major</th>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-<th>5</th>
-<th>6</th>
-<th>7</th>
+<th>Chroma sequence</th>
+<th>Root of which mode?</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Dot color</td>
-<td>half white, half black</td>
+<td>1</td>
+<td>white/black</td>
+<td>Ionian</td>
+</tr>
+<tr>
+<td>2</td>
 <td>green</td>
+<td>Dorian</td>
+</tr>
+<tr>
+<td>3</td>
 <td>yellow</td>
+<td>Phrygian</td>
+</tr>
+<tr>
+<td>4</td>
 <td>orange</td>
+<td>Lydian</td>
+</tr>
+<tr>
+<td>5</td>
 <td>red</td>
+<td>Mixolydian</td>
+</tr>
+<tr>
+<td>6</td>
 <td>blue</td>
+<td>Aeolian</td>
+</tr>
+<tr>
+<td>7</td>
 <td>purple</td>
+<td>Locrian</td>
 </tr>
 </tbody>
 </table>
-<p>In Ionian the root is the half white, half black dot. In other modes the root is another color: in Aeolian, for example, it is blue. The badge at the top left names the root's color, and the note under the mode buttons in Settings names the relative major.</p>
-<p><strong>Pentatonic modes (luma sequence):</strong> Ritsu, Minor, Major, Egyptian and Man Gong. Their five notes appear as black dots, and the badge names the root by its Greek letter (α, β, γ, δ or ε; see the next section).</p>
-<p>Each mode button starts with its root's degree or Greek letter, for example 6-Aeolian or β-Minor.</p>
+<p>In Ionian the root is the half white, half black dot. In other modes the root is another color: in Aeolian, for example, it is blue. The badge at the top left names the root's color, and in Settings, the note under the mode buttons names the relative major.</p>
+<p><strong>Pentatonic modes (luma sequence):</strong> Ritsu, Minor, Major, Egyptian and Man Gong. Their five notes appear as black dots.</p>
+<table>
+<thead>
+<tr>
+<th>Luma sequence</th>
+<th>Pentatonic scale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>α</td>
+<td>Ritsu</td>
+</tr>
+<tr>
+<td>β</td>
+<td>Minor</td>
+</tr>
+<tr>
+<td>γ</td>
+<td>Major</td>
+</tr>
+<tr>
+<td>δ</td>
+<td>Egyptian</td>
+</tr>
+<tr>
+<td>ε</td>
+<td>Man Gong</td>
+</tr>
+</tbody>
+</table>
 <h2 id="dots-and-labels">Dots and labels</h2>
 <p>Two kinds of dots can be shown, each turned on or off in Settings &gt; View.</p>
 <ul>
@@ -73,7 +125,7 @@
 <li><strong>Dots (D):</strong> show all scale notes, or only the notes being played. "Only notes being played" leaves a clean board that lights up as you play.</li>
 </ul>
 <h2 id="scale-patterns">Scale patterns</h2>
-<p>A scale pattern narrows the board to one playable position: only the pattern's dots stay, and any note you play outside it shows faintly.</p>
+<p>A scale pattern narrows the display of dots to one playable position: only the pattern's dots stay, and any note you play outside it shows faintly.</p>
 <ul>
 <li><strong>P</strong> turns the pattern on and off. The app picks the kind that fits the mode: <strong>3 notes per string</strong> in diatonic modes, <strong>2 notes per string</strong> in pentatonic modes.</li>
 <li>The pattern starts at a fret on the low string and climbs across the strings. Set that fret under Settings &gt; Scale pattern &gt; Starting fret.</li>
@@ -83,18 +135,18 @@
 <h2 id="views-instrument-and-palettes">Views, instrument and palettes</h2>
 <p><strong>View (V):</strong></p>
 <ul>
-<li><strong>Six strings</strong> shows a real guitar neck.</li>
-<li><strong>Twelve strings</strong> extends the same tuning to twelve rows a fourth apart, so the pattern of the scale repeats as a spiral. The six real strings sit in the middle, with lower rows above and higher rows below. Twelve strings can be drawn as a <strong>guitar neck</strong> or an <strong>abstract grid</strong>.</li>
+<li><strong>Six strings</strong> depicts a real guitar neck.</li>
+<li><strong>Twelve strings</strong> extends the same tuning to twelve rows a fourth apart, so the pattern of the scale repeats as a spiral. The six real strings sit in the middle, with lower rows above and higher rows below. Twelve strings can be drawn as a <strong>guitar neck</strong> or an <strong>abstract grid</strong>. Twelve strings works with All Fourths only.</li>
 </ul>
 <p><strong>Instrument (Settings &gt; Instrument):</strong></p>
 <ul>
 <li><strong>Lowest open string:</strong> from A1 to B2. E2 gives E–A–D–G–C–F; D2 gives D–G–C–F–B♭–E♭.</li>
 <li><strong>Frets shown:</strong> 12 to 24.</li>
-<li><strong>Tuning:</strong> <strong>All Fourths</strong> (every string a fourth above the last) or <strong>Standard</strong> (a major third between the 4th and 5th strings from the bottom, like a regular guitar). Twelve strings works with All Fourths only.</li>
+<li><strong>Tuning:</strong> <strong>All Fourths</strong> (every string a fourth above the last) or <strong>Standard</strong> (a major third between the 4th and 5th strings from the bottom, like a regular guitar). This app is focussed on explorations of All Fourths tuning, but can be helpful with Standard tuning as well.</li>
 <li><strong>Orientation (O):</strong> <strong>Standard</strong> puts the high string on top, as in guitar tab and most chord charts. <strong>Mirror</strong> puts the low string on top.</li>
 </ul>
-<p><strong>Hide info (I)</strong> hides the key badge, the MIDI status and the fret numbers and open-string names. Press <strong>M</strong> to peek at the MIDI status while the rest stays hidden.</p>
-<p><strong>Palettes (&lt; &gt;):</strong> nine color schemes, five light and four dark. <strong>&gt;</strong> (the period key) steps forward, <strong>&lt;</strong> (the comma key) steps back, and <strong>T</strong> also steps forward. The scale-degree colors keep their order in every palette; only their shades change.</p>
+<p><strong>Hide info (I)</strong> hides from the screen the key badge, the MIDI status, the fret numbers, and the open-string names. Press <strong>M</strong> to peek at the MIDI status while the rest stays hidden.</p>
+<p><strong>Palettes (&lt; &gt;):</strong> nine color schemes, five light and four dark. <strong>&gt;</strong> (the period key) steps forward, <strong>&lt;</strong> (the comma key) steps back. The scale-degree colors keep their order in every palette; only their shades change.</p>
 <h2 id="playing-along-with-midi">Playing along with MIDI</h2>
 <p>Connect a MIDI guitar, guitar-to-MIDI converter or keyboard, and each note you play lights up at its position on the board.</p>
 <p><strong>Browsers:</strong> live MIDI works in Google Chrome, Microsoft Edge and other Chrome-family browsers on Mac, Windows and Android. It does not work in Safari or on any iPhone or iPad; there the board and click-to-play still work.</p>
@@ -102,13 +154,13 @@
 <ol>
 <li>Plug in your MIDI device before or after opening the app.</li>
 <li>When Chrome asks to allow MIDI devices, click <strong>Allow</strong>. If the status says MIDI is blocked, click the icon at the left of the address bar, allow MIDI devices, then reload.</li>
-<li>The MIDI status at the top right lists the inputs found. <strong>Settings &gt; MIDI &gt; Last note received</strong> confirms notes are arriving.</li>
+<li>The MIDI status at the top right lists the inputs found. In the app's <strong>Settings</strong> panel, watch <strong>MIDI &gt; Last note received</strong> to confirm that notes are arriving.</li>
 </ol>
 <p><strong>Settings &gt; MIDI:</strong></p>
 <ul>
 <li><strong>Input:</strong> All inputs, or one device.</li>
 <li><strong>String mapping:</strong> for a MIDI guitar sending one channel per string, choose <strong>channel 1 = high string</strong> or <strong>channel 1 = low string</strong>, so each note lights on the right string. For a keyboard, choose <strong>Pitch only</strong>: the note lights at every position where it can be played.</li>
-<li><strong>Transpose incoming notes:</strong> shifts notes up or down by up to 24 half steps, if your device sends them at the wrong pitch.</li>
+<li><strong>Transpose incoming notes:</strong> shifts notes up or down by up to 24 half steps. Helpful if your device sends them at the wrong pitch.</li>
 <li><strong>Show MIDI status on the fretboard (M).</strong></li>
 </ul>
 <p><strong>No MIDI device?</strong> Click and hold any position on the board to light it.</p>
@@ -118,12 +170,65 @@
 <p>Song presets save a key and mode for each song, so you can switch between them with a click or a MIDI Program Change.</p>
 <ul>
 <li><strong>+ Add preset</strong> (Settings &gt; Song presets) adds a preset with the current key and mode. Give it a song name, and change its key or mode from its menus.</li>
-<li><strong>▶</strong> loads a preset; <strong>×</strong> removes it.</li>
-<li>Each preset is numbered: <strong>PC 1</strong>, <strong>PC 2</strong> and so on. An incoming MIDI Program Change 1 loads preset 1, Program Change 2 loads preset 2, and a notice at the top names what loaded.</li>
+<li><strong>▶</strong> loads a preset; <strong>×</strong> deletes it.</li>
+<li>Each preset is numbered: <strong>PC 1</strong>, <strong>PC 2</strong> and so on. An incoming MIDI Program Change 1 loads preset 1, Program Change 2 loads preset 2, and a notice at the top of the fretboard screen names what loaded.</li>
 <li><strong>Listen for Program Change on:</strong> pick the channel your controller or recording software sends on, so other gear (such as a guitar synth changing patches) doesn't load presets by accident.</li>
 </ul>
 <p>Many programs number programs from 0 rather than 1. If program 1 in your software loads preset 2, send one lower.</p>
 <p>Anything that sends Program Change can drive presets: a footswitch, a multi-effects unit, a keyboard, or recording software such as Logic Pro sending through the Mac's IAC Driver.</p>
+<h2 id="example-program-change-from-logic-pro-on-a-mac">Example: Program Change from Logic Pro on a Mac</h2>
+<p>This example shows one setup that works: Logic Pro on a Mac, with the app open in Google Chrome. Other recording software and computers need similar steps: a virtual MIDI connection from the software to the browser, and a track that sends Program Change through it.</p>
+<p>The example sends on <strong>channel 16</strong>. That isn't required, but a channel used only for song presets keeps Program Change messages from other gear (such as a guitar synth changing patches) from loading presets by accident.</p>
+<p><strong>Numbering:</strong> Logic counts programs from 0 and the app counts presets from 1. Logic program <strong>0</strong> loads preset <strong>1</strong>, program <strong>1</strong> loads preset <strong>2</strong>, and so on.</p>
+<h3 id="1-turn-on-the-macs-iac-driver">1. Turn on the Mac's IAC Driver</h3>
+<p>The IAC Driver is a virtual MIDI cable built into macOS.</p>
+<ol>
+<li>Open the <strong>Audio MIDI Setup</strong> app (in Applications &gt; Utilities).</li>
+<li>Choose <strong>Window &gt; Show MIDI Studio</strong>.</li>
+<li>Double-click <strong>IAC Driver</strong>.</li>
+<li>Tick <strong>Device is online</strong> and close the window.</li>
+</ol>
+<p>If Chrome or Logic was open when you did this, quit it completely (<strong>Cmd+Q</strong>) and reopen it so it sees the new connection.</p>
+<h3 id="2-set-up-the-app">2. Set up the app</h3>
+<p>In the app's Settings:</p>
+<ul>
+<li><strong>MIDI &gt; Input:</strong> All inputs (or IAC Driver Bus 1).</li>
+<li><strong>Song presets &gt; Listen for Program Change on:</strong> Channel 16.</li>
+<li><strong>Song presets:</strong> make one preset for each key and mode you want to call up.</li>
+</ul>
+<h3 id="3-make-a-logic-track-that-sends-to-the-iac-driver">3. Make a Logic track that sends to the IAC Driver</h3>
+<ol>
+<li>Create an <strong>External MIDI</strong> track.</li>
+<li>Select the track and press <strong>I</strong> to show the Inspector on the left.</li>
+<li>Open the <strong>Track</strong> section by clicking its disclosure triangle.</li>
+<li>Set <strong>MIDI Output</strong> to <strong>IAC Driver Bus 1</strong> (it starts as "Off").</li>
+<li>Set <strong>MIDI Out Channel</strong> to <strong>16</strong>.</li>
+</ol>
+<p>The Rev and Chor knobs in this track's mixer strip play no part here.</p>
+<h3 id="4-test-it">4. Test it</h3>
+<ol>
+<li>In the track's Inspector, <strong>tick the checkbox to the left of Program</strong>. With the box unticked, changing the number sends nothing.</li>
+<li>Pick a program number. Logic sends it right away.</li>
+<li>A notice at the top of the fretboard screen shows "PC 1: …", or "no preset" if that number has no preset yet. Either one means the connection works.</li>
+</ol>
+<h3 id="5-put-the-changes-into-a-song">5. Put the changes into a song</h3>
+<ol>
+<li>On the track, Control-click at bar 1 and choose <strong>Create MIDI Region</strong>. Drag its right edge so it covers the song.</li>
+<li>Select the region and open the Event List: press <strong>D</strong> and click the <strong>Event</strong> tab, or choose <strong>Window &gt; Open Event List</strong>. (In Logic Pro 12, <strong>E</strong> opens the Piano Roll, not the Event List.)</li>
+<li>Move the playhead to where the change should happen.</li>
+<li>Set the event-type menu next to <strong>+</strong> to <strong>Program Change</strong> and click <strong>+</strong>.</li>
+<li>Set the event's position, channel <strong>16</strong>, and the program number.</li>
+<li>Repeat for each change, then press Play. The fretboard switches as the playhead passes each event.</li>
+</ol>
+<p><strong>Starting mid-song:</strong> turn on <strong>File &gt; Project Settings &gt; MIDI &gt; Chase &gt; Program Change</strong>, so Logic sends the latest Program Change whenever you start or stop playback.</p>
+<p><strong>After setup:</strong> you can untick the Inspector's Program box. Otherwise it sends its own number whenever you select the track or open the project.</p>
+<h3 id="if-nothing-arrives">If nothing arrives</h3>
+<ul>
+<li>Is the <strong>Program</strong> box in the Inspector ticked (for the test)?</li>
+<li>Does <strong>MIDI Output</strong> still say IAC Driver Bus 1, not Off?</li>
+<li>In the app's <strong>Settings &gt; MIDI</strong>, does the Status line list IAC Driver Bus 1? If not, quit and reopen Chrome.</li>
+<li>Do Logic's <strong>MIDI Out Channel</strong> and the app's <strong>Listen for Program Change on</strong> match (both 16, or the app set to Any channel)?</li>
+</ul>
 <h2 id="keyboard-shortcuts">Keyboard shortcuts</h2>
 <p>Press <strong>K</strong> to show the shortcuts bubble on screen. Shortcuts pause while you type in a number box or menu in Settings; click the fretboard to resume.</p>
 <table>
@@ -156,7 +261,7 @@
 </tr>
 <tr>
 <td>&lt; &gt; (comma, period)</td>
-<td>Previous / next palette (T also goes forward)</td>
+<td>Previous / next palette</td>
 </tr>
 <tr>
 <td>← →</td>

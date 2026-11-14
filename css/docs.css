@@ -18,3 +18,23 @@ code { font: 14px Menlo, Consolas, monospace; background: var(--head); padding: 
 table { border-collapse: collapse; margin: 6px 0 18px; width: 100%; font-size: 15px; }
 th, td { border: 1px solid var(--line); padding: 6px 9px; text-align: left; vertical-align: top; }
 th { background: var(--head); }
+
+/* About page: pictures that enlarge when clicked (js/lightbox.js) */
+main img.pic { display: block; width: 100%; height: auto; margin: 14px 0; cursor: zoom-in; }
+main img.after-gap { margin-top: 2.6em; }
+main p.caption { text-align: center; }
+main img.for-light { display: none; }   /* the Rotundum: white lines on dark pages, black lines on light ones */
+@media (prefers-color-scheme: light) { main img.for-dark { display: none; } main img.for-light { display: block; } }
+#lightbox { position: fixed; inset: 0; z-index: 100; display: none; align-items: center; justify-content: center;
+  background: rgba(0, 0, 0, 0.96); cursor: zoom-out; }
+#lightbox.open { display: flex; }
+#lightbox img { max-width: 94vw; max-height: 92vh; object-fit: contain; }
+#lightbox img.can-zoom { cursor: zoom-in; }
+#lightbox.full { display: block; overflow: auto; }
+#lightbox.full img { max-width: none; max-height: none; display: block; margin: 0 auto; cursor: zoom-out; }
+#lightbox button { position: fixed; top: 14px; right: 18px; width: 40px; height: 40px; border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.5); background: rgba(0,0,0,0.5); color: #fff; font-size: 26px; line-height: 1; cursor: pointer; }
+@media (prefers-color-scheme: light) {
+  #lightbox { background: rgba(250, 248, 244, 0.97); }
+  #lightbox button { border-color: rgba(0,0,0,0.4); background: rgba(255,255,255,0.6); color: #111; }
+}
