@@ -2,7 +2,7 @@
 // Addresses go to Kevin's SwipeOne workspace through an incoming webhook, tagged costar_system_notify.
 // Until SIGNUP_URL is filled in, the form stays hidden.
 (function () {
-  const SIGNUP_URL = '';   // SwipeOne incoming-webhook URL (https://integrations-api.swipeone.com/...)
+  const SIGNUP_URL = 'https://integrations-api.swipeone.com/webhooks/apps/generic-webhooks/6af806d27fb4b1dc1a54d1b8';   // SwipeOne incoming-webhook URL (https://integrations-api.swipeone.com/...)
   const TAG = 'costar_system_notify';
   if (!SIGNUP_URL) return;
   const looksLikeEmail = v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
