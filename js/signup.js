@@ -23,7 +23,7 @@
         await fetch(SIGNUP_URL, { method: 'POST', mode: 'no-cors',
           body: new URLSearchParams({ email, tags: TAG, source: 'COSTAR Spiral-Tuned Guitar' }) });
         form.querySelector('.signup-row').hidden = true;
-        msg.textContent = 'Thank you. You’ll hear when the complete COSTAR system is presented.';
+        msg.textContent = 'Thank you. You’re signed up for occasional COSTAR updates.';
         try { if (window.rybbit) window.rybbit.event('Signed up for COSTAR news'); } catch (err) {}
       } catch (err) {
         form.querySelector('button').disabled = false;
