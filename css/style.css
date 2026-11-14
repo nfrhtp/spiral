@@ -268,3 +268,4 @@ form.signup .signup-note { margin: 8px 0 0; font-size: 0.85em; opacity: 0.75; }
 form.signup .signup-msg { margin: 6px 0 0; font-size: 0.9em; }
 form.signup .signup-msg:empty { display: none; }
 form.signup .signup-trap { position: absolute; left: -9999px; width: 1px; height: 1px; }
+#panel form.signup .signup-text { font-size: 13px; }   /* same size as the Sign up button */

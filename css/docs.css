@@ -50,3 +50,4 @@ form.signup .signup-msg { margin: 6px 0 0; font-size: 0.9em; }
 form.signup .signup-msg:empty { display: none; }
 form.signup .signup-trap { position: absolute; left: -9999px; width: 1px; height: 1px; }
 main p.copyright { margin-top: 2.6em; }
+form.signup .signup-text, form.signup button, form.signup input[type=email] { font-size: 14px; }
