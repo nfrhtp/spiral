@@ -319,6 +319,7 @@
         b.textContent = `${tag}-${m.short || m.name}`;
         b.title = m.name;
         b.dataset.value = m.id;
+        if (!m.penta) b.dataset.degree = tag;   // colors the button with its root's chroma color (style.css)
         b.onclick = () => set({ mode: m.id });
         box.appendChild(b);
       });
