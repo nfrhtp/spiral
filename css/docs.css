@@ -38,3 +38,15 @@ main img.for-light { display: none; }   /* the Rotundum: white lines on dark pag
   #lightbox { background: rgba(250, 248, 244, 0.97); }
   #lightbox button { border-color: rgba(0,0,0,0.4); background: rgba(255,255,255,0.6); color: #111; }
 }
+
+/* "Notify me" sign-up (js/signup.js) */
+form.signup { margin: 2.6em 0 0; padding: 14px; border: 1px solid var(--signup-line, rgba(127,127,127,0.35)); border-radius: 10px; text-align: center; }
+form.signup .signup-text { margin: 0 0 10px; font-weight: 600; }
+form.signup .signup-row { display: flex; gap: 8px; }
+form.signup input[type=email] { flex: 1; min-width: 0; padding: 7px 9px; border-radius: 6px; border: 1px solid rgba(127,127,127,0.5); background: transparent; color: inherit; font: inherit; }
+form.signup button { padding: 7px 12px; border-radius: 6px; border: 1px solid rgba(127,127,127,0.5); background: rgba(127,127,127,0.15); color: inherit; font: inherit; cursor: pointer; white-space: nowrap; }
+form.signup .signup-note { margin: 8px 0 0; font-size: 0.85em; opacity: 0.75; }
+form.signup .signup-msg { margin: 6px 0 0; font-size: 0.9em; }
+form.signup .signup-msg:empty { display: none; }
+form.signup .signup-trap { position: absolute; left: -9999px; width: 1px; height: 1px; }
+main p.copyright { margin-top: 2.6em; }
