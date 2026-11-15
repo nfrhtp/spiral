@@ -529,7 +529,7 @@
   }
 
   // ---------- keyboard ----------
-  const SHORTCUT_KEYS = 'hkfvodclgnistpmau[],.<>';
+  const SHORTCUT_KEYS = 'hkfvodclgnistpma[],.<>';
   // While the Userback suggestion form or its screen markup is open, keys belong to it.
   const userbackOpen = () => [...document.querySelectorAll('.userback-controls, .userback-overlay, .userback-toolbar-tool')]
     .some(el => el.getClientRects().length);
@@ -556,7 +556,7 @@
         if (state.tuning === 'standard') { notice('Twelve strings with All Fourths tuning only'); break; }
         set({ view: state.view === 'six' ? 'spiral' : 'six' });
         break;
-      case 'u': {
+      case 't': {   // T = Tuning (palettes are < >)
         const toStandard = state.tuning !== 'standard', wasTwelve = state.view !== 'six';
         set({ tuning: toStandard ? 'standard' : 'fourths' });
         notice('Tuning: ' + (toStandard ? 'Standard' + (wasTwelve ? ' · Six strings shown (Twelve strings with All Fourths only)' : '') : 'All Fourths'));
@@ -607,8 +607,8 @@
         notice('Dot size: ' + next + '%');
         break;
       }
-      // Palettes: > (the . key) forward, < (the , key) back; T still steps forward.
-      case 't': case '.': case '>': stepPalette(1); break;
+      // Palettes: > (the . key) forward, < (the , key) back.
+      case '.': case '>': stepPalette(1); break;
       case ',': case '<': stepPalette(-1); break;
       case 'p': {
         // Off ↔ the pattern kind that fits the mode: chroma in diatonic modes, luma in pentatonic ones.
