@@ -491,6 +491,17 @@
     notice('Palette: ' + next.name);
   }
 
+  // Relative modes (Shift+↑ ↓): keep the same notes and move the root to the previous/next mode
+  // that shares them: C Ionian → D Dorian → E Phrygian …, or Ritsu → Minor → Major … in pentatonic.
+  function stepRelative(dir) {
+    const cur = Theory.modeById(state.mode);
+    const family = Theory.MODES.filter(m => !!m.penta === !!cur.penta);
+    const next = family[Theory.mod(family.indexOf(cur) + dir, family.length)];
+    const parent = Theory.parentRoot(state.root, cur.id);
+    set({ mode: next.id, root: Theory.mod(parent + next.offset, 12) });
+    notice('Relative mode: ' + Theory.describe(state.root, state.mode));
+  }
+
   // ---------- keyboard ----------
   const SHORTCUT_KEYS = 'hkfvodclgnistpm[],.<>';
   document.addEventListener('keydown', e => {
@@ -570,6 +581,7 @@
       case 'arrowright': set({ root: Theory.mod(state.root + 1, 12) }); break;
       case 'arrowup':
       case 'arrowdown': {
+        if (e.shiftKey) { stepRelative(e.key === 'ArrowUp' ? -1 : 1); break; }
         const k = Theory.MODES.findIndex(m => m.id === state.mode) + (e.key === 'ArrowUp' ? -1 : 1);
         set({ mode: Theory.MODES[Theory.mod(k, Theory.MODES.length)].id });
         break;

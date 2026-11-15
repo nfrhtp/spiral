@@ -271,9 +271,10 @@ form.signup .signup-trap { position: absolute; left: -9999px; width: 1px; height
 #panel form.signup .signup-text { font-size: 13px; }   /* same size as the Sign up button */
 
 /* Diatonic mode buttons wear their root's chroma color: pale (Pastel Night) when not chosen,
-   deeper (Autumn) when chosen. Degree 1 is white, and black when chosen. Same in every palette. */
+   deeper (Jewel) when chosen. Degree 1 is the opposite of the palette's chosen-button color, and that color when chosen. Same in every palette. */
 #panel #modes button[data-degree] { color: #1e1e1e; border-color: rgba(0,0,0,0.18); }
 #panel #modes button[data-degree="1"] { background: #ffffff; border-color: #9a9a9a; }
+body.dark #panel #modes button[data-degree="1"] { background: #111111; border-color: #777777; color: #ffffff; }   /* the opposite of the chosen-button color */
 #panel #modes button[data-degree="2"] { background: #a9e8a0; }
 #panel #modes button[data-degree="3"] { background: #fff2a8; }
 #panel #modes button[data-degree="4"] { background: #ffc69b; }
@@ -281,10 +282,10 @@ form.signup .signup-trap { position: absolute; left: -9999px; width: 1px; height
 #panel #modes button[data-degree="6"] { background: #a9d6f7; }
 #panel #modes button[data-degree="7"] { background: #dcbaf2; }
 #panel #modes button[data-degree].active { color: #ffffff; font-weight: 600; outline: 2px solid var(--fg); outline-offset: 2px; }
-#panel #modes button[data-degree="1"].active { background: #1e1e1e; border-color: #1e1e1e; }
-#panel #modes button[data-degree="2"].active { background: #6f8f2f; border-color: #6f8f2f; }
-#panel #modes button[data-degree="3"].active { background: #d9a520; border-color: #d9a520; color: #1e1e1e; }
-#panel #modes button[data-degree="4"].active { background: #cf6a2a; border-color: #cf6a2a; }
-#panel #modes button[data-degree="5"].active { background: #a8382d; border-color: #a8382d; }
-#panel #modes button[data-degree="6"].active { background: #4b7ea6; border-color: #4b7ea6; }
-#panel #modes button[data-degree="7"].active { background: #7d5a8e; border-color: #7d5a8e; }
+body #panel #modes button[data-degree="1"].active { background: var(--btn-active); border-color: var(--btn-active); color: var(--btn-active-fg); }
+#panel #modes button[data-degree="2"].active { background: #0f9d58; border-color: #0f9d58; }
+#panel #modes button[data-degree="3"].active { background: #ffb300; border-color: #ffb300; color: #1e1e1e; }
+#panel #modes button[data-degree="4"].active { background: #f4511e; border-color: #f4511e; }
+#panel #modes button[data-degree="5"].active { background: #d81b60; border-color: #d81b60; }
+#panel #modes button[data-degree="6"].active { background: #1e88e5; border-color: #1e88e5; }
+#panel #modes button[data-degree="7"].active { background: #8e24aa; border-color: #8e24aa; }
