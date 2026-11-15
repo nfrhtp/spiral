@@ -530,7 +530,11 @@
 
   // ---------- keyboard ----------
   const SHORTCUT_KEYS = 'hkfvodclgnistpm[],.<>';
+  // While the Userback suggestion form or its screen markup is open, keys belong to it.
+  const userbackOpen = () => [...document.querySelectorAll('.userback-controls, .userback-overlay, .userback-toolbar-tool')]
+    .some(el => el.getClientRects().length);
   document.addEventListener('keydown', e => {
+    if (userbackOpen()) return;
     const t = e.target;
     // A ticked checkbox keeps the focus but takes no typing, so shortcuts carry on there.
     const typing = ['INPUT', 'SELECT', 'TEXTAREA'].includes(t.tagName) && t.type !== 'checkbox';
