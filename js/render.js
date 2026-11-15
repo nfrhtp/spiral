@@ -161,14 +161,10 @@ const Render = (() => {
   }
 
   // The open-string note to the left of each of the six real strings, styled like the fret numbers.
-  // In the Spiral view the six playable rows (3..8) get one, plus the top and bottom rows. Hidden with the fret numbers in clean view.
+  // In the Spiral view every row gets one. Hidden with the fret numbers in clean view.
   function drawOpenNames(gp, g, state, size) {
     // Open strings are named the way guitarists name them (D G C F Bb Eb), whatever the key.
-    const rows = [];
-    for (let r = g.anchorRow; r < g.anchorRow + 6; r++) rows.push(r);
-    // Twelve strings: also name the outermost rows (the highest and lowest strings shown).
-    if (g.rows > 6) rows.push(0, g.rows - 1);
-    for (const r of rows) {
+    for (let r = 0; r < g.rows; r++) {
       const pc = Theory.mod(openOfRow(state, r), 12);
       const t = text(gp, g.ml - 18, g.y(r), Theory.NAMES_FLAT[pc], 'fretnum', size);
       t.setAttribute('text-anchor', 'end');
