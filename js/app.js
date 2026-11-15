@@ -529,7 +529,7 @@
   }
 
   // ---------- keyboard ----------
-  const SHORTCUT_KEYS = 'hkfvodclgnistpm[],.<>';
+  const SHORTCUT_KEYS = 'hkfvodclgnistpma[],.<>';
   // While the Userback suggestion form or its screen markup is open, keys belong to it.
   const userbackOpen = () => [...document.querySelectorAll('.userback-controls, .userback-overlay, .userback-toolbar-tool')]
     .some(el => el.getClientRects().length);
@@ -555,6 +555,11 @@
       case 'v':
         if (state.tuning === 'standard') { notice('Twelve strings with All Fourths tuning only'); break; }
         set({ view: state.view === 'six' ? 'spiral' : 'six' });
+        break;
+      case 'a':
+        if (state.view === 'six') { notice('Abstract grid with Twelve strings only · Type V for twelve strings'); break; }
+        set({ spiralStyle: state.spiralStyle === 'grid' ? 'neck' : 'grid' });
+        notice('Fretboard style: ' + (state.spiralStyle === 'grid' ? 'Abstract grid' : 'Guitar neck'));
         break;
       case 'o': set({ orientation: state.orientation === 'mirror' ? 'standard' : 'mirror' }); break;
       case 'd': set({ dots: state.dots === 'all' ? 'played' : 'all' }); break;

@@ -222,6 +222,15 @@ const Render = (() => {
     for (let k = -1; k <= state.frets; k++) {
       el('line', { x1: g.wire(k), y1: top, x2: g.wire(k), y2: bottom, class: 'fret' }, gp);
     }
+    // The neck's position markers (fret inlays), in the middle of the six real strings.
+    const mid = g.rows / 2, inlayR = g.cellW * 0.075;
+    for (let f = 1; f <= state.frets; f++) {
+      if (INLAY_SINGLE.includes(f)) el('circle', { cx: g.x(f), cy: (g.y(mid - 1) + g.y(mid)) / 2, r: inlayR, class: 'inlay' }, gp);
+      if (INLAY_DOUBLE.includes(f)) {
+        el('circle', { cx: g.x(f), cy: (g.y(mid - 2) + g.y(mid - 1)) / 2, r: inlayR, class: 'inlay' }, gp);
+        el('circle', { cx: g.x(f), cy: (g.y(mid) + g.y(mid + 1)) / 2, r: inlayR, class: 'inlay' }, gp);
+      }
+    }
     for (let r = 0; r < g.rows; r++) {
       el('line', { x1: left, y1: g.y(r), x2: right, y2: g.y(r), class: 'string', 'stroke-width': STRING_WIDTHS[5] }, gp);
     }
