@@ -151,10 +151,16 @@
     return DEGREE_COLORS[Theory.MAJOR.indexOf(m.offset) + 1];
   }
 
-  // Dark or light text on each colored diatonic mode button, whichever reads better on the palette's color.
+  // Dark or light text on each colored diatonic mode button.
+  // Kevin's choices per palette: the degrees whose buttons get white text (the rest dark).
+  // Palettes not listed pick by contrast.
+  const WHITE_TEXT = { jewel: [2, 3, 4, 5, 6, 7], paper: [4, 5], studio: [2, 4, 5, 6, 7],
+                       okabe: [2, 4, 5, 6, 7], autumn: [2, 4, 5, 6, 7], pop: [5, 6] };
   function contrastModeButtons() {
+    const chosen = WHITE_TEXT[state.theme];
     document.querySelectorAll('#modes button[data-degree]').forEach(b => {
       if (b.dataset.degree === '1') { b.style.color = ''; return; }
+      if (chosen) { b.style.color = chosen.includes(+b.dataset.degree) ? '#ffffff' : '#111111'; return; }
       const m = getComputedStyle(b).backgroundColor.match(/\d+(\.\d+)?/g);
       if (!m) return;
       const lin = v => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
