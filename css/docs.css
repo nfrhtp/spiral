@@ -54,3 +54,4 @@ form.signup .signup-text, form.signup button, form.signup input[type=email] { fo
 main form.signup { width: fit-content; max-width: 100%; margin-left: auto; margin-right: auto; }   /* just wide enough for its sentence */
 main form.signup input[type=email] { flex: 0 1 36ch; }
 main form.signup .signup-row { justify-content: center; }
+main img.logo { cursor: default; }   /* the logo isn't enlarged */
