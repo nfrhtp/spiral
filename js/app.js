@@ -151,6 +151,18 @@
     return DEGREE_COLORS[Theory.MAJOR.indexOf(m.offset) + 1];
   }
 
+  // Dark or light text on each colored diatonic mode button, whichever reads better on the palette's color.
+  function contrastModeButtons() {
+    document.querySelectorAll('#modes button[data-degree]').forEach(b => {
+      if (b.dataset.degree === '1') { b.style.color = ''; return; }
+      const m = getComputedStyle(b).backgroundColor.match(/\d+(\.\d+)?/g);
+      if (!m) return;
+      const lin = v => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
+      const L = 0.2126 * lin(+m[0]) + 0.7152 * lin(+m[1]) + 0.0722 * lin(+m[2]);
+      b.style.color = (L + 0.05) / 0.05 > 1.05 / (L + 0.05) ? '#111111' : '#ffffff';
+    });
+  }
+
   // ---------- rendering ----------
   function render() {
     const t = themeById(state.theme);
@@ -161,6 +173,7 @@
     held.clear();
     $('#badge').textContent = `${Theory.describe(state.root, state.mode)}  ·  root = ${rootLabel(state.mode)}`;
     syncPanel();
+    contrastModeButtons();
     save();
   }
 
