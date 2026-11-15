@@ -529,7 +529,7 @@
   }
 
   // ---------- keyboard ----------
-  const SHORTCUT_KEYS = 'hkfvodclgnistpma[],.<>';
+  const SHORTCUT_KEYS = 'hkfvodclgnistpmau[],.<>';
   // While the Userback suggestion form or its screen markup is open, keys belong to it.
   const userbackOpen = () => [...document.querySelectorAll('.userback-controls, .userback-overlay, .userback-toolbar-tool')]
     .some(el => el.getClientRects().length);
@@ -556,6 +556,12 @@
         if (state.tuning === 'standard') { notice('Twelve strings with All Fourths tuning only'); break; }
         set({ view: state.view === 'six' ? 'spiral' : 'six' });
         break;
+      case 'u': {
+        const toStandard = state.tuning !== 'standard', wasTwelve = state.view !== 'six';
+        set({ tuning: toStandard ? 'standard' : 'fourths' });
+        notice('Tuning: ' + (toStandard ? 'Standard' + (wasTwelve ? ' · Six strings shown (Twelve strings with All Fourths only)' : '') : 'All Fourths'));
+        break;
+      }
       case 'a':
         if (state.view === 'six') { notice('Abstract grid with Twelve strings only · Type V for twelve strings'); break; }
         set({ spiralStyle: state.spiralStyle === 'grid' ? 'neck' : 'grid' });
