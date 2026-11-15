@@ -122,6 +122,7 @@
     for (const k in TRACKED) if (k in patch && patch[k] !== state[k]) trackChoice(k);
     Object.assign(state, patch);
     const nowPenta = isPenta(state.mode);
+    if (state.tuning === 'standard') state.view = 'six';   // the 12-row Spiral only makes sense in all fourths
     // Scale pattern follows the mode family: chroma (3 per string) in diatonic modes, luma (2 per
     // string) in pentatonic ones. Crossing families switches a running pattern to the other kind.
     if (isPenta(state.mode) && state.pattern === 'chroma') state.pattern = 'luma';
@@ -436,8 +437,8 @@
     mark($('#themes'), themeById(state.theme).id);
     document.querySelectorAll('.btn-row[data-field]').forEach(row => mark(row, state[row.dataset.field]));
     const spiralBtn = document.querySelector('.btn-row[data-field="view"] button[data-value="spiral"]');
-    spiralBtn.disabled = false;
-    spiralBtn.title = '';
+    spiralBtn.disabled = state.tuning === 'standard';
+    spiralBtn.title = spiralBtn.disabled ? 'Twelve strings needs All Fourths tuning' : '';
     // The six-string view is always drawn as a guitar neck, so there the grid style is unavailable and
     // "Guitar neck" shows as chosen. The saved choice is kept for when Twelve strings comes back.
     const styleRow = document.querySelector('.btn-row[data-field="spiralStyle"]');
@@ -552,12 +553,13 @@
       case 'k': toggleHelp(); break;
       case 'f': toggleFullscreen(); break;
       case 'v':
+        if (state.tuning === 'standard') { notice('Twelve strings with All Fourths tuning only'); break; }
         set({ view: state.view === 'six' ? 'spiral' : 'six' });
         break;
       case 't': {   // T = Tuning (palettes are < >)
-        const toStandard = state.tuning !== 'standard';
+        const toStandard = state.tuning !== 'standard', wasTwelve = state.view !== 'six';
         set({ tuning: toStandard ? 'standard' : 'fourths' });
-        notice('Tuning: ' + (toStandard ? 'Standard' : 'All Fourths'));
+        notice('Tuning: ' + (toStandard ? 'Standard' + (wasTwelve ? ' · Six strings shown (Twelve strings with All Fourths only)' : '') : 'All Fourths'));
         break;
       }
       case 'a':

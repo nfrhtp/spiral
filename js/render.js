@@ -62,11 +62,10 @@ const Render = (() => {
 
   // MIDI note of the open string on a given row.
   function openOfRow(state, row) {
-    const base = state.view === 'six' ? 0 : 3;   // row of the lowest real string
-    // Standard tuning: the 4th and 5th real strings up from the lowest are a major third apart, so
-    // every string from the 5th up sits a semitone lower. In the twelve-string view the extra rows
-    // carry on in fourths beyond the real strings (below the low string, above the high one).
-    const third = state.tuning === 'standard' && row - base >= 4 ? 1 : 0;
+    const base = state.view === 'six' ? 0 : 3;
+    // Standard tuning (six-string view only): the 4th and 5th strings up from the lowest
+    // (rows 3 and 4) are a major third apart, so every string from row 4 up sits a semitone lower.
+    const third = state.tuning === 'standard' && state.view === 'six' && row >= 4 ? 1 : 0;
     return state.openLow + 5 * (row - base) - third;
   }
 
@@ -162,10 +161,14 @@ const Render = (() => {
   }
 
   // The open-string note to the left of each of the six real strings, styled like the fret numbers.
-  // In the Spiral view only the six playable rows (3..8) get one. Hidden with the fret numbers in clean view.
+  // In the Spiral view the six playable rows (3..8) get one, plus the top and bottom rows. Hidden with the fret numbers in clean view.
   function drawOpenNames(gp, g, state, size) {
     // Open strings are named the way guitarists name them (D G C F Bb Eb), whatever the key.
-    for (let r = g.anchorRow; r < g.anchorRow + 6; r++) {
+    const rows = [];
+    for (let r = g.anchorRow; r < g.anchorRow + 6; r++) rows.push(r);
+    // Twelve strings: also name the outermost rows (the highest and lowest strings shown).
+    if (g.rows > 6) rows.push(0, g.rows - 1);
+    for (const r of rows) {
       const pc = Theory.mod(openOfRow(state, r), 12);
       const t = text(gp, g.ml - 18, g.y(r), Theory.NAMES_FLAT[pc], 'fretnum', size);
       t.setAttribute('text-anchor', 'end');
