@@ -154,8 +154,8 @@
   // Dark or light text on each colored diatonic mode button.
   // Kevin's choices per palette: the degrees whose buttons get white text (the rest dark).
   // Palettes not listed pick by contrast.
-  const WHITE_TEXT = { jewel: [2, 3, 4, 5, 6, 7], paper: [4, 5], studio: [2, 4, 5, 6, 7],
-                       okabe: [2, 4, 5, 6, 7], autumn: [2, 4, 5, 6, 7], pop: [5, 6] };
+  const WHITE_TEXT = { jewel: [2, 4, 5, 6, 7], paper: [4, 5], studio: [2, 4, 5, 6, 7],
+                       okabe: [2, 4, 5, 6, 7], autumn: [2, 4, 5, 6, 7], pop: [5, 6, 7] };
   function contrastModeButtons() {
     const chosen = WHITE_TEXT[state.theme];
     document.querySelectorAll('#modes button[data-degree]').forEach(b => {
