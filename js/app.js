@@ -333,7 +333,14 @@
         b.title = m.name;
         b.dataset.value = m.id;
         if (!m.penta) b.dataset.degree = tag;   // colors the button with its root's chroma color (style.css)
-        b.onclick = () => set({ mode: m.id });
+        // Shift-click: Relative modes — jump to this mode keeping the same notes (the root moves).
+        b.onclick = e => {
+          const cur = Theory.modeById(state.mode);
+          if (e.shiftKey && !!cur.penta === !!m.penta) {
+            set({ mode: m.id, root: Theory.mod(Theory.parentRoot(state.root, cur.id) + m.offset, 12) });
+            notice('Relative mode: ' + Theory.describe(state.root, state.mode));
+          } else set({ mode: m.id });
+        };
         box.appendChild(b);
       });
     }
