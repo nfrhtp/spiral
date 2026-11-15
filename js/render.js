@@ -62,10 +62,11 @@ const Render = (() => {
 
   // MIDI note of the open string on a given row.
   function openOfRow(state, row) {
-    const base = state.view === 'six' ? 0 : 3;
-    // Standard tuning (six-string view only): the 4th and 5th strings up from the lowest
-    // (rows 3 and 4) are a major third apart, so every string from row 4 up sits a semitone lower.
-    const third = state.tuning === 'standard' && state.view === 'six' && row >= 4 ? 1 : 0;
+    const base = state.view === 'six' ? 0 : 3;   // row of the lowest real string
+    // Standard tuning: the 4th and 5th real strings up from the lowest are a major third apart, so
+    // every string from the 5th up sits a semitone lower. In the twelve-string view the extra rows
+    // carry on in fourths beyond the real strings (below the low string, above the high one).
+    const third = state.tuning === 'standard' && row - base >= 4 ? 1 : 0;
     return state.openLow + 5 * (row - base) - third;
   }
 
