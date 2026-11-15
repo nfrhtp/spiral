@@ -283,3 +283,4 @@ body.dark #panel #modes button[data-degree="1"] { background: #111111; border-co
 #panel #modes button[data-degree="6"] { background: var(--c6); }
 #panel #modes button[data-degree="7"] { background: var(--c7); }
 #panel #modes button[data-degree].active { outline: 2px solid var(--fg); outline-offset: 2px; }
+#panel h2 .h2-also { margin-left: 22px; }   /* "Relative modes Shift ↑ ↓" beside the Modes heading */
