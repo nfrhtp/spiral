@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <title>COSTAR Spiral-Tuned Guitar</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="css/style.css?v=20261115233211">
+<link rel="stylesheet" href="css/style.css?v=20261118143715">
 <script src="https://app.rybbit.io/api/script.js?siteId=1d7a8f01dfc9" defer></script>
 </head>
 <body class="theme-light">
@@ -44,23 +44,7 @@
   </section>
 
   <section>
-    <h2>View <kbd>V</kbd></h2>
-    <div class="btn-row" data-field="view">
-      <button data-value="six">Six strings</button>
-      <button data-value="spiral">Twelve strings</button>
-    </div>
-    <p class="hint">Fretboard style <kbd>A</kbd></p>
-    <div class="btn-row" data-field="spiralStyle">
-      <button data-value="neck">Guitar neck</button>
-      <button data-value="grid">Abstract grid</button>
-    </div>
-    <p class="hint">Abstract grid with Twelve strings only.</p>
-    <label><input type="checkbox" id="clean"> Hide key, MIDI status and fret numbers <kbd>I</kbd></label>
-    <p class="hint">Dots <kbd>D</kbd></p>
-    <div class="btn-row" data-field="dots">
-      <button data-value="all">All scale notes</button>
-      <button data-value="played">Only notes being played</button>
-    </div>
+    <h2>Dots</h2>
     <label><input type="checkbox" id="chroma"> Chroma sequence (diatonic, colored) <kbd>C</kbd></label>
     <p class="hint">Chroma sequence dots with diatonic only</p>
     <p class="hint">Chroma dot labels <kbd>N</kbd></p>
@@ -77,11 +61,10 @@
       <button data-value="name">Note names</button>
       <button data-value="degree">Scale degrees</button>
     </div>
-    <p class="hint">Dot size <kbd>S</kbd></p>
-    <div class="btn-row" data-field="dotSize">
-      <button data-value="100">100%</button>
-      <button data-value="75">75%</button>
-      <button data-value="50">50%</button>
+    <p class="hint">Show <kbd>D</kbd></p>
+    <div class="btn-row" data-field="dots">
+      <button data-value="all">All scale notes</button>
+      <button data-value="played">Only notes being played</button>
     </div>
   </section>
 
@@ -97,18 +80,23 @@
   </section>
 
   <section>
-    <h2>Instrument</h2>
-    <label><span>Lowest open string</span><select id="openLow"></select></label>
-    <label><span>Frets shown</span><input type="number" id="frets" min="12" max="24"></label>
-    <p class="hint">Tuning <kbd>T</kbd></p>
-    <div class="btn-row" data-field="tuning">
-      <button data-value="fourths">All Fourths</button>
-      <button data-value="standard">Standard</button>
+    <h2>View <kbd>V</kbd></h2>
+    <div class="btn-row" data-field="view">
+      <button data-value="six">Six strings</button>
+      <button data-value="spiral">Twelve strings</button>
     </div>
-    <p class="hint">Orientation <kbd>O</kbd></p>
-    <div class="btn-row" data-field="orientation">
-      <button data-value="mirror">Mirror: low string on top</button>
-      <button data-value="standard">Standard: high string on top</button>
+    <p class="hint">Fretboard style <kbd>A</kbd></p>
+    <div class="btn-row" data-field="spiralStyle">
+      <button data-value="neck">Guitar neck</button>
+      <button data-value="grid">Abstract grid</button>
+    </div>
+    <p class="hint">Abstract grid with Twelve strings only.</p>
+    <label><input type="checkbox" id="clean"> Hide key, MIDI status and fret numbers <kbd>I</kbd></label>
+    <p class="hint">Dot size <kbd>S</kbd></p>
+    <div class="btn-row" data-field="dotSize">
+      <button data-value="100">100%</button>
+      <button data-value="75">75%</button>
+      <button data-value="50">50%</button>
     </div>
   </section>
 
@@ -116,6 +104,22 @@
     <h2 id="palette">Palette <kbd>&lt;</kbd> <kbd>&gt;</kbd></h2>
     <div id="themes" class="btn-row"></div>
     <p class="hint"><a href="palettes.html" target="_blank">See all palettes full size</a></p>
+  </section>
+
+  <section class="setup">
+    <h2>Instrument</h2>
+    <p class="hint">Tuning <kbd>T</kbd></p>
+    <div class="btn-row" data-field="tuning">
+      <button data-value="fourths">All Fourths</button>
+      <button data-value="standard">Standard</button>
+    </div>
+    <label><span>Lowest open string</span><select id="openLow"></select></label>
+    <label><span>Frets shown</span><input type="number" id="frets" min="12" max="24"></label>
+    <p class="hint">Orientation <kbd>O</kbd></p>
+    <div class="btn-row" data-field="orientation">
+      <button data-value="mirror">Mirror: low string on top</button>
+      <button data-value="standard">Standard: high string on top</button>
+    </div>
   </section>
 
   <section>
@@ -201,13 +205,13 @@
   </div>
 </div>
 
-<script src="js/theory.js?v=20261115233211"></script>
-<script src="js/render.js?v=20261115233211"></script>
-<script src="js/midi.js?v=20261115233211"></script>
-<script src="js/app.js?v=20261115233211"></script>
-<script src="js/lightbox.js?v=20261115233211"></script>
-<script src="js/contact.js?v=20261115233211"></script>
-<script src="js/userback.js?v=20261115233211"></script>
-<script src="js/signup.js?v=20261115233211"></script>
+<script src="js/theory.js?v=20261118143715"></script>
+<script src="js/render.js?v=20261118143715"></script>
+<script src="js/midi.js?v=20261118143715"></script>
+<script src="js/app.js?v=20261118143715"></script>
+<script src="js/lightbox.js?v=20261118143715"></script>
+<script src="js/contact.js?v=20261118143715"></script>
+<script src="js/userback.js?v=20261118143715"></script>
+<script src="js/signup.js?v=20261118143715"></script>
 </body>
 </html>

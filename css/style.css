@@ -153,6 +153,7 @@ body.no-midi-pill #midi-pill { display: none; }   /* Hide info (I) hides it too,
 #panel h2 { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 18px 0 8px; }
 #panel section { border-top: 1px solid var(--panel-border); }
 #panel section:first-of-type { border-top: 0; }
+#panel section.setup { border-top: 3px double var(--panel-border); margin-top: 16px; }   /* divider: playing and look above, set-up-once below */
 #panel label { display: flex; align-items: center; gap: 8px; margin: 6px 0; }
 #panel label > span { flex: 1; }
 #panel .nowrap { white-space: nowrap; }
