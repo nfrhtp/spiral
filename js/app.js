@@ -381,8 +381,7 @@
     const ol = $('#openLow');
     for (let m = 33; m <= 47; m++) {
       let label = Theory.midiName(m, 0);
-      if (m === 40) label += '  (standard fourths)';
-      if (m === 38) label += '  (down a whole step)';
+      if (m === 40) label += ' (standard)';
       ol.add(new Option(label, m));
     }
     ol.onchange = e => set({ openLow: +e.target.value });
