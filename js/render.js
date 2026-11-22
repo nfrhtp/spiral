@@ -166,7 +166,7 @@ const Render = (() => {
     // Open strings are named the way guitarists name them (D G C F Bb Eb), whatever the key.
     for (let r = 0; r < g.rows; r++) {
       const pc = Theory.mod(openOfRow(state, r), 12);
-      const t = text(gp, g.ml - 18, g.y(r), Theory.NAMES_FLAT[pc], 'fretnum', size);
+      const t = text(gp, g.ml - 18, g.y(r), Theory.NAMES_FLAT[pc], 'fretnum openname', size);
       t.setAttribute('text-anchor', 'end');
     }
   }

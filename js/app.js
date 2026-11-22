@@ -27,6 +27,7 @@
     dots: 'all',                           // 'all' | 'played' (only the notes being played)
     dotSize: 100,                          // 100 | 75 | 50 — dot diameter, % of the original
     clean: false,                          // true hides the key badge, MIDI pill and fret numbers (key I)
+    cleanKeepOpen: false,                  // with clean: keep the open-string names showing (key U)
     midiPill: true,                        // false hides just the MIDI status pill (key M)
     pattern: 'off', patternFret: 8,        // 'off' | 'chroma' | 'luma'
     openLow: 40,                           // E2 for newcomers (Kevin plays D2) — lowest open string (MIDI note)
@@ -172,7 +173,7 @@
   // ---------- rendering ----------
   function render() {
     const t = themeById(state.theme);
-    document.body.className = 'theme-' + t.id + (t.dark ? ' dark' : ' light') + (state.clean ? ' clean' : '') + ((state.clean ? midiPeek : state.midiPill !== false) ? '' : ' no-midi-pill');
+    document.body.className = 'theme-' + t.id + (t.dark ? ' dark' : ' light') + (state.clean ? ' clean' : '') + (state.clean && state.cleanKeepOpen ? ' keep-open' : '') + ((state.clean ? midiPeek : state.midiPill !== false) ? '' : ' no-midi-pill');
     board = Render.build(svg, state);
     trackPattern();
     Live.reset(board, state);
@@ -243,16 +244,18 @@
     // 120 = All Sound Off, 123 = All Notes Off — guitar synths send these when strings are muted.
     if (m.cc === 120 || m.cc === 123) releaseChannel(m.ch);
   });
-  // Program Changes 81–128 (Logic Pro numbers them 80–127) set the display, so a recording can
+  // Program Changes 80–128 (Logic Pro numbers them 79–127) set the display, so a recording can
   // drive it while both hands play. Each number sets ONE option (not a toggle), so a Program Change
   // that arrives twice — Logic's Chase, or a take started mid-song — gives the same result.
-  // Same rules and notices as the keys. Song presets keep PC 1–80. Key, Mode and Relative modes are
+  // Same rules and notices as the keys. Song presets keep PC 1–79. Key, Mode and Relative modes are
   // left out (song presets set those); full screen too (Chrome allows it only from a key or a click).
   // Order agreed with Kevin 2026-11-22; the User Guide's table lists the same numbers.
   const PC_ACTIONS = [
+    // Logic 79 came later (2026-11-22) and sits below the rest so their numbers don't move.
+    ['Hide info, keep open-string names', () => { midiPeek = false; set({ clean: true, cleanKeepOpen: true }); }],
     ['Shortcuts shown',          () => toggleHelp(true)],
     ['Shortcuts hidden',         () => toggleHelp(false)],
-    ['Hide info on',             () => { midiPeek = false; set({ clean: true }); }],
+    ['Hide info on',             () => { midiPeek = false; set({ clean: true, cleanKeepOpen: false }); }],
     ['Hide info off',            () => { midiPeek = false; set({ clean: false }); }],
     ['MIDI status shown',        () => pcMidiStatus(true)],
     ['MIDI status hidden',       () => pcMidiStatus(false)],
@@ -291,7 +294,7 @@
     ['Orientation Mirror',       () => set({ orientation: 'mirror' })],
     ['Clear notes (Esc)',        () => runShortcut('escape')],
   ];
-  const PC_ACTION_FIRST = 80;   // MIDI program 80 (0-based, as Logic counts) = the app's PC 81
+  const PC_ACTION_FIRST = 79;   // MIDI program 79 (0-based, as Logic counts) = the app's PC 80
   function pcMidiStatus(show) {
     if (state.clean) { midiPeek = show; render(); } else set({ midiPill: show });
     notice('MIDI status ' + (show ? 'shown' : 'hidden'));
@@ -444,6 +447,8 @@
     for (const id of ['chroma', 'luma', 'clean', 'midiPill']) {
       $('#' + id).onchange = e => { if (id === 'clean') midiPeek = false; set({ [id]: e.target.checked }); };
     }
+    // "…but keep open-string names": ticking it also hides the info; unticking keeps the info hidden.
+    $('#cleanKeepOpen').onchange = e => { midiPeek = false; set(e.target.checked ? { clean: true, cleanKeepOpen: true } : { cleanKeepOpen: false }); };
     $('#patternFret').onchange = e => set({ patternFret: clamp(+e.target.value, 0, state.frets) });
     $('#frets').onchange = e => set({ frets: clamp(+e.target.value, 12, 24) });
     $('#transpose').onchange = e => set({ transpose: clamp(+e.target.value, -24, 24) });
@@ -514,6 +519,7 @@
     if (state.view === 'six') mark(styleRow, 'neck');
     styleRow.querySelector('button[data-value="grid"]').disabled = state.view === 'six';
     for (const id of ['chroma', 'luma', 'clean', 'midiPill']) $('#' + id).checked = state[id] !== false;
+    $('#cleanKeepOpen').checked = state.clean && state.cleanKeepOpen;
     $('#chroma').disabled = isPenta(state.mode);   // no chroma dots in pentatonic modes
     const patRow = document.querySelector('.btn-row[data-field="pattern"]');
     patRow.querySelector('[data-value="chroma"]').disabled = isPenta(state.mode);
@@ -567,7 +573,9 @@
 
   // Move the pattern start to the previous/next scale note on the low string.
   function stepPattern(dir) {
-    if (state.pattern === 'off') { notice('Pattern’s base fret with Scale pattern on (P) only'); return; }
+    // With the pattern off, [ ] turns it on first (the kind that fits the mode, as P does) and then moves
+    // it — Kevin chose this over refusing, 2026-11-22.
+    if (state.pattern === 'off') { set({ pattern: isPenta(state.mode) ? 'luma' : 'chroma' }); notice('Scale pattern on'); }
     const kind = state.pattern;
     const parent = Theory.parentRoot(state.root, state.mode);
     const inSet = f => Theory.classify(Theory.mod(state.openLow + f, 12), parent).kind === kind;
@@ -598,7 +606,7 @@
   }
 
   // ---------- keyboard ----------
-  const SHORTCUT_KEYS = 'hkfvodclgnistpma[],.<>';
+  const SHORTCUT_KEYS = 'hkfvodclgnistpmau[],.<>';
   // While the Userback suggestion form or its screen markup is open, keys belong to it.
   const userbackOpen = () => [...document.querySelectorAll('.userback-controls, .userback-overlay, .userback-toolbar-tool')]
     .some(el => el.getClientRects().length);
@@ -608,13 +616,14 @@
     // A ticked checkbox keeps the focus but takes no typing, so shortcuts carry on there.
     const typing = ['INPUT', 'SELECT', 'TEXTAREA'].includes(t.tagName) && t.type !== 'checkbox';
     if (typing) {
-      // In a number box or a list, a shortcut letter does nothing; say why. In a text box (a song
-      // name) letters are being typed on purpose, so stay quiet.
-      if ((t.type === 'number' || t.tagName === 'SELECT') && !e.metaKey && !e.ctrlKey && !e.altKey
-          && e.key.length === 1 && SHORTCUT_KEYS.includes(e.key.toLowerCase())) {
-        notice('Shortcuts pause while typing in Settings — click the fretboard to resume');
-      }
-      return;
+      // A shortcut letter in a number box or a list leaves it and runs the shortcut (Kevin, 2026-11-22;
+      // it used to pause with a notice). Leaving commits a typed number, and taking the key stops a
+      // list from jumping to an item starting with that letter. In a text box (a song name) letters
+      // are being typed on purpose, so they stay there.
+      const shortcutLetter = (t.type === 'number' || t.tagName === 'SELECT') && !e.metaKey && !e.ctrlKey && !e.altKey
+          && e.key.length === 1 && SHORTCUT_KEYS.includes(e.key.toLowerCase());
+      if (!shortcutLetter) return;
+      t.blur();
     }
     if (e.metaKey || e.ctrlKey || e.altKey) return;
     if (runShortcut(e.key.toLowerCase(), e.shiftKey)) e.preventDefault();
@@ -664,11 +673,14 @@
         notice('Chroma dots: ' + { none: 'no labels', name: 'note names', degree: 'scale degrees' }[next]);
         break;
       }
-      case 'i':
+      case 'i':   // hide info (open-string names too); from the U kind of hiding, I switches to this one
+      case 'u': { // hide info but keep the open-string names
+        const keep = key === 'u';
         if (state.clean && midiPeek) { midiPeek = false; render(); notice('MIDI status hidden'); break; }
         midiPeek = false;
-        set({ clean: !state.clean });
+        set(state.clean && !!state.cleanKeepOpen === keep ? { clean: false } : { clean: true, cleanKeepOpen: keep });
         break;
+      }
       case 'm':
         if (state.clean) { midiPeek = !midiPeek; render(); }
         else set({ midiPill: state.midiPill === false });

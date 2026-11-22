@@ -114,6 +114,7 @@ body {
 
 /* Clean view (key I): only the board and the settings button. */
 body.clean #badge, body.clean .board .fretnum { display: none; }
+body.clean.keep-open .board .openname { display: inline; }   /* key U: hide info but keep the open-string names */
 body.no-midi-pill #midi-pill { display: none; }   /* Hide info (I) hides it too, unless M shows it for a look */
 
 .board .dot circle { stroke: var(--dot-stroke); stroke-width: 1.5; }

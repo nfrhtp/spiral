@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <title>User Guide · COSTAR Spiral-Tuned Guitar</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="css/docs.css?v=20261122025153">
+<link rel="stylesheet" href="css/docs.css?v=20261122031823">
 <script src="https://app.rybbit.io/api/script.js?siteId=1d7a8f01dfc9" defer></script>
 </head>
 <body>
@@ -129,7 +129,7 @@
 <ul>
 <li><strong>P</strong> turns the pattern on and off. The app picks the kind that fits the mode: <strong>3 notes per string</strong> in diatonic modes, <strong>2 notes per string</strong> in pentatonic modes.</li>
 <li>The pattern starts at a fret on the low string and climbs across the strings. Set that fret under Settings &gt; Scale pattern &gt; Starting fret.</li>
-<li><strong>[</strong> and <strong>]</strong> move the start to the previous or next scale note on the low string.</li>
+<li><strong>[</strong> and <strong>]</strong> move the start to the previous or next scale note on the low string. With the pattern off, they turn it on first.</li>
 <li><strong>Shift-click</strong> a dot on the low string to start the pattern there.</li>
 </ul>
 <h2 id="views-instrument-and-palettes">Views, instrument and palettes</h2>
@@ -146,9 +146,10 @@
 <li><strong>Orientation (O):</strong> <strong>Standard</strong> puts the high string on top, as in guitar tab and most chord charts. <strong>Mirror</strong> puts the low string on top.</li>
 </ul>
 <p><strong>Hide info (I)</strong> hides from the screen the key badge, the MIDI status, the fret numbers, and the open-string names. Press <strong>M</strong> to peek at the MIDI status while the rest stays hidden.</p>
+<p><strong>U</strong> hides the same but keeps the open-string names.</p>
 <p><strong>Palettes (&lt; &gt;):</strong> nine color schemes, five light and four dark. <strong>&gt;</strong> (the period key) steps forward, <strong>&lt;</strong> (the comma key) steps back. The scale-degree colors keep their order in every palette; only their shades change.</p>
 <h2 id="keyboard-shortcuts">Keyboard shortcuts</h2>
-<p>Press <strong>K</strong> to show the shortcuts bubble on screen. Shortcuts pause while you type in a number box or menu in Settings; click the fretboard to resume.</p>
+<p>Press <strong>K</strong> to show the shortcuts bubble on screen. A shortcut letter pressed in a Settings number box or menu leaves the box and does the shortcut. Song-name boxes take letters as typing.</p>
 <table>
 <thead>
 <tr>
@@ -172,6 +173,10 @@
 <tr>
 <td>I</td>
 <td>Hide info (key badge, MIDI status, fret numbers, open-string names)</td>
+</tr>
+<tr>
+<td>U</td>
+<td>Hide info but keep the open-string names</td>
 </tr>
 <tr>
 <td>M</td>
@@ -271,7 +276,7 @@
 <ul>
 <li><strong>+ Add preset</strong> (Settings &gt; Song presets) adds a preset with the current key and mode. Give it a song name, and change its key or mode from its menus.</li>
 <li><strong>▶</strong> loads a preset; <strong>×</strong> deletes it.</li>
-<li>Each preset is numbered: <strong>PC 1</strong>, <strong>PC 2</strong> and so on. An incoming MIDI Program Change 1 loads preset 1, Program Change 2 loads preset 2, and a notice at the top of the fretboard screen names what loaded. Presets use PC 1 to 80; PC 81 to 128 change the display (see Changing the display with Program Change).</li>
+<li>Each preset is numbered: <strong>PC 1</strong>, <strong>PC 2</strong> and so on. An incoming MIDI Program Change 1 loads preset 1, Program Change 2 loads preset 2, and a notice at the top of the fretboard screen names what loaded. Presets use PC 1 to 79; PC 80 to 128 change the display (see Changing the display with Program Change).</li>
 <li><strong>Listen for Program Change on:</strong> pick the channel your controller or recording software sends on, so other gear (such as a guitar synth changing patches) doesn't load presets by accident.</li>
 </ul>
 <p>Many programs number programs from 0 rather than 1. If program 1 in your software loads preset 2, send one lower.</p>
@@ -330,9 +335,9 @@
 <li>Do Logic's <strong>MIDI Out Channel</strong> and the app's <strong>Listen for Program Change on</strong> match (both 16, or the app set to Any channel)?</li>
 </ul>
 <h2 id="changing-the-display-with-program-change">Changing the display with Program Change</h2>
-<p>Program Changes 81 to 128 change what the display shows, so a recording or a footswitch can switch it while you play. Each number sets one choice, such as Luma dot labels: scale degrees, so the same number sent twice gives the same result.</p>
+<p>Program Changes 80 to 128 change what the display shows, so a recording or a footswitch can switch it while you play. Each number sets one choice, such as Luma dot labels: scale degrees, so the same number sent twice gives the same result.</p>
 <ul>
-<li>They listen on the same channel as song presets (<strong>Listen for Program Change on</strong>). Song presets use PC 1 to 80.</li>
+<li>They listen on the same channel as song presets (<strong>Listen for Program Change on</strong>). Song presets use PC 1 to 79.</li>
 <li>Previous and next palette, and the pattern's base fret down and up, move one step each time.</li>
 <li>The same rules apply as for the keys: for example, Abstract grid works with twelve strings only. A notice at the top of the screen says when a rule stops one.</li>
 <li>Full screen can't be switched this way: Chrome allows it only from a key or a click. Press <strong>F</strong> before you start.</li>
@@ -348,6 +353,11 @@
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>80</td>
+<td>79</td>
+<td>Hide info, keep open-string names</td>
+</tr>
 <tr>
 <td>81</td>
 <td>80</td>
@@ -657,6 +667,6 @@
 </table>
 <p><strong>Privacy:</strong> site visits are counted anonymously, without cookies. The app collects nothing you type, and your settings stay in your browser.</p>
 </main>
-<script src="js/userback.js?v=20261122025153"></script>
+<script src="js/userback.js?v=20261122031823"></script>
 </body>
 </html>
