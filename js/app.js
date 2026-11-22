@@ -243,8 +243,78 @@
     // 120 = All Sound Off, 123 = All Notes Off — guitar synths send these when strings are muted.
     if (m.cc === 120 || m.cc === 123) releaseChannel(m.ch);
   });
+  // Program Changes 81–128 (Logic Pro numbers them 80–127) set the display, so a recording can
+  // drive it while both hands play. Each number sets ONE option (not a toggle), so a Program Change
+  // that arrives twice — Logic's Chase, or a take started mid-song — gives the same result.
+  // Same rules and notices as the keys. Song presets keep PC 1–80. Key, Mode and Relative modes are
+  // left out (song presets set those); full screen too (Chrome allows it only from a key or a click).
+  // Order agreed with Kevin 2026-11-22; the User Guide's table lists the same numbers.
+  const PC_ACTIONS = [
+    ['Shortcuts shown',          () => toggleHelp(true)],
+    ['Shortcuts hidden',         () => toggleHelp(false)],
+    ['Hide info on',             () => { midiPeek = false; set({ clean: true }); }],
+    ['Hide info off',            () => { midiPeek = false; set({ clean: false }); }],
+    ['MIDI status shown',        () => pcMidiStatus(true)],
+    ['MIDI status hidden',       () => pcMidiStatus(false)],
+    ['Tuning All Fourths',       () => pcTuning('fourths')],
+    ['Tuning Standard',          () => pcTuning('standard')],
+    ['Chroma sequence on',       () => isPenta(state.mode) ? notice('Chroma sequence dots with diatonic modes only') : set({ chroma: true })],
+    ['Chroma sequence off',      () => set({ chroma: false })],
+    ['Chroma labels: none',      () => pcChromaLabel('none')],
+    ['Chroma labels: names',     () => pcChromaLabel('name')],
+    ['Chroma labels: degrees',   () => pcChromaLabel('degree')],
+    ['Luma sequence on',         () => set({ luma: true })],
+    ['Luma sequence off',        () => set({ luma: false })],
+    ['Luma labels: none',        () => pcLumaLabel('none')],
+    ['Luma labels: Greek',       () => pcLumaLabel('greek')],
+    ['Luma labels: names',       () => pcLumaLabel('name')],
+    ['Luma labels: degrees',     () => pcLumaLabel('degree')],
+    ...THEMES.map(t => ['Palette ' + t.name, () => { set({ theme: t.id }); notice('Palette: ' + t.name); }]),
+    ['Previous palette',         () => stepPalette(-1)],
+    ['Next palette',             () => stepPalette(1)],
+    ['Scale pattern on',         () => set({ pattern: isPenta(state.mode) ? 'luma' : 'chroma' })],
+    ['Scale pattern off',        () => set({ pattern: 'off' })],
+    ['Base fret down',           () => stepPattern(-1)],
+    ['Base fret up',             () => stepPattern(1)],
+    ['Settings open',            () => togglePanel(true)],
+    ['Settings closed',          () => togglePanel(false)],
+    ['Dots: all',                () => set({ dots: 'all' })],
+    ['Dots: only when played',   () => set({ dots: 'played' })],
+    ['Dot size 100%',            () => pcDotSize(100)],
+    ['Dot size 75%',             () => pcDotSize(75)],
+    ['Dot size 50%',             () => pcDotSize(50)],
+    ['Six strings',              () => set({ view: 'six' })],
+    ['Twelve strings',           () => state.tuning === 'standard' ? notice('Twelve strings with All Fourths tuning only') : set({ view: 'spiral' })],
+    ['Guitar neck',              () => set({ spiralStyle: 'neck' })],
+    ['Abstract grid',            () => state.view === 'six' ? notice('Abstract grid with Twelve strings only') : set({ spiralStyle: 'grid' })],
+    ['Orientation Standard',     () => set({ orientation: 'standard' })],
+    ['Orientation Mirror',       () => set({ orientation: 'mirror' })],
+    ['Clear notes (Esc)',        () => runShortcut('escape')],
+  ];
+  const PC_ACTION_FIRST = 80;   // MIDI program 80 (0-based, as Logic counts) = the app's PC 81
+  function pcMidiStatus(show) {
+    if (state.clean) { midiPeek = show; render(); } else set({ midiPill: show });
+    notice('MIDI status ' + (show ? 'shown' : 'hidden'));
+  }
+  function pcTuning(t) {
+    const wasTwelve = state.view !== 'six';
+    set({ tuning: t });
+    notice('Tuning: ' + (t === 'standard' ? 'Standard' + (wasTwelve ? ' · Six strings shown (Twelve strings with All Fourths only)' : '') : 'All Fourths'));
+  }
+  function pcChromaLabel(v) {
+    if (isPenta(state.mode)) { notice('Chroma dot labels with diatonic modes only'); return; }
+    set({ chromaLabel: v });
+    notice('Chroma dots: ' + { none: 'no labels', name: 'note names', degree: 'scale degrees' }[v]);
+  }
+  function pcLumaLabel(v) {
+    set({ lumaLabel: v });
+    notice('Luma dots: ' + { none: 'no labels', greek: 'Greek letters', name: 'note names', degree: 'scale degrees' }[v]);
+  }
+  function pcDotSize(v) { set({ dotSize: v }); notice('Dot size: ' + v + '%'); }
   Midi.on('program', m => {
     if (state.pcChannel !== 'any' && m.ch !== +state.pcChannel) return;
+    const a = PC_ACTIONS[m.program - PC_ACTION_FIRST];
+    if (a) { a[1](); return; }
     const p = state.presets[m.program];
     if (p) {
       set({ root: p.root, mode: p.mode });
@@ -547,7 +617,12 @@
       return;
     }
     if (e.metaKey || e.ctrlKey || e.altKey) return;
-    switch (e.key.toLowerCase()) {
+    if (runShortcut(e.key.toLowerCase(), e.shiftKey)) e.preventDefault();
+  });
+
+  // One shortcut, by its key name in lower case. Returns false for a key that isn't a shortcut.
+  function runShortcut(key, shift) {
+    switch (key) {
       case 'h': togglePanel(); break;
       case 'k': toggleHelp(); break;
       case 'f': toggleFullscreen(); break;
@@ -621,16 +696,16 @@
       case 'arrowright': set({ root: Theory.mod(state.root + 1, 12) }); break;
       case 'arrowup':
       case 'arrowdown': {
-        if (e.shiftKey) { stepRelative(e.key === 'ArrowUp' ? -1 : 1); break; }
-        const k = Theory.MODES.findIndex(m => m.id === state.mode) + (e.key === 'ArrowUp' ? -1 : 1);
+        if (shift) { stepRelative(key === 'arrowup' ? -1 : 1); break; }
+        const k = Theory.MODES.findIndex(m => m.id === state.mode) + (key === 'arrowup' ? -1 : 1);
         set({ mode: Theory.MODES[Theory.mod(k, Theory.MODES.length)].id });
         break;
       }
       case 'escape': toggleHelp(false); togglePanel(false); allNotesOff(); break;
-      default: return;
+      default: return false;
     }
-    e.preventDefault();
-  });
+    return true;
+  }
 
   // ---------- start ----------
   buildPanel();

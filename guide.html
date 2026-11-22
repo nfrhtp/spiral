@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <title>User Guide · COSTAR Spiral-Tuned Guitar</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="css/docs.css?v=20261118162130">
+<link rel="stylesheet" href="css/docs.css?v=20261122014136">
 <script src="https://app.rybbit.io/api/script.js?siteId=1d7a8f01dfc9" defer></script>
 </head>
 <body>
@@ -171,7 +171,7 @@
 <ul>
 <li><strong>+ Add preset</strong> (Settings &gt; Song presets) adds a preset with the current key and mode. Give it a song name, and change its key or mode from its menus.</li>
 <li><strong>▶</strong> loads a preset; <strong>×</strong> deletes it.</li>
-<li>Each preset is numbered: <strong>PC 1</strong>, <strong>PC 2</strong> and so on. An incoming MIDI Program Change 1 loads preset 1, Program Change 2 loads preset 2, and a notice at the top of the fretboard screen names what loaded.</li>
+<li>Each preset is numbered: <strong>PC 1</strong>, <strong>PC 2</strong> and so on. An incoming MIDI Program Change 1 loads preset 1, Program Change 2 loads preset 2, and a notice at the top of the fretboard screen names what loaded. Presets use PC 1 to 80; PC 81 to 128 change the display (see Changing the display with Program Change).</li>
 <li><strong>Listen for Program Change on:</strong> pick the channel your controller or recording software sends on, so other gear (such as a guitar synth changing patches) doesn't load presets by accident.</li>
 </ul>
 <p>Many programs number programs from 0 rather than 1. If program 1 in your software loads preset 2, send one lower.</p>
@@ -229,6 +229,267 @@
 <li>In the app's <strong>Settings &gt; MIDI</strong>, does the Status line list IAC Driver Bus 1? If not, quit and reopen Chrome.</li>
 <li>Do Logic's <strong>MIDI Out Channel</strong> and the app's <strong>Listen for Program Change on</strong> match (both 16, or the app set to Any channel)?</li>
 </ul>
+<h2 id="changing-the-display-with-program-change">Changing the display with Program Change</h2>
+<p>Program Changes 81 to 128 change what the display shows, so a recording or a footswitch can switch it while you play. Each number sets one choice, such as Luma dot labels: scale degrees, so the same number sent twice gives the same result.</p>
+<ul>
+<li>They listen on the same channel as song presets (<strong>Listen for Program Change on</strong>). Song presets use PC 1 to 80.</li>
+<li>Previous and next palette, and the pattern's base fret down and up, move one step each time.</li>
+<li>The same rules apply as for the keys: for example, Abstract grid works with twelve strings only. A notice at the top of the screen says when a rule stops one.</li>
+<li>Full screen can't be switched this way: Chrome allows it only from a key or a click. Press <strong>F</strong> before you start.</li>
+<li>Key and mode come from song presets.</li>
+</ul>
+<p>In Logic Pro, use the Logic number (one lower) and add the events to the song's region as in step 5 above.</p>
+<table>
+<thead>
+<tr>
+<th>PC</th>
+<th>Logic</th>
+<th>Sets</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>81</td>
+<td>80</td>
+<td>Shortcuts shown</td>
+</tr>
+<tr>
+<td>82</td>
+<td>81</td>
+<td>Shortcuts hidden</td>
+</tr>
+<tr>
+<td>83</td>
+<td>82</td>
+<td>Hide info on</td>
+</tr>
+<tr>
+<td>84</td>
+<td>83</td>
+<td>Hide info off</td>
+</tr>
+<tr>
+<td>85</td>
+<td>84</td>
+<td>MIDI status shown</td>
+</tr>
+<tr>
+<td>86</td>
+<td>85</td>
+<td>MIDI status hidden</td>
+</tr>
+<tr>
+<td>87</td>
+<td>86</td>
+<td>Tuning: All Fourths</td>
+</tr>
+<tr>
+<td>88</td>
+<td>87</td>
+<td>Tuning: Standard</td>
+</tr>
+<tr>
+<td>89</td>
+<td>88</td>
+<td>Chroma sequence dots on</td>
+</tr>
+<tr>
+<td>90</td>
+<td>89</td>
+<td>Chroma sequence dots off</td>
+</tr>
+<tr>
+<td>91</td>
+<td>90</td>
+<td>Chroma dot labels: none</td>
+</tr>
+<tr>
+<td>92</td>
+<td>91</td>
+<td>Chroma dot labels: note names</td>
+</tr>
+<tr>
+<td>93</td>
+<td>92</td>
+<td>Chroma dot labels: scale degrees</td>
+</tr>
+<tr>
+<td>94</td>
+<td>93</td>
+<td>Luma sequence dots on</td>
+</tr>
+<tr>
+<td>95</td>
+<td>94</td>
+<td>Luma sequence dots off</td>
+</tr>
+<tr>
+<td>96</td>
+<td>95</td>
+<td>Luma dot labels: none</td>
+</tr>
+<tr>
+<td>97</td>
+<td>96</td>
+<td>Luma dot labels: Greek</td>
+</tr>
+<tr>
+<td>98</td>
+<td>97</td>
+<td>Luma dot labels: note names</td>
+</tr>
+<tr>
+<td>99</td>
+<td>98</td>
+<td>Luma dot labels: scale degrees</td>
+</tr>
+<tr>
+<td>100</td>
+<td>99</td>
+<td>Palette: Paper</td>
+</tr>
+<tr>
+<td>101</td>
+<td>100</td>
+<td>Palette: Studio</td>
+</tr>
+<tr>
+<td>102</td>
+<td>101</td>
+<td>Palette: Okabe–Ito</td>
+</tr>
+<tr>
+<td>103</td>
+<td>102</td>
+<td>Palette: Autumn</td>
+</tr>
+<tr>
+<td>104</td>
+<td>103</td>
+<td>Palette: Pop</td>
+</tr>
+<tr>
+<td>105</td>
+<td>104</td>
+<td>Palette: Stage</td>
+</tr>
+<tr>
+<td>106</td>
+<td>105</td>
+<td>Palette: Neon</td>
+</tr>
+<tr>
+<td>107</td>
+<td>106</td>
+<td>Palette: Pastel Night</td>
+</tr>
+<tr>
+<td>108</td>
+<td>107</td>
+<td>Palette: Jewel</td>
+</tr>
+<tr>
+<td>109</td>
+<td>108</td>
+<td>Previous palette</td>
+</tr>
+<tr>
+<td>110</td>
+<td>109</td>
+<td>Next palette</td>
+</tr>
+<tr>
+<td>111</td>
+<td>110</td>
+<td>Scale pattern on</td>
+</tr>
+<tr>
+<td>112</td>
+<td>111</td>
+<td>Scale pattern off</td>
+</tr>
+<tr>
+<td>113</td>
+<td>112</td>
+<td>Pattern's base fret down</td>
+</tr>
+<tr>
+<td>114</td>
+<td>113</td>
+<td>Pattern's base fret up</td>
+</tr>
+<tr>
+<td>115</td>
+<td>114</td>
+<td>Settings open</td>
+</tr>
+<tr>
+<td>116</td>
+<td>115</td>
+<td>Settings closed</td>
+</tr>
+<tr>
+<td>117</td>
+<td>116</td>
+<td>Display: all scale notes</td>
+</tr>
+<tr>
+<td>118</td>
+<td>117</td>
+<td>Display: only notes being played</td>
+</tr>
+<tr>
+<td>119</td>
+<td>118</td>
+<td>Dot size 100%</td>
+</tr>
+<tr>
+<td>120</td>
+<td>119</td>
+<td>Dot size 75%</td>
+</tr>
+<tr>
+<td>121</td>
+<td>120</td>
+<td>Dot size 50%</td>
+</tr>
+<tr>
+<td>122</td>
+<td>121</td>
+<td>Six strings</td>
+</tr>
+<tr>
+<td>123</td>
+<td>122</td>
+<td>Twelve strings</td>
+</tr>
+<tr>
+<td>124</td>
+<td>123</td>
+<td>Guitar neck</td>
+</tr>
+<tr>
+<td>125</td>
+<td>124</td>
+<td>Abstract grid (twelve strings)</td>
+</tr>
+<tr>
+<td>126</td>
+<td>125</td>
+<td>Orientation: Standard</td>
+</tr>
+<tr>
+<td>127</td>
+<td>126</td>
+<td>Orientation: Mirror</td>
+</tr>
+<tr>
+<td>128</td>
+<td>127</td>
+<td>Clear stuck notes, close Settings and the bubble (as Esc)</td>
+</tr>
+</tbody>
+</table>
 <h2 id="keyboard-shortcuts">Keyboard shortcuts</h2>
 <p>Press <strong>K</strong> to show the shortcuts bubble on screen. Shortcuts pause while you type in a number box or menu in Settings; click the fretboard to resume.</p>
 <table>
@@ -396,6 +657,6 @@
 </table>
 <p><strong>Privacy:</strong> site visits are counted anonymously, without cookies. The app collects nothing you type, and your settings stay in your browser.</p>
 </main>
-<script src="js/userback.js?v=20261118162130"></script>
+<script src="js/userback.js?v=20261122014136"></script>
 </body>
 </html>
