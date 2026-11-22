@@ -46,7 +46,7 @@
 .theme-autumn { --bg: #efe7d6; --string: #3a2f28; --edge: #4a3b30; --nut: #3a2f28; --fret: #a08f78; --wood: rgba(120,80,30,0.06);
   --c2: #6f8f2f; --c3: #d9a520; --c4: #cf6a2a; --c5: #a8382d; --c6: #4b7ea6; --c7: #7d5a8e; --luma: #2a2420; --luma-stroke: #2a2420; --c1r: #2a2420; }
 /* 7 Pastel Night — soft pastels on deep navy */
-.theme-pastelnight { --bg: #121a2b; --string: #d7deeb; --edge: #9fb0cc; --fret: #2c3a55; --nut: #e3e9f5; --grid: #27344d;
+.theme-pastelnight { --bg: #121a2b; --string: #d7deeb; --edge: #9fb0cc; --fret: #41557b; --nut: #e3e9f5; --grid: #27344d;
   --c2: #a9e8a0; --c3: #fff2a8; --c4: #ffc69b; --c5: #ff9f9f; --c6: #a9d6f7; --c7: #dcbaf2;
   --luma: #1b2437; --luma-stroke: #8a97b3; }
 /* 8 Jewel — deep saturated gem tones on charcoal */

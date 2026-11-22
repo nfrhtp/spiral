@@ -179,11 +179,7 @@ const Render = (() => {
     const nutX = g.wire(0);
     // The six-string neck sits on the plain page background; only the 12-row neck gets the faint
     // fretboard tint plus the brighter band marking the six playable strings.
-    if (!g.six) {
-      el('rect', { x: nutX, y: top, width: right - nutX, height: bottom - top, class: 'wood' }, gp);
-      const bandTop = Math.min(g.y(3), g.y(8)) - g.rowGap / 2;
-      el('rect', { x: left, y: bandTop, width: right - left, height: g.rowGap * 6, class: 'band' }, gp);
-    }
+    if (!g.six) el('rect', { x: nutX, y: top, width: right - nutX, height: bottom - top, class: 'wood' }, gp);
     for (const yy of [top, bottom]) {
       const off = yy === top ? -7 : 7;
       el('line', { x1: left, y1: yy, x2: right, y2: yy, class: 'edge' }, gp);
@@ -193,6 +189,9 @@ const Render = (() => {
       el('line', { x1: g.wire(k), y1: top, x2: g.wire(k), y2: bottom, class: 'fret' }, gp);
     }
     el('line', { x1: nutX, y1: top, x2: nutX, y2: bottom, class: 'nut' }, gp);
+    // The band goes OVER the fret wires: drawn under them, it lightened only the background and the
+    // wires nearly vanished inside it (Pastel Night, Jewel — Kevin, 2026-11-22).
+    if (!g.six) drawBand(gp, g);
 
     const mid = rows / 2;
     const inlayR = g.cellW * 0.075;
@@ -212,16 +211,21 @@ const Render = (() => {
     drawOpenNames(gp, g, state, 20);
   }
 
+  // Twelve strings: the brighter band behind the six playable strings (rows 3–8).
+  function drawBand(gp, g) {
+    const bandTop = Math.min(g.y(3), g.y(8)) - g.rowGap / 2;
+    el('rect', { x: g.ml, y: bandTop, width: g.W - g.mx - g.ml, height: g.rowGap * 6, class: 'band' }, gp);
+  }
+
   // The abstract lattice: fine lines only, no nut, no string thickness. A faint band marks the real strings.
   function drawGrid(gp, g, state) {
     const top = g.my, bottom = g.H - g.my, left = g.ml, right = g.W - g.mx;
-    const bandTop = Math.min(g.y(3), g.y(8)) - g.rowGap / 2;
-    el('rect', { x: left, y: bandTop, width: right - left, height: g.rowGap * 6, class: 'band' }, gp);
     // Vertical lines sit between the dots and look like fret wires (wire(-1) is the left edge);
     // horizontals look like strings, all at the thin weight of the high string. No nut.
     for (let k = -1; k <= state.frets; k++) {
       el('line', { x1: g.wire(k), y1: top, x2: g.wire(k), y2: bottom, class: 'fret' }, gp);
     }
+    drawBand(gp, g);   // over the fret lines, so they show as well inside the band as outside it
     // The neck's position markers (fret inlays), in the middle of the six real strings.
     const mid = g.rows / 2, inlayR = g.cellW * 0.075;
     for (let f = 1; f <= state.frets; f++) {
