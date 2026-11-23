@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <title>User Guide · COSTAR Spiral-Tuned Guitar</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="css/docs.css?v=20261122031823">
+<link rel="stylesheet" href="css/docs.css?v=20261122190941">
 <script src="https://app.rybbit.io/api/script.js?siteId=1d7a8f01dfc9" defer></script>
 </head>
 <body>
@@ -306,27 +306,38 @@
 <li>Create an <strong>External MIDI</strong> track.</li>
 <li>Select the track and press <strong>I</strong> to show the Inspector on the left.</li>
 <li>Open the <strong>Track</strong> section by clicking its disclosure triangle.</li>
-<li>Set <strong>MIDI Output</strong> to <strong>IAC Driver Bus 1</strong> (it starts as "Off").</li>
+<li>Set <strong>MIDI Output</strong> to <strong>IAC Driver Bus 1</strong> (it starts as "Off"; Logic may list it as <strong>IAC Driver</strong>).</li>
 <li>Set <strong>MIDI Out Channel</strong> to <strong>16</strong>.</li>
 </ol>
 <p>The Rev and Chor knobs in this track's mixer strip play no part here.</p>
-<h3 id="4-test-it">4. Test it</h3>
+<h3 id="4-set-logics-midi-inputs">4. Set Logic's MIDI inputs</h3>
+<p>Logic passes whatever arrives at its MIDI inputs on to the selected track. With this setup, two inputs cause trouble:</p>
+<ol>
+<li>Choose <strong>Logic Pro &gt; Settings &gt; MIDI</strong> and click the <strong>Inputs</strong> tab.</li>
+<li><strong>Untick IAC Driver.</strong> If Logic listens to it, every Program Change it sends comes straight back in and goes out again, endlessly. In the app, a setting you change with a key flashes and snaps back, and new changes seem to be ignored.</li>
+<li><strong>Untick your MIDI guitar's interface</strong> (for example a Scarlett). If Logic listens to it, Logic copies your notes to the app on channel 16, and each note you play lights on several strings.</li>
+<li>Close the window.</li>
+</ol>
+<p>The app gets your guitar's notes directly, so Logic doesn't need to pass them on. If Logic itself needs the guitar's notes (to record them or play a sound), keep the interface ticked and, while you play, select a track other than the Program Change track.</p>
+<h3 id="5-test-it">5. Test it</h3>
 <ol>
 <li>In the track's Inspector, <strong>tick the checkbox to the left of Program</strong>. With the box unticked, changing the number sends nothing.</li>
 <li>Pick a program number. Logic sends it right away.</li>
 <li>A notice at the top of the fretboard screen shows "PC 1: …", or "no preset" if that number has no preset yet. Either one means the connection works.</li>
 </ol>
-<h3 id="5-put-the-changes-into-a-song">5. Put the changes into a song</h3>
+<h3 id="6-put-the-changes-into-a-song">6. Put the changes into a song</h3>
 <ol>
 <li>On the track, Control-click at bar 1 and choose <strong>Create MIDI Region</strong>. Drag its right edge so it covers the song.</li>
 <li>Select the region and open the Event List: press <strong>D</strong> and click the <strong>Event</strong> tab, or choose <strong>Window &gt; Open Event List</strong>. (In Logic Pro 12, <strong>E</strong> opens the Piano Roll, not the Event List.)</li>
 <li>Move the playhead to where the change should happen.</li>
 <li>Set the event-type menu next to <strong>+</strong> to <strong>Program Change</strong> and click <strong>+</strong>.</li>
-<li>Set the event's position, channel <strong>16</strong>, and the program number.</li>
+<li>Set the event's position, channel <strong>16</strong>, and the program number in the <strong>Val</strong> column (leave <strong>Num</strong> as "–").</li>
 <li>Repeat for each change, then press Play. The fretboard switches as the playhead passes each event.</li>
 </ol>
 <p><strong>Starting mid-song:</strong> turn on <strong>File &gt; Project Settings &gt; MIDI &gt; Chase &gt; Program Change</strong>, so Logic sends the latest Program Change whenever you start or stop playback.</p>
 <p><strong>After setup:</strong> you can untick the Inspector's Program box. Otherwise it sends its own number whenever you select the track or open the project.</p>
+<h3 id="if-a-setting-snaps-back-or-a-note-lights-on-several-strings">If a setting snaps back, or a note lights on several strings</h3>
+<p>Check step 4: IAC Driver and your MIDI guitar's interface should be unticked in <strong>Logic Pro &gt; Settings &gt; MIDI &gt; Inputs</strong>.</p>
 <h3 id="if-nothing-arrives">If nothing arrives</h3>
 <ul>
 <li>Is the <strong>Program</strong> box in the Inspector ticked (for the test)?</li>
@@ -343,7 +354,7 @@
 <li>Full screen can't be switched this way: Chrome allows it only from a key or a click. Press <strong>F</strong> before you start.</li>
 <li>Key and mode come from song presets.</li>
 </ul>
-<p>In Logic Pro, use the Logic number (one lower) and add the events to the song's region as in step 5 above.</p>
+<p>In Logic Pro, use the Logic number (one lower) and add the events to the song's region as in step 6 above.</p>
 <table>
 <thead>
 <tr>
@@ -667,6 +678,6 @@
 </table>
 <p><strong>Privacy:</strong> site visits are counted anonymously, without cookies. The app collects nothing you type, and your settings stay in your browser.</p>
 </main>
-<script src="js/userback.js?v=20261122031823"></script>
+<script src="js/userback.js?v=20261122190941"></script>
 </body>
 </html>
